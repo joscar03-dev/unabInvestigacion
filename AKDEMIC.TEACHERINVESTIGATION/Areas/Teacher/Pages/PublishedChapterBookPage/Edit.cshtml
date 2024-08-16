@@ -1,0 +1,456 @@
+﻿@page "/investigador/capitulos-libros-publicados/{publishedChapterBookId:Guid}/editar"
+@model AKDEMIC.TEACHERINVESTIGATION.Areas.Teacher.Pages.PublishedChapterBookPage.EditModel
+
+@{
+    ViewData["Title"] = "Mis Capítulos de Libros publicados";
+    ViewBag.Breadcrumbs = new[]
+    {
+        new BreadcrumbViewData {Name="Mis Capítulos de Libros publicados", Url = "/investigador/capitulos-libros-publicados"},
+        new BreadcrumbViewData {Name="Editar", Url = null},
+    };
+}
+
+
+
+<div class="m-content">
+    <div class="m-portlet">
+        <div class="m-portlet__head">
+            <div class="m-portlet__head-caption">
+                <div class="m-portlet__head-title">
+                    <h3 class="m-portlet__head-text">
+                        Datos del Capítulos de Libros publicado
+                    </h3>
+                </div>
+            </div>
+        </div>
+        <form id="edit-form" class="m-form m-form--state" asp-area="Teacher" method="post" enctype="multipart/form-data">
+            <input asp-for="Input.Id" hidden />
+            <div class="m-portlet__body">
+                <div class="m-form__content">
+                    <div class="m-alert m-alert--icon alert alert-danger m--hide" role="alert" id="m-form_alert">
+                        <div class="m-alert__icon">
+                            <i class="la la-warning"></i>
+                        </div>
+                        <div id="alert-text" class="m-alert__text">
+                            @ViewBag.ErrorMessage
+                        </div>
+                        <div class="m-alert__close">
+                            <button type="button" class="close" data-close="alert" aria-label="Close"></button>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group m-form__group row">
+                    <div class="m-form__group-sub col-lg-6">
+                        <label class="required-form-label">Título del libro</label>
+                        <div class="m-input-icon m-input-icon--right">
+                            <input asp-for="Input.BookTitle" class="form-control m-input" placeholder="Título del libro" autocomplete="off" required />
+                            <span class="m-input-icon__icon m-input-icon__icon--right">
+                                <span>
+                                    <i class="la la-info-circle"></i>
+                                </span>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="m-form__group-sub col-lg-6">
+                        <label class="required-form-label">Título del capítulo</label>
+                        <div class="m-input-icon m-input-icon--right">
+                            <input asp-for="Input.ChapterTitle" class="form-control m-input" placeholder="Título del capítulo" autocomplete="off" required />
+                            <span class="m-input-icon__icon m-input-icon__icon--right">
+                                <span>
+                                    <i class="la la-info-circle"></i>
+                                </span>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group m-form__group row">
+                    <div class="m-form__group-sub col-lg-6">
+                        <label class="required-form-label">Editorial</label>
+                        <div class="m-input-icon m-input-icon--right">
+                            <input asp-for="Input.PublishingHouse" class="form-control m-input" placeholder="Editorial" autocomplete="off" required />
+                            <span class="m-input-icon__icon m-input-icon__icon--right">
+                                <span>
+                                    <i class="la la-info-circle"></i>
+                                </span>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="m-form__group-sub col-lg-6">
+                        <label class="required-form-label">Ciudad de edición</label>
+                        <div class="m-input-icon m-input-icon--right">
+                            <input asp-for="Input.PublishingCity" class="form-control m-input" placeholder="Ciudad de edición" autocomplete="off" required />
+                            <span class="m-input-icon__icon m-input-icon__icon--right">
+                                <span>
+                                    <i class="la la-info-circle"></i>
+                                </span>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group m-form__group row">
+                    <div class="m-form__group-sub col-lg-6">
+                        <label class="required-form-label">Año de edición</label>
+                        <div class="m-input-icon m-input-icon--right">
+                            <input asp-for="Input.PublishingYear" class="form-control m-input" placeholder="Año de edición" autocomplete="off" required />
+                            <span class="m-input-icon__icon m-input-icon__icon--right">
+                                <span>
+                                    <i class="la la-info-circle"></i>
+                                </span>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="m-form__group-sub col-lg-6">
+                        <label class="form-control-label">ISBN</label>
+                        <div class="m-input-icon m-input-icon--right">
+                            <input asp-for="Input.ISBN" class="form-control m-input" placeholder="ISBN" autocomplete="off" />
+                            <span class="m-input-icon__icon m-input-icon__icon--right">
+                                <span>
+                                    <i class="la la-info-circle"></i>
+                                </span>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group m-form__group row">
+                    <div class="m-form__group-sub col-lg-6">
+                        <label class="required-form-label">Página de Inicio</label>
+                        <div class="m-input-icon m-input-icon--right">
+                            <input asp-for="Input.StartPage" class="form-control m-input" placeholder="Página de Inicio" autocomplete="off" required />
+                            <span class="m-input-icon__icon m-input-icon__icon--right">
+                                <span>
+                                    <i class="la la-info-circle"></i>
+                                </span>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="m-form__group-sub col-lg-6">
+                        <label class="required-form-label">Página de Fin</label>
+                        <div class="m-input-icon m-input-icon--right">
+                            <input asp-for="Input.EndPage" class="form-control m-input" placeholder="Página de Fin" autocomplete="off" required />
+                            <span class="m-input-icon__icon m-input-icon__icon--right">
+                                <span>
+                                    <i class="la la-info-circle"></i>
+                                </span>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="form-group m-form__group row">
+                    <div class="m-form__group-sub col-lg-6">
+                        <label class="required-form-label">Autor principal</label>
+                        <div class="m-input-icon m-input-icon--right">
+                            <input asp-for="Input.MainAuthor" class="form-control m-input" placeholder="Autor Principal" autocomplete="off" required />
+                            <span class="m-input-icon__icon m-input-icon__icon--right">
+                                <span>
+                                    <i class="la la-info-circle"></i>
+                                </span>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="m-form__group-sub col-lg-6">
+                        <label class="form-control-label">DOI</label>
+                        <div class="m-input-icon m-input-icon--right">
+                            <input asp-for="Input.DOI" class="form-control m-input" placeholder="DOI" autocomplete="off" />
+                            <span class="m-input-icon__icon m-input-icon__icon--right">
+                                <span>
+                                    <i class="la la-info-circle"></i>
+                                </span>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group m-form__group row">
+                    <div class="m-form__group-sub col-lg-12">
+                        <label class="form-control-label">Url</label>
+                        <div class="m-input-icon m-input-icon--right">
+                            <input asp-for="Input.Url" class="form-control m-input" placeholder="Url" autocomplete="off" />
+                            <span class="m-input-icon__icon m-input-icon__icon--right">
+                                <span>
+                                    <i class="la la-info-circle"></i>
+                                </span>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="m-portlet__foot m-portlet__foot--fit m--align-right m--margin-top-10">
+                <div class="m-form__actions">
+                    <button id="btnSave" class="btn btn-primary m-btn m-btn--custom m-btn--icon" type="submit">
+                        <span>
+                            <i class="la la-save"></i>
+                            &nbsp;&nbsp;
+                            <span>
+                                Guardar
+                            </span>
+                        </span>
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+    <!--AQUI EMPIEZA EL TAB PANEL-->
+    <div class="m-portlet m-portlet--tabs">
+        <div class="m-portlet__head">
+            <div class="m-portlet__head-tools">
+                <ul class="nav nav-fill m-tabs-line m-tabs-line--primary m-tabs-line--2x" role="tablist">
+                    <li class="nav-item m-tabs__item">
+                        <a class="nav-link m-tabs__link active" href="#tab_1" data-toggle="tab" role="tab">
+                            <i class="la la-info-circle"></i>
+                            Autores
+                        </a>
+                    </li>
+                    <li class="nav-item m-tabs__item">
+                        <a class="nav-link m-tabs__link" href="#tab_2" data-toggle="tab" role="tab">
+                            <i class="fa fa-file"></i>
+                            Archivos
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="m-portlet__body">
+            <div class="tab-content">
+                <div class="tab-pane active" id="tab_1" role="tabpanel">
+                    <div class="m-portlet__body m-portlet__body--no-padding">
+                        <div class="m-form--label-align-right m--margin-top-20">
+                            <div class="row align-items-center">
+                                <div class="col-xl-8 order-2 order-xl-1">
+                                </div>
+                                <div class="col-xl-4 order-1 order-xl-2 m--align-right">
+                                    <button data-toggle="modal" data-target="#authorModal" class="btn btn-primary m-btn m-btn--air m-btn--icon">
+                                        <span>
+                                            <i class="la la-plus"></i>
+                                            <span>Nuevo Autor</span>
+                                        </span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <table class="table table-striped table-bordered" id="author-datatable"></table>
+                    </div>
+                </div>
+                <div class="tab-pane" id="tab_2" role="tabpanel">
+                    <div class="m-portlet__body m-portlet__body--no-padding">
+                        <div class="m-form--label-align-right m--margin-top-20">
+                            <div class="row align-items-center">
+                                <div class="col-xl-8 order-2 order-xl-1">
+                                </div>
+                                <div class="col-xl-4 order-1 order-xl-2 m--align-right">
+                                    <button data-toggle="modal" data-target="#fileModal" class="btn btn-primary m-btn m-btn--air m-btn--icon">
+                                        <span>
+                                            <i class="la la-plus"></i>
+                                            <span>Nuevo Archivo</span>
+                                        </span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <table class="table table-striped table-bordered" id="file-datatable"></table>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <!--AQUI TERMINA EL TAB PANEL-->
+    <!--AQUI EMPIEZA EL CRUD DE AUTHOR-->
+    <!--CREATE Modal Author-->
+    <div class="modal fade" id="authorModal" tabindex="-1000" role="dialog" aria-labelledby="detailLabel" aria-hidden="true">
+        <div class="modal-dialog " role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">
+                        Registrar un Autor
+                    </h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <form id="author-form" class="m-form m-form--state" asp-area="Teacher" asp-page-handler="CreateAuthor" method="post" enctype="multipart/form-data">
+                    <input name="PublishedChapterBookId" value="@Model.Input.Id" type="hidden">
+                    <div class="modal-body">
+                        <div class="form-group m-form__group">
+                            <label class="required-form-label">DNI</label>
+                            <input type="text" name="Dni" placeholder="DNI" pattern="^[0-9]*$" minlength="8" maxlength="8" class="form-control m-input" required />
+                        </div>
+                        <div class="m-form__group">
+                            <label class="required-form-label">Apellido Paterno</label>
+                            <input name="PaternalSurname" placeholder="Apellido Paterno" type="text" class="form-control m-input" required />
+                        </div>
+                        <div class="m-form__group">
+                            <label class="required-form-label">Apellido Materno</label>
+                            <input name="MaternalSurname" placeholder="Apellido Materno" type="text" class="form-control m-input" required />
+                        </div>
+                        <div class="m-form__group">
+                            <label class="required-form-label">Nombres</label>
+                            <input name="Name" placeholder="Nombres" type="text" class="form-control m-input" required />
+                        </div>
+                        <div class="m-form__group">
+                            <label class="required-form-label">Email</label>
+                            <input name="Email" placeholder="Email" type="text" class="form-control m-input" required />
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <div style="text-align:right;">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                                Cancelar
+                            </button>
+                            <button id="btnSaveAuthor" type="submit" class="btn btn-primary ladda-button" data-style="slide-down">
+                                <span class="ladda-label">Guardar</span>
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <!--Edit Modal Author-->
+    <div class="modal fade" id="authorEditModal" tabindex="-1000" role="dialog" aria-labelledby="detailLabel" aria-hidden="true">
+        <div class="modal-dialog " role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">
+                        Editar Autor
+                    </h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <form id="author-editform" class="m-form m-form--state" asp-area="Teacher" asp-page-handler="EditAuthor" method="post" enctype="multipart/form-data">
+                    <input name="Id" hidden />
+                    <input name="PublishedChapterBookId" value="@Model.Input.Id" hidden />
+                    <div class="modal-body">
+                        <div class="form-group m-form__group">
+                            <label class="required-form-label">DNI</label>
+                            <input type="text" name="Dni" placeholder="DNI" pattern="^[0-9]*$" minlength="8" maxlength="8" class="form-control m-input" required />
+                        </div>
+                        <div class="m-form__group">
+                            <label class="required-form-label">Apellido Paterno</label>
+                            <input name="PaternalSurname" placeholder="Apellido Paterno" type="text" class="form-control m-input" required />
+                        </div>
+                        <div class="m-form__group">
+                            <label class="required-form-label">Apellido Materno</label>
+                            <input name="MaternalSurname" placeholder="Apellido Materno" type="text" class="form-control m-input" required />
+                        </div>
+                        <div class="m-form__group">
+                            <label class="required-form-label">Nombres</label>
+                            <input name="Name" placeholder="Nombres" type="text" class="form-control m-input" required />
+                        </div>
+                        <div class="m-form__group">
+                            <label class="required-form-label">Email</label>
+                            <input name="Email" placeholder="Email" type="text" class="form-control m-input" required />
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <div style="text-align:right;">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                                Cancelar
+                            </button>
+                            <button id="btnEditAuthor" type="submit" class="btn btn-primary ladda-button" data-style="slide-down">
+                                <span class="ladda-label">Guardar</span>
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <!--AQUI TERMINA EL CRUD DE AUTHOR-->
+    <!--AQUI EMPIEZA EL CRUD DE FILE-->
+    <!--CREATE Modal File-->
+    <div class="modal fade" id="fileModal" tabindex="-1000" role="dialog" aria-labelledby="detailLabel" aria-hidden="true">
+        <div class="modal-dialog " role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">
+                        Registrar un Archivo
+                    </h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <form id="file-form" class="m-form m-form--state" asp-area="Teacher" asp-page-handler="CreateFile" method="post" enctype="multipart/form-data">
+                    <input name="PublishedChapterBookId" value="@Model.Input.Id" type="hidden">
+                    <div class="modal-body">
+                        <div class="m-form__group">
+                            <label class="required-form-label">Nombre del archivo</label>
+                            <input name="Name" placeholder="Nombre del archivo" type="text" class="form-control m-input" required />
+                        </div>
+                        <div class="m-form__group">
+                            <label class="required-form-label">Archivo</label>
+                            <div class="custom-file">
+                                <input class="form-control m-input custom-file-input" name="File" type="file" accept="application/pdf, application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document" placeholder="Seleccionar archivo" required>
+                                <label class="custom-file-label selected">Seleccionar Archivo...</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <div style="text-align:right;">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                                Cancelar
+                            </button>
+                            <button id="btnSaveFile" type="submit" class="btn btn-primary ladda-button" data-style="slide-down">
+                                <span class="ladda-label">Guardar</span>
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <!--EDIT Modal File-->
+    <div class="modal fade" id="fileEditModal" tabindex="-1000" role="dialog" aria-labelledby="detailLabel" aria-hidden="true">
+        <div class="modal-dialog " role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">
+                        Editar Archivo
+                    </h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <form id="file-editform" class="m-form m-form--state" asp-area="Teacher" asp-page-handler="EditFile" method="post" enctype="multipart/form-data">
+                    <input name="Id" hidden />
+                    <input name="PublishedChapterBookId" value="@Model.Input.Id" type="hidden">
+                    <div class="modal-body">
+                        <div class="m-form__group">
+                            <label class="required-form-label">Nombre de Archivo</label>
+                            <input name="Name" placeholder="Nombre de Archivo" type="text" class="form-control m-input" required />
+                        </div>
+                        <div class="m-form__group">
+                            <label class="form-label">Archivo</label>
+                            <div class="custom-file">
+                                <input class="form-control m-input custom-file-input" name="File" type="file" accept="application/pdf, application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document" placeholder="Seleccionar archivo">
+                                <label class="custom-file-label selected">Seleccionar Archivo...</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <div style="text-align:right;">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                                Cancelar
+                            </button>
+                            <button id="btnEditFile" type="submit" class="btn btn-primary ladda-button" data-style="slide-down">
+                                <span class="ladda-label">Guardar</span>
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+@section Scripts{
+    <script src="~/js/areas/teacher/publishedchapterbook/edit.js" asp-append-version="true"></script>
+}
+

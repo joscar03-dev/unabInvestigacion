@@ -1,0 +1,359 @@
+﻿@inject AKDEMIC.CORE.Services.General.Interfaces.IConfigurationService _configurationService
+@{
+    bool allowRegistration = false;
+    _ = bool.TryParse(await _configurationService.GetValueByKey(AKDEMIC.CORE.Constants.ConfigurationConstants.TEACHERINVESTIGATION.ALLOW_REGISTRATION_REQUEST), out allowRegistration);
+}
+<style>
+    html, body {
+        font-family: "Droid Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+        font-size: 12px;
+    }
+
+    .form-control {
+        font-family: "Droid Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+        border-radius: 0;
+        border-radius: .25rem;
+    }
+
+    .m-form .m-form__group {
+        margin-bottom: 0;
+        padding-top: 5px;
+        padding-bottom: 5px;
+    }
+
+    .modal .modal-content .modal-header {
+        padding: 15px;
+    }
+
+    label {
+        display: inline-block;
+        margin-bottom: 0rem;
+    }
+
+    .table th {
+        font-weight: 600;
+    }
+
+    .m-aside-menu .m-menu__nav > .m-menu__item > .m-menu__heading .m-menu__link-text, .m-aside-menu .m-menu__nav > .m-menu__item > .m-menu__link .m-menu__link-text {
+        font-size: 1.02rem;
+        text-transform: initial;
+        font-weight: 600;
+    }
+
+    .table th, .table td {
+        padding: .5rem;
+</style>
+
+<ul class="m-menu__nav  m-menu__nav--dropdown-submenu-arrow ">
+    <li class="m-menu__item " aria-haspopup="true" is-active-route asp-page="/Index">
+        <a asp-page="/Index" class="m-menu__link ">
+            <i class="m-menu__link-icon la la-home"></i>
+            <span class="m-menu__link-text">
+                Inicio
+            </span>
+        </a>
+    </li>
+
+   
+
+    @*Modulo de Publicaciones*@
+    @if (User.IsInRole(AKDEMIC.CORE.Constants.GeneralConstants.ROLES.SUPERADMIN) ||
+    User.IsInRole(AKDEMIC.CORE.Constants.GeneralConstants.ROLES.TEACHERINVESTIGATION_ADMIN) ||
+    User.IsInRole(AKDEMIC.CORE.Constants.GeneralConstants.ROLES.PUBLICATION_UNIT))
+    {
+        <li class="m-menu__item  m-menu__item--submenu" aria-haspopup="true" m-menu-submenu-toggle="hover">
+            <a href="javascript:;" class="m-menu__link m-menu__toggle">
+                <i class="m-menu__link-icon flaticon-map"></i>
+                <span class="m-menu__link-text">
+                    Gestión de Incubadoras
+                </span>
+                <i class="m-menu__ver-arrow la la-angle-right"></i>
+            </a>
+            <div class="m-menu__submenu ">
+                <span class="m-menu__arrow"></span>
+                <ul class="m-menu__subnav">
+                    <li class="m-menu__item  m-menu__item--parent" aria-haspopup="true">
+                        <span class="m-menu__link">
+                            <span class="m-menu__link-text">
+                                Gestión de Incubadoras
+                            </span>
+                        </span>
+                    </li>
+                   
+                        <li class="m-menu__item " aria-haspopup="true" is-active-route asp-area="Evaluator" asp-page="/IncubatorPostulationPage/Index">
+                            <a asp-area="Evaluator" asp-page="/IncubatorPostulationPage/Index" asp-route-area="Evaluator" class="m-menu__link ">
+                                <i class="m-menu__link-icon flaticon-edit-1"></i>
+                                <span class="m-menu__link-text">
+                                    Postulaciones de Incubadora Evaluador externo
+                                </span>
+                            </a>
+                        </li>
+                    
+                   
+                        <li class="m-menu__item " aria-haspopup="true" is-active-route asp-area="CoordinatorMonitor" asp-page="/IncubatorConvocationPage/Index">
+                            <a asp-area="CoordinatorMonitor" asp-page="/IncubatorConvocationPage/Index" asp-route-area="CoordinatorMonitor" class="m-menu__link ">
+                                <i class="m-menu__link-icon flaticon-edit-1"></i>
+                                <span class="m-menu__link-text">
+                                    Convocatorias de Incubadora Coordinador monitor
+                                </span>
+                            </a>
+                        </li>
+                    
+                    
+                        <li class="m-menu__item " aria-haspopup="true" is-active-route asp-area="Monitor" asp-page="/IncubatorPostulationPage/Index">
+                            <a asp-area="Monitor" asp-page="/IncubatorPostulationPage/Index" asp-route-area="Monitor" class="m-menu__link ">
+                                <i class="m-menu__link-icon flaticon-edit-1"></i>
+                                <span class="m-menu__link-text">
+                                    Postulaciones de Incubadora Monitor
+                                </span>
+                            </a>
+                        </li>
+                   
+
+                    
+                        <li class="m-menu__item  m-menu__item--submenu" aria-haspopup="true" m-menu-submenu-toggle="hover">
+                            <a href="javascript:;" class="m-menu__link m-menu__toggle">
+                                <i class="m-menu__link-icon flaticon-technology"></i>
+                                <span class="m-menu__link-text">
+                                    Incubadora de Empresa Admin
+                                </span>
+                                <i class="m-menu__ver-arrow la la-angle-right"></i>
+                            </a>
+                            <div class="m-menu__submenu ">
+                                <span class="m-menu__arrow"></span>
+                                <ul class="m-menu__subnav">
+                                    <li class="m-menu__item  m-menu__item--parent" aria-haspopup="true">
+                                        <span class="m-menu__link">
+                                            <span class="m-menu__link-text">
+                                                Incubadora de Empresas Admin
+                                            </span>
+                                        </span>
+                                    </li>
+                                    <li class="m-menu__item " aria-haspopup="true" is-active-route asp-area="IncubatorUnit" asp-page="/IncubatorConvocationPage/Index">
+                                        <a asp-area="IncubatorUnit" asp-page="/IncubatorConvocationPage/Index" asp-route-area="IncubatorUnit" class="m-menu__link ">
+                                            <i class="m-menu__link-bullet m-menu__link-bullet--dot"><span></span></i>
+                                            <span class="m-menu__link-text">
+                                                Gestión de Convocatorias Admin
+                                            </span>
+                                        </a>
+                                    </li>
+                                    <li class="m-menu__item " aria-haspopup="true" is-active-route asp-area="IncubatorUnit" asp-page="/IncubatorPostulantPage/Index">
+                                        <a asp-area="IncubatorUnit" asp-page="/IncubatorPostulantPage/Index" asp-route-area="IncubatorUnit" class="m-menu__link ">
+                                            <i class="m-menu__link-bullet m-menu__link-bullet--dot"><span></span></i>
+                                            <span class="m-menu__link-text">
+                                                Postulantes Admin
+                                            </span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+
+                        </li>
+                    
+
+                        <li class="m-menu__item  m-menu__item--submenu" aria-haspopup="true" m-menu-submenu-toggle="hover">
+                            <a href="javascript:;" class="m-menu__link m-menu__toggle">
+                                <i class="m-menu__link-icon flaticon-technology"></i>
+                                <span class="m-menu__link-text">
+                                    Incubadoras de Empresas Estudiante
+                                </span>
+                                <i class="m-menu__ver-arrow la la-angle-right"></i>
+                            </a>
+                            <div class="m-menu__submenu ">
+                                <span class="m-menu__arrow"></span>
+                                <ul class="m-menu__subnav">
+                                    <li class="m-menu__item  m-menu__item--parent" aria-haspopup="true">
+                                        <span class="m-menu__link">
+                                            <span class="m-menu__link-text">
+                                                Incubadoras de Empresas Estudiante
+                                            </span>
+                                        </span>
+                                    </li>
+                                    <li class="m-menu__item " aria-haspopup="true" is-active-route asp-area="Student" asp-page="/IncubatorConvocationPage/Index">
+                                        <a asp-area="Student" asp-page="/IncubatorConvocationPage/Index" asp-route-area="Student" class="m-menu__link ">
+                                            <i class="m-menu__link-bullet m-menu__link-bullet--dot"><span></span></i>
+                                            <span class="m-menu__link-text">
+                                                Convocatorias Estudiantes
+                                            </span>
+                                        </a>
+                                    </li>
+                                    <li class="m-menu__item " aria-haspopup="true" is-active-route asp-area="Student" asp-page="/IncubatorPostulationPage/Index">
+                                        <a asp-area="Student" asp-page="/IncubatorPostulationPage/Index" asp-route-area="Student" class="m-menu__link ">
+                                            <i class="m-menu__link-bullet m-menu__link-bullet--dot"><span></span></i>
+                                            <span class="m-menu__link-text">
+                                                Mis Postulaciones Estudiantes
+                                            </span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </li>
+                    
+
+
+
+
+
+
+
+
+                </ul>
+            </div>
+        </li>
+
+       }
+
+
+   
+    @if (User.IsInRole(AKDEMIC.CORE.Constants.GeneralConstants.ROLES.EXTERNAL_EVALUATOR))
+    {
+        <li class="m-menu__item " aria-haspopup="true" is-active-route asp-area="Evaluator" asp-page="/Postulant/Index">
+            <a asp-area="Evaluator" asp-page="/Postulant/Index" asp-route-area="Evaluator" class="m-menu__link ">
+                <i class="m-menu__link-icon flaticon-edit-1"></i>
+                <span class="m-menu__link-text">
+                    Postulaciones de Investigacion
+                </span>
+            </a>
+        </li>
+        <li class="m-menu__item " aria-haspopup="true" is-active-route asp-area="Evaluator" asp-page="/IncubatorPostulationPage/Index">
+            <a asp-area="Evaluator" asp-page="/IncubatorPostulationPage/Index" asp-route-area="Evaluator" class="m-menu__link ">
+                <i class="m-menu__link-icon flaticon-edit-1"></i>
+                <span class="m-menu__link-text">
+                    Postulaciones de Incubadora
+                </span>
+            </a>
+        </li>
+    }
+
+
+    @if (User.IsInRole(AKDEMIC.CORE.Constants.GeneralConstants.ROLES.TECHNICAL_COMMITTEE))
+    {
+        <li class="m-menu__item " aria-haspopup="true" is-active-route asp-area="Committee" asp-page="/InvestigationConvocationPostulantPage/Index">
+            <a asp-area="Committee" asp-page="/InvestigationConvocationPostulantPage/Index" asp-route-area="Committee" class="m-menu__link ">
+                <i class="m-menu__link-icon flaticon-edit-1"></i>
+                <span class="m-menu__link-text">
+                    Postulaciones
+                </span>
+            </a>
+        </li>
+    }
+
+    @if (User.IsInRole(AKDEMIC.CORE.Constants.GeneralConstants.ROLES.EVALUATOR_COMMITTEE))
+    {
+        <li class="m-menu__item " aria-haspopup="true" is-active-route asp-area="EvaluatorCommittee" asp-page="/InvestigationConvocationPostulantPage/Index">
+            <a asp-area="EvaluatorCommittee" asp-page="/InvestigationConvocationPostulantPage/Index" asp-route-area="EvaluatorCommittee" class="m-menu__link ">
+                <i class="m-menu__link-icon flaticon-edit-1"></i>
+                <span class="m-menu__link-text">
+                    Postulaciones
+                </span>
+            </a>
+        </li>
+    }
+
+    @if (User.IsInRole(AKDEMIC.CORE.Constants.GeneralConstants.ROLES.INVESTIGATIONCONVOCATION_COORDINATORMONITOR))
+    {
+        <li class="m-menu__item " aria-haspopup="true" is-active-route asp-area="CoordinatorMonitor" asp-page="/InvestigationConvocationPage/Index">
+            <a asp-area="CoordinatorMonitor" asp-page="/InvestigationConvocationPage/Index" asp-route-area="CoordinatorMonitor" class="m-menu__link ">
+                <i class="m-menu__link-icon flaticon-edit-1"></i>
+                <span class="m-menu__link-text">
+                    Convocatorias de Investigación
+                </span>
+            </a>
+        </li>
+
+    }
+
+    @if (User.IsInRole(AKDEMIC.CORE.Constants.GeneralConstants.ROLES.INCUBATORCONVOCATION_COORDINATORMONITOR))
+    {
+        <li class="m-menu__item " aria-haspopup="true" is-active-route asp-area="CoordinatorMonitor" asp-page="/IncubatorConvocationPage/Index">
+            <a asp-area="CoordinatorMonitor" asp-page="/IncubatorConvocationPage/Index" asp-route-area="CoordinatorMonitor" class="m-menu__link ">
+                <i class="m-menu__link-icon flaticon-edit-1"></i>
+                <span class="m-menu__link-text">
+                    Convocatorias de Incubadora
+                </span>
+            </a>
+        </li>
+    }
+
+    @if (User.IsInRole(AKDEMIC.CORE.Constants.GeneralConstants.ROLES.INVESTIGATIONCONVOCATION_MONITOR))
+    {
+        <li class="m-menu__item " aria-haspopup="true" is-active-route asp-area="Monitor" asp-page="/InvestigationConvocationPostulantPage/Index">
+            <a asp-area="Monitor" asp-page="/InvestigationConvocationPostulantPage/Index" asp-route-area="Monitor" class="m-menu__link ">
+                <i class="m-menu__link-icon flaticon-edit-1"></i>
+                <span class="m-menu__link-text">
+                    Postulaciones de Investigación
+                </span>
+            </a>
+        </li>
+    }
+
+    @if (User.IsInRole(AKDEMIC.CORE.Constants.GeneralConstants.ROLES.INCUBATORCONVOCATION_MONITOR))
+    {
+        <li class="m-menu__item " aria-haspopup="true" is-active-route asp-area="Monitor" asp-page="/IncubatorPostulationPage/Index">
+            <a asp-area="Monitor" asp-page="/IncubatorPostulationPage/Index" asp-route-area="Monitor" class="m-menu__link ">
+                <i class="m-menu__link-icon flaticon-edit-1"></i>
+                <span class="m-menu__link-text">
+                    Postulaciones de Incubadora
+                </span>
+            </a>
+        </li>
+    }
+
+    @*Jefes de Unidades*@
+    @if (User.IsInRole(AKDEMIC.CORE.Constants.GeneralConstants.ROLES.BUSINESS_INCUBATOR_UNIT) ||
+    User.IsInRole(AKDEMIC.CORE.Constants.GeneralConstants.ROLES.PUBLICATION_UNIT) ||
+    User.IsInRole(AKDEMIC.CORE.Constants.GeneralConstants.ROLES.RESEARCH_PROMOTION_UNIT))
+    {
+
+        <li class="m-menu__item " aria-haspopup="true" is-active-route asp-area="UnitBoss" asp-page="/OperativePlanPage/Index">
+            <a asp-area="UnitBoss" asp-page="/OperativePlanPage/Index" asp-route-area="UnitBoss" class="m-menu__link ">
+                <i class="m-menu__link-icon flaticon-edit-1"></i>
+                <span class="m-menu__link-text">
+                    Plan Operativo
+                </span>
+            </a>
+        </li>
+    }
+
+
+   
+    
+    @*Modulo de Reportes*@
+    @if (User.IsInRole(AKDEMIC.CORE.Constants.GeneralConstants.ROLES.SUPERADMIN) ||
+    User.IsInRole(AKDEMIC.CORE.Constants.GeneralConstants.ROLES.TEACHERINVESTIGATION_ADMIN))
+    {
+        <li class="m-menu__item  m-menu__item--submenu" aria-haspopup="true" m-menu-submenu-toggle="hover">
+            <a href="javascript:;" class="m-menu__link m-menu__toggle">
+                <i class="m-menu__link-icon flaticon-statistics"></i>
+                <span class="m-menu__link-text">
+                    Reportes
+                </span>
+                <i class="m-menu__ver-arrow la la-angle-right"></i>
+            </a>
+            <div class="m-menu__submenu ">
+                <span class="m-menu__arrow"></span>
+                <ul class="m-menu__subnav">
+                    <li class="m-menu__item  m-menu__item--parent" aria-haspopup="true">
+                        <span class="m-menu__link">
+                            <span class="m-menu__link-text">
+                                Reportes
+                            </span>
+                        </span>
+                    </li>
+                    <li class="m-menu__item " aria-haspopup="true" is-active-route asp-area="Report" asp-page="">
+                        <a asp-area="Report" asp-page="" asp-route-area="Report" class="m-menu__link ">
+                            <i class="m-menu__link-bullet m-menu__link-bullet--dot"><span></span></i>
+                            <span class="m-menu__link-text">
+                                Publicaciones
+                            </span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+
+        </li>
+    }
+
+    
+</ul>
+

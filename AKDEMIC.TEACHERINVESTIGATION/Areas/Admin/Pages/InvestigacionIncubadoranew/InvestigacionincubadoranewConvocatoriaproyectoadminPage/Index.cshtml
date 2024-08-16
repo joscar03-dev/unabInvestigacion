@@ -1,0 +1,621 @@
+﻿@page "/InvestigacionIncubadoranew/convocatoriaproyectoadmin"
+@model AKDEMIC.TEACHERINVESTIGATION.Areas.Admin.Pages.InvestigacionIncubadoranew.InvestigacionIncubadoranewConvocatoriaproyectoadminPage.IndexModel
+@{
+    if (ViewData["tipousuario"] == "R")
+    {
+        ViewData["Title"] = "Revisión de Proyectos";
+
+    }
+    else
+    {
+        ViewData["Title"] = "Proyectos (Administrador)";
+
+    }
+    ViewBag.Breadcrumbs = new[]
+    {
+        new BreadcrumbViewData {Name="Proyectos", Url = null},
+    };
+        Layout = "~/Pages/Shared/Templates/Default/_Layoutinvestigacionincubadoranew.cshtml";
+
+}
+
+<div class="m-content">
+    <div class="m-portlet">
+        <div class="m-portlet__head">
+            <div class="m-portlet__head-caption" style="width:100%">
+                <div class="m-portlet__head-title" style="width:100%;display: block;">
+                    <h3 class="m-portlet__head-text" style="display:initial;">
+                        @ViewData["Title"]
+                        <input type="hidden" id="tipousuario" name="tipousuario" value="@ViewData["tipousuario"]" />
+
+                    </h3>
+                </div>
+            </div>
+        </div>
+        <div class="m-portlet__body">
+            <div class="m-form--label-align-right m--margin-bottom-20">
+                <div class="row align-items-center">
+                    <div class="col-xl-8 order-2 order-xl-1">
+                        <div class="row">
+                            <div class="form-group m-form__group col-xl-8">
+                                @if (ViewData["tipousuario"] == "R")
+                                {
+                                    <label>Areas</label>
+                                    <div class="m-input m-input-icon m-input-icon--left">
+
+                                        <select multiple="" name="lst_search" class="form-control input_lst_search" required>
+                                            <option value="0" disabled>Seleccionar</option>
+                                        </select>
+                                        <input type="hidden" class="form-control m-input m-input--pill m-input--solid input_search" placeholder="Buscar..." id="search" autocomplete="off">
+                                    </div>
+                                }
+                                
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-4 order-1 order-xl-2 m--align-right">
+                        @if (ViewData["tipousuario"] != "R"){
+                        <button data-toggle="modal" data-target="#addModal" class="btn btn-primary m-btn m-btn--icon">
+                            <span>
+                                <i class="la la-plus"></i>
+                                <span>Nueva Proyecto</span>
+                            </span>
+                        </button>
+                        }
+                       
+                        <div class="m-separator m-separator--dashed d-xl-none"></div>
+                    </div>
+                </div>
+            </div>
+            @Html.AntiForgeryToken()
+            <table class="table table-striped table-bordered" id="data-table"></table>
+        </div>
+    </div>
+</div>
+
+
+<!--Add Modal-->
+<div class="modal fade" id="addModal" tabindex="-1000" role="dialog" aria-labelledby="detailLabel" aria-hidden="true">
+    <div style="max-width:50%"  class="modal-dialog " role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">
+                    Agregar Proyectos
+                </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form id="add-form" class="m-form m-form--state" asp-area="Admin" asp-page-handler="Create" method="post">
+                <div class="modal-body">
+                    <div class="form-group m-form__group row">
+                        <div class="m-form__group-sub col-lg-12">
+                            <div class="">
+                                <label class="required-form-label">Convocatoría:</label>
+                                <select multiple="" name="IdConvocatoria" class="form-control input_IdConvocatoria" required>
+                                    <option value="0" disabled>Seleccionar</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group m-form__group row">
+                        <div class="m-form__group-sub col-lg-12">
+                            <div class="m-form__group">
+                                <label class="required-form-label">Nombre:</label>
+                                <input name="nombre" type="text" class="form-control m-input" placeholder="Nombre" required />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group m-form__group row">
+                        <div class="m-form__group-sub col-lg-6">
+                            <div class="">
+                                <label class="required-form-label">Linea:</label>
+                                <select multiple="" name="IdLinea" class="form-control input_IdLinea" required>
+                                    <option value="0" disabled>Seleccionar</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="m-form__group-sub col-lg-6">
+                            <div class="m-form__group">
+                                <label class="required-form-label">Presupuesto:</label>
+                                <input name="presupuesto" type="text" class="form-control m-input" placeholder="Nombre" required />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group m-form__group row">
+                        <div class="m-form__group-sub col-lg-6">
+                            <div class="m-form__group">
+                                <label class="required-form-label">Nro de Meses:</label>
+                                <input name="nromeses" type="text" class="form-control m-input" placeholder="Nro de meses" required />
+                            </div>
+                        </div>
+                       
+                    </div>
+                    <div class="form-group m-form__group row">
+                        <div class="m-form__group-sub col-lg-12">
+                            <div class="">
+                                <label>Objetivo Principal:</label>
+                                <textarea style="height: 45px;" name="objetivoprincipal" class="form-control l-input" placeholder="Objetivo Prinicipal"></textarea>
+                            </div>
+                        </div>
+                    </div>
+
+                   
+                   
+                   
+                 
+                    
+                </div>
+                <div class="modal-footer">
+                    <div style="text-align:right;">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                            Cancelar
+                        </button>
+                        <button id="btnSave" type="submit" class="btn btn-primary ladda-button" data-style="slide-down">
+                            <span class="ladda-label">Guardar</span>
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!--Edit Modal-->
+<div class="modal fade" id="editModal" tabindex="-1000" role="dialog" aria-labelledby="detailLabel" aria-hidden="true">
+    <div style="max-width:50%"  class="modal-dialog " role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">
+                    Editar Proyectos
+                </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form id="edit-form" class="m-form m-form--state" asp-area="Admin" asp-page-handler="Edit" method="post">
+                <input name="Id" hidden />
+                <div class="modal-body">
+                    <div class="form-group m-form__group row">
+                        <div class="m-form__group-sub col-lg-12">
+                            <div class="">
+                                <label class="required-form-label">Convocatoría:</label>
+                                <select multiple="" name="IdConvocatoria" class="form-control input_IdConvocatoria" required>
+                                    <option value="0" disabled>Seleccionar</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group m-form__group row">
+                        <div class="m-form__group-sub col-lg-12">
+                            <div class="m-form__group">
+                                <label class="required-form-label">Nombre:</label>
+                                <input name="nombre" type="text" class="form-control m-input" placeholder="Nombre" required />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group m-form__group row">
+                        <div class="m-form__group-sub col-lg-6">
+                            <div class="">
+                                <label class="required-form-label">Linea:</label>
+                                <select multiple="" name="IdLinea" class="form-control input_IdLinea" required>
+                                    <option value="0" disabled>Seleccionar</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="m-form__group-sub col-lg-6">
+                            <div class="m-form__group">
+                                <label class="required-form-label">Presupuesto:</label>
+                                <input name="presupuesto" type="text" class="form-control m-input" placeholder="Nombre" required />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group m-form__group row">
+                        <div class="m-form__group-sub col-lg-6">
+                            <div class="m-form__group">
+                                <label class="required-form-label">Nro de Meses:</label>
+                                <input name="nromeses" type="text" class="form-control m-input" placeholder="Nro de meses" required />
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="form-group m-form__group row">                        
+                        <div class="m-form__group-sub col-lg-12">
+                            <div class="">
+                                <label>Objetivo Principal:</label>
+                                <textarea style="height: 45px;" name="objetivoprincipal" class="form-control l-input" placeholder="Objetivo Prinicipal"></textarea>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+
+
+                </div>
+                <div class="modal-footer">
+                    <div style="text-align:right;">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                            Cancelar
+                        </button>
+                        <button id="btnEdit" type="submit" class="btn btn-primary ladda-button" data-style="slide-down">
+                            <span class="ladda-label">Guardar</span>
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!--subir crta Modal-->
+
+<div class="modal fade" id="editModalAnexo" tabindex="-1000" role="dialog" aria-labelledby="detailLabel" aria-hidden="true">
+    <div class="modal-dialog " role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">
+                    Subir Carta Presentacion (Anexo1)
+                </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form id="editanexo-form" class="m-form m-form--state" asp-area="Admin" asp-page-handler="EditFile" method="post" enctype="multipart/form-data">
+                <input name="Id" hidden />
+                <div class="modal-body">
+                    <div class="m-form__group">
+                        <label class="form-label">Archivo</label>
+                        <div class="custom-file">
+                            <input class="form-control m-input custom-file-input" name="File" type="file" accept="application/pdf, application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document" placeholder="Seleccionar archivo">
+                            <label class="custom-file-label selected">Seleccionar Archivo...</label>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <div style="text-align:right;">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                            Cancelar
+                        </button>
+                        <button id="btnEditanexo" type="submit" class="btn btn-primary ladda-button" data-style="slide-down">
+                            <span class="ladda-label">Guardar</span>
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+
+<!--Enviar observacones Modal-->
+<div class="modal fade" id="editModalObservacion" tabindex="-1000" role="dialog" aria-labelledby="detailLabel" aria-hidden="true">
+    <div style="max-width:70%" class="modal-dialog " role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">
+                    Aprobar Flujo de Proyecto
+                </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form id="editobservacion-form" class="m-form m-form--state" asp-area="Admin" asp-page-handler="EnviarRevisionproyecto" method="post" enctype="multipart/form-data">
+                <input name="Id" hidden />
+                <input name="IdProyectoflujo" hidden />
+             
+                   
+                    <input name="IdArea" hidden />
+                    <input name="Retornadocente" hidden />
+
+
+                
+
+               
+                <div class="modal-body">
+                    <table class="table table-striped table-bordered" id="data-tableobservaciones"></table>
+
+
+                    <div class="form-group m-form__group row">
+
+                        <div class="m-form__group-sub col-lg-12">
+                            <div class="">
+                                <label>Observación:</label>
+                                <textarea name="observacion" class="form-control m-input" placeholder="Observación"></textarea>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="form-group m-form__group row">
+
+                        <div class="m-form__group-sub col-lg-4">
+                            <div class="">
+                                <label class="opcion">
+                                    <input checked="checked" value="1" name="estado" type="radio" />
+                                    Aprobado
+                                </label>
+                                <label class="opcion">
+                                    <input value="0" name="estado" type="radio" />
+                                    Rechazado
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <div style="text-align:right;">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                            Cancelar
+                        </button>
+                        <button id="btnEditobservacion" type="submit" class="btn btn-primary ladda-button" data-style="slide-down">
+                            <span class="ladda-label">Guardar</span>
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+<!--Enviar anexos faltantes Modal-->
+<div class="modal fade" id="editModalAnexofaltante" tabindex="-1000" role="dialog" aria-labelledby="detailLabel" aria-hidden="true">
+    <div style="max-width:50%" class="modal-dialog " role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">
+                    Subir Anexos Faltantes
+                </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form id="editanexofaltante-form" class="m-form m-form--state" asp-area="Admin" asp-page-handler="" method="post" enctype="multipart/form-data">
+                <input name="Id" hidden />
+              
+                <div class="modal-body">
+                    <table class="table table-striped table-bordered" id="data-tableanexofaltantes"></table>
+
+
+                </div>
+                <div class="modal-footer">
+                    <div style="text-align:right;">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                            Cancelar
+                        </button>
+                        
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="addModalAnexo" tabindex="-1000" role="dialog" aria-labelledby="detailLabel" aria-hidden="true">
+    <div class="modal-dialog " role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">
+                    Subir Anexos
+                </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form id="addanexo-form" class="m-form m-form--state" asp-area="Admin" asp-page-handler="EnviarAnexofaltante" method="post" enctype="multipart/form-data">
+                <input name="Id" hidden />
+                <div class="modal-body">
+                    <div class="m-form__group">
+                        <label class="form-label">Archivo</label>
+                        <div class="custom-file">
+                            <input class="form-control m-input custom-file-input" name="File" type="file" accept="application/pdf, application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document" placeholder="Seleccionar archivo">
+                            <label class="custom-file-label selected">Seleccionar Archivo...</label>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <div style="text-align:right;">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                            Cancelar
+                        </button>
+                        <button id="btnAddanexo" type="submit" class="btn btn-primary ladda-button" data-style="slide-down">
+                            <span class="ladda-label">Guardar</span>
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<!--Enviar actividades-->
+<div class="modal fade" id="editModalActividad" tabindex="-1000" role="dialog" aria-labelledby="detailLabel" aria-hidden="true">
+    <div style="max-width:50%" class="modal-dialog " role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">
+                    Lista Actividades
+                </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="m-portlet__body">
+                <div class="m-form--label-align-right m--margin-bottom-20">
+                    <div class="row align-items-center">
+                        <div class="col-xl-8 order-2 order-xl-1">
+                            <div class="row">
+                                <div class="form-group m-form__group col-xl-8">
+                                  
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xl-4 order-1 order-xl-2 m--align-right">
+
+                            <button type="button" data-toggle="modal" data-target="#newModalCronograma" class="btn btn-primary m-btn m-btn--icon">
+                                    <span>
+                                        <i class="la la-plus"></i>
+                                        <span>Nueva Actividad</span>
+                                    </span>
+                                </button>
+                          
+
+                            <div class="m-separator m-separator--dashed d-xl-none"></div>
+                        </div>
+                    </div>
+                </div>
+                @Html.AntiForgeryToken()
+            </div>
+            <form id="editactividad-form" class="m-form m-form--state" asp-area="Admin" asp-page-handler="" method="post" enctype="multipart/form-data">
+                <input name="Id" hidden />
+
+                <div class="modal-body" style="overflow-y:auto;height:400px">
+                    <table class="table table-striped table-bordered" id="data-tableactividades"></table>
+
+
+                </div>
+                <div class="modal-footer">
+                    <div style="text-align:right;">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                            Cancelar
+                        </button>
+
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="addModalActividad" tabindex="-1000" role="dialog" aria-labelledby="detailLabel" aria-hidden="true">
+    <div class="modal-dialog " role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">
+                    Cumplimiento de  Actividad
+                </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form id="addactividad-form" class="m-form m-form--state" asp-area="Admin" asp-page-handler="EnviarActividad" method="post" enctype="multipart/form-data">
+                <input name="Id" hidden />
+                <div class="modal-body" >
+                    <div class="m-form__group">
+                        <div class="m-form__group">
+                            <label class="required-form-label">Título:</label>
+                            <input name="titulo" type="text" class="form-control m-input" placeholder="Título" required />
+                        </div>
+                    </div>
+                    <div class="m-form__group">
+                        <label class="form-label">Archivo</label>
+                        <div class="custom-file">
+                            <input class="form-control m-input custom-file-input" name="File" type="file" accept="application/pdf, application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document" placeholder="Seleccionar archivo">
+                            <label class="custom-file-label selected">Seleccionar Archivo...</label>
+                        </div>
+                    </div>
+                    <div class="m-form__group">
+                        <label class="form-label">Terminado</label>
+                        <input style="width:30px"  class="form-control m-input" value="1" name="estado" type="checkbox" placeholder="Terminado" />
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <div style="text-align:right;">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                            Cancelar
+                        </button>
+                        <button id="btnActividad" type="submit" class="btn btn-primary ladda-button" data-style="slide-down">
+                            <span class="ladda-label">Guardar</span>
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<!--Enviar cronograma-->
+<div class="modal fade" id="newModalCronograma" tabindex="-1000" role="dialog" aria-labelledby="detailLabel" aria-hidden="true">
+    <div style="max-width:50%" class="modal-dialog " role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">
+                    Cronograma de Actividades
+                </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+          
+            <form id="newcronograma-form" class="m-form m-form--state" asp-area="Admin" asp-page-handler="NewActividad" method="post" enctype="multipart/form-data">
+               
+                <input name="IdConvocatoriaproyecto" hidden />
+
+                <div class="modal-body" >
+                    <div class="m-form__group">
+                        <div class="m-form__group">
+                            <label class="required-form-label">Título:</label>
+                            <input name="titulo" type="text" class="form-control m-input" placeholder="Título" required />
+                        </div>
+                    </div>
+                  
+                </div>
+                <div class="modal-footer">
+                    <div style="text-align:right;">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                            Cancelar
+                        </button>
+                        <button id="btnNewcronograma" type="submit" class="btn btn-primary ladda-button" data-style="slide-down">
+                            <span class="ladda-label">Guardar</span>
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="editModalCronograma" tabindex="-1000" role="dialog" aria-labelledby="detailLabel" aria-hidden="true">
+    <div style="max-width:50%" class="modal-dialog " role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">
+                    Cronograma de Actividades
+                </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+              
+            <form id="editcronograma-form" class="m-form m-form--state" asp-area="Admin" asp-page-handler="NewCronograma" method="post" enctype="multipart/form-data">
+                <input name="Id" hidden />
+                <div class="modal-body" >
+                   
+                    <div class="">
+                        <label class="required-form-label">Mes del Cronograma:</label>
+                        <select multiple="" name="IdConvocatoriaproyectocronograma" class="form-control input_IdConvocatoriaproyectocronograma" required>
+                            <option value="0" disabled>Seleccionar</option>
+                        </select>
+                    </div>
+                    <table class="table table-striped table-bordered" id="data-tablecronogramas"></table>
+
+
+                </div>
+                <div class="modal-footer">
+                    <div style="text-align:right;">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                            Cancelar
+                        </button>
+                        <button id="btnEditcronograma" type="submit" class="btn btn-primary ladda-button" data-style="slide-down">
+                            <span class="ladda-label">Guardar</span>
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+@section Scripts{
+    <script src="~/js/areas/admin/investigacionincubadoranew/investigacionincubadoranewconvocatoriaproyectoadmin/index.js" asp-append-version="true"></script>
+}

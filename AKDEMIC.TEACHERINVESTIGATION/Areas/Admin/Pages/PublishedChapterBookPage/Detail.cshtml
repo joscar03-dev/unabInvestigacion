@@ -1,0 +1,158 @@
+﻿@page "/admin/capitulos-libros-publicados/{publishedChapterBookId:Guid}/detalle"
+@model AKDEMIC.TEACHERINVESTIGATION.Areas.Admin.Pages.PublishedChapterBookPage.DetailModel
+
+@{
+    ViewBag.Breadcrumbs = new[]
+    {
+        new BreadcrumbViewData {Name="Capitulos de Libros Publicados", Url = "/admin/capitulos-libros-publicados"},
+        new BreadcrumbViewData {Name="Detalle", Url = null},
+    };
+}
+
+
+
+<div class="m-content">
+    <div class="m-portlet">
+        <div class="m-portlet__head">
+            <div class="m-portlet__head-caption">
+                <div class="m-portlet__head-title">
+                    <h3 class="m-portlet__head-text">
+                        Datos del Capítulo del Libro publicado
+                    </h3>
+                </div>
+            </div>
+        </div>
+        <input asp-for="Input.Id" hidden />
+        <div class="m-portlet__body">
+            <div class="m-form__content">
+                <div class="m-alert m-alert--icon alert alert-danger m--hide" role="alert" id="m-form_alert">
+                    <div class="m-alert__icon">
+                        <i class="la la-warning"></i>
+                    </div>
+                    <div id="alert-text" class="m-alert__text">
+                        @ViewBag.ErrorMessage
+                    </div>
+                    <div class="m-alert__close">
+                        <button type="button" class="close" data-close="alert" aria-label="Close"></button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group m-form__group row">
+                <div class="m-form__group-sub col-lg-6">
+                    <label class="required-form-label">Creador</label>
+                    <input asp-for="Input.UserFullName" class="form-control m-input" autocomplete="off" disabled />
+                </div>
+                <div class="m-form__group-sub col-lg-6">
+                    <label class="required-form-label">Usuario</label>
+                    <input asp-for="Input.UserName" class="form-control m-input" autocomplete="off" disabled />
+                </div>
+            </div>
+
+            <div class="form-group m-form__group row">
+                <div class="m-form__group-sub col-lg-6">
+                    <label class="required-form-label">Título del Libro</label>
+                    <input asp-for="Input.BookTitle" class="form-control m-input" autocomplete="off" disabled />
+                </div>
+                <div class="m-form__group-sub col-lg-6">
+                    <label class="required-form-label">Título del capítulo</label>
+                    <input asp-for="Input.BookTitle" class="form-control m-input" autocomplete="off" disabled />
+                </div>
+            </div>
+
+            <div class="form-group m-form__group row">
+                <div class="m-form__group-sub col-lg-6">
+                    <label class="required-form-label">Editorial</label>
+                    <input asp-for="Input.PublishingHouse" class="form-control m-input" autocomplete="off" disabled />
+                </div>
+                <div class="m-form__group-sub col-lg-6">
+                    <label class="required-form-label">Ciudad de edición</label>
+                    <input asp-for="Input.PublishingCity" class="form-control m-input" autocomplete="off" disabled />
+                </div>
+            </div>
+            <div class="form-group m-form__group row">
+                <div class="m-form__group-sub col-lg-6">
+                    <label class="required-form-label">Año de edición</label>
+                    <input asp-for="Input.PublishingYear" class="form-control m-input" autocomplete="off" disabled />
+                </div>
+                <div class="m-form__group-sub col-lg-6">
+                    <label class="required-form-label">ISBN</label>
+                    <input asp-for="Input.ISBN" class="form-control m-input" autocomplete="off" disabled />
+                </div>
+            </div>
+            <div class="form-group m-form__group row">
+                <div class="m-form__group-sub col-lg-6">
+                    <label class="required-form-label">Página de Inicio</label>
+                    <input asp-for="Input.StartPage" class="form-control m-input" autocomplete="off" disabled />
+                </div>
+                <div class="m-form__group-sub col-lg-6">
+                    <label class="required-form-label">Página de Fin</label>
+                    <input asp-for="Input.EndPage" class="form-control m-input" autocomplete="off" disabled />
+                </div>
+            </div>
+
+            <div class="form-group m-form__group row">
+                <div class="m-form__group-sub col-lg-6">
+                    <label class="required-form-label">Autor principal</label>
+                    <input asp-for="Input.MainAuthor" class="form-control m-input" autocomplete="off" disabled />
+                </div>
+                <div class="m-form__group-sub col-lg-6">
+                    <label class="required-form-label">DOI</label>
+                    <input asp-for="Input.DOI" class="form-control m-input" autocomplete="off" disabled />
+                </div>
+            </div>
+
+            <div class="form-group m-form__group row">
+                <div class="m-form__group-sub col-lg-12">
+                    <label class="required-form-label">URL</label>
+                    <input asp-for="Input.Url" class="form-control m-input" autocomplete="off" disabled />
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <!--AQUI EMPIEZA EL TAB PANEL-->
+    <div class="m-portlet m-portlet--tabs">
+        <div class="m-portlet__head">
+            <div class="m-portlet__head-tools">
+                <ul class="nav nav-fill m-tabs-line m-tabs-line--primary m-tabs-line--2x" role="tablist">
+                    <li class="nav-item m-tabs__item">
+                        <a class="nav-link m-tabs__link active" href="#tab_1" data-toggle="tab" role="tab">
+                            <i class="la la-info-circle"></i>
+                            Autores
+                        </a>
+                    </li>
+                    <li class="nav-item m-tabs__item">
+                        <a class="nav-link m-tabs__link" href="#tab_2" data-toggle="tab" role="tab">
+                            <i class="fa fa-file"></i>
+                            Archivos
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="m-portlet__body">
+            <div class="tab-content">
+                <div class="tab-pane active" id="tab_1" role="tabpanel">
+                    <div class="m-portlet__body m-portlet__body--no-padding">
+                        <table class="table table-striped table-bordered" id="author-datatable"></table>
+                    </div>
+                </div>
+                <div class="tab-pane" id="tab_2" role="tabpanel">
+                    <div class="m-portlet__body m-portlet__body--no-padding">
+
+                        <table class="table table-striped table-bordered" id="file-datatable"></table>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <!--AQUI TERMINA EL TAB PANEL-->
+</div>
+
+
+@section Scripts{
+    <script src="~/js/areas/admin/publishedchapterbook/detail.js" asp-append-version="true"></script>
+}
+

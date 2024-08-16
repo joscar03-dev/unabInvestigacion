@@ -1,0 +1,309 @@
+﻿@model AKDEMIC.TEACHERINVESTIGATION.Areas.Admin.ViewModels.InvestigacionFomento.InvestigacionfomentoPdfCartapresentacionViewModels.InvestigacionfomentoPdfCartapresentacionRptViewModel
+
+@{
+    Layout = null;
+    var fecha = DateTime.Now.ToString("yyyy-MM-dd");
+    var dia = DateTime.Now.ToString("dd");
+    var anio = DateTime.Now.ToString("yyyy");
+    var mes = DateTime.Now.ToString("MM");
+    var mescompleto = "";
+    if (mes == "01")
+    {
+        mescompleto = "Enero";
+    }
+    if (mes == "02")
+    {
+        mescompleto = "Febrero";
+    }
+    if (mes == "03")
+    {
+        mescompleto = "Marzo";
+    }
+    if (mes == "04")
+    {
+        mescompleto = "Abril";
+    }
+    if (mes == "05")
+    {
+        mescompleto = "Mayo";
+    }
+    if (mes == "06")
+    {
+        mescompleto = "Junio";
+    }
+    if (mes == "07")
+    {
+        mescompleto = "Julio";
+    }
+    if (mes == "08")
+    {
+        mescompleto = "Agosto";
+    }
+    if (mes == "09")
+    {
+        mescompleto = "Septiembre";
+    }
+    if (mes == "10")
+    {
+        mescompleto = "Octubre";
+    }
+    if (mes == "11")
+    {
+        mescompleto = "Noviembre";
+    }
+    if (mes == "12")
+    {
+        mescompleto = "Diciembre";
+    }
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        body:after {
+            font-size: 15em;
+            color: rgba(52, 166, 214, 0.4);
+            opacity: 0.2;
+            filter: alpha(opacity=25);
+            z-index: 9999;
+            align-items: center;
+            justify-content: center;
+            position: absolute;
+            top: 300px;
+            right: 0;
+            bottom: 0;
+            left: 250px;
+            -webkit-pointer-events: none;
+            -moz-pointer-events: none;
+            -ms-pointer-events: none;
+            -o-pointer-events: none;
+            pointer-events: none;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            -o-user-select: none;
+            user-select: none;
+            transform: translate(10px);
+        }
+
+        table.minimalistBlack {
+            width: 100%;
+            text-align: center;
+            border-collapse: collapse;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+            table.minimalistBlack td, table.minimalistBlack th {
+                border: 1px solid #000000;
+                padding: 5px 4px;
+                font-family: Arial, Helvetica, sans-serif;
+            }
+
+            table.minimalistBlack thead {
+            }
+
+                table.minimalistBlack thead th {
+                    font-size: 15px;
+                    font-weight: bold;
+                    color: #000000;
+                    text-align: center;
+                    font-family: Arial, Helvetica, sans-serif;
+                }
+
+            table.minimalistBlack tfoot td {
+                font-size: 14px;
+            }
+
+        .created-font {
+            font-family: Arial;
+            font-size: 13px;
+            letter-spacing: -0.8px;
+            word-spacing: 0.8px;
+            color: #000000;
+            /*font-weight: 700;*/
+            text-decoration: none;
+            font-style: italic;
+            font-variant: normal;
+            /*text-transform: uppercase*/;
+        }
+
+        .footer {
+            left: 0;
+            bottom: 0;
+            width: 100%;
+            text-align: center;
+        }
+
+        .sign-name-span {
+            border-top: 1px solid #000000;
+            color: #000000;
+            width: 95%;
+            display: block;
+            margin: auto;
+            padding: 2px 0;
+            text-align: center;
+            margin-left: auto;
+        }
+
+        .sign-name-title {
+            font-family: Georgia, serif;
+            font-size: 17px;
+            letter-spacing: -0.8px;
+            word-spacing: 0.8px;
+            font-weight: 700;
+            text-decoration: none;
+            font-variant: normal;
+            font-size: 25px;
+            text-align: center;
+        }
+
+        .sign-name-subtitle {
+            font-family: Georgia, serif;
+            font-size: 14px;
+            letter-spacing: -0.8px;
+            word-spacing: 0.8px;
+            color: #000000;
+            font-weight: 700;
+            /*text-decoration: underline;*/
+            font-style: italic;
+            font-variant: normal;
+            text-transform: uppercase;
+            font-size: 16px;
+        }
+    </style>
+</head>
+<body>
+    <div>
+        <img style="width:100px; float: left;" src="@Model.ImageLogoPath" />
+        <p class="sign-name-title" style="text-transform: uppercase">
+            @AKDEMIC.CORE.Constants.GeneralConstants.GetInstitutionName()
+        </p>
+    </div>
+
+    <div style="text-align:center;">
+        <p class="sign-name-subtitle">
+            CARTA DE PRESENTACIÓN DE LA PROPUESTA DE INVESTIGACIÓN
+        </p>
+    </div>
+
+    <table style="padding-top: 20px;">
+        <tr class="created-font" style="page-break-inside:avoid">
+            <td width="15%"></td>
+            <td></td>
+            <td width="5%"></td>
+            <td width="80%" style="text-align:right; font-weight: 200; text-transform: initial;">
+                BARRANCA, @dia de @mescompleto de @anio
+            </td>
+        </tr>
+    </table>
+    <br />
+    <br />
+    <br />
+    <br />
+    <table style="padding-top: 20px;">
+        
+        <tr class="created-font" style="page-break-inside:avoid">
+            <td width="35%">Señor (a) Doctor (a):</td>
+            <td></td>
+            <td width="5%"></td>
+            <td width="50%" style="text-align:justify;  text-transform: initial;">
+            </td>
+        </tr>
+        <tr class="created-font" style="page-break-inside:avoid">
+            <td>Velasquez Castillo Nilo Albert</td>
+            <td></td>
+            <td width="5%"></td>
+            <td width="40%" style="text-align:justify;  text-transform: initial;">
+            </td>
+        </tr>
+        <tr class="created-font" style="page-break-inside:avoid">
+            <td><hr /></td>
+            <td></td>
+            <td width="5%"></td>
+            <td width="40%" style="text-align:justify;  text-transform: initial;">
+            </td>
+        </tr>
+        <tr class="created-font" style="page-break-inside:avoid">
+            <td>Vicepresidente(a) de Investigación <br />
+                Universidad Nacional de Barranca<br />
+                UNAB<br /><br /><br />
+                Presente.-
+                <br /><br /><br />
+                De mi mayor consideración
+            </td>
+            <td></td>
+            <td width="5%"></td>
+            <td width="40%" style="text-align:justify;  text-transform: initial;">
+            </td>
+        </tr>
+    </table>
+    <br />
+    <br />
+    <table style="padding-top: 20px">
+
+        <tr class="created-font" style="page-break-inside:avoid">
+            <td width="95%" style=" text-align: justify;  text-transform: none;">
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                Me dirijo a usted para saludarlo y presentarle, en mi condición de responsable del proyecto, 
+                la propuesta de investigación <b>@Model.nombreproyecto</b>, para su consideración en la Convocatoria <b>@anio</b> para Estudios de Investigación, e Innovación y Transferencia Tecnológica con Financiamiento Interno en la UNAB; la cual pertenece a la Línea de investigación <b>@Model.nombrelinea</b>.
+            </td>
+        </tr>
+
+    </table>
+    <br />
+    <table style="padding-top: 20px">
+
+        <tr class="created-font" style="page-break-inside:avoid">
+            <td width="95%" style=" text-align: justify;  text-transform: none;">
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                El proyecto tiene por objetivo principal <b>@Model.objetivoprincipal</b>. El presupuesto solicitado es de S/ <b>@Model.presupuesto</b> soles. Asimismo, declaro que la propuesta cumple con los requisitos y las normas establecidas en el Reglamento para Estudios de Investigación, e Innovación y Transferencia Tecnológica con Financiamiento Interno en la UNAB.
+            </td>
+        </tr>
+
+    </table>
+    <br />
+    <br />
+    <table style="padding-top: 20px;">
+        <tr class="created-font" style="page-break-inside:avoid">
+            <td width="15%"></td>
+            <td></td>
+            <td width="5%"></td>
+            <td width="80%" style=" text-transform: initial;">
+                Atentamente,
+            </td>
+        </tr>
+    </table>
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <table style="width:100%;padding-top: 20px;" >
+        <tr class="created-font" style="page-break-inside:avoid">
+            <td width="27%">&nbsp;</td>
+            <td></td>
+            <td width="27%">&nbsp;</td>
+        </tr>
+        <tr class="created-font" style="text-align:center; page-break-inside:avoid">
+            <td width="27%"></td>
+            <td><hr style=" background-color:#000000"  /></td>
+            <td width="27%"></td>
+        </tr>
+        <tr class="created-font" style="text-align:center;page-break-inside:avoid">
+            <td width="27%"></td>
+            <td>@Model.FullName</td>
+            <td width="27%"></td>
+        </tr>
+    </table>
+
+
+
+ 
+
+</body>
+</html>

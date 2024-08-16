@@ -1,0 +1,389 @@
+﻿@model AKDEMIC.TEACHERINVESTIGATION.Areas.Teacher.ViewModels.InvestigationConvocationPostulantViewModels.InvestigationConvocationPostulantPdfViewModel
+@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8">
+    <style>
+
+        .p-br {
+            page-break-after: always;
+        }
+
+        body {
+            text-align: center;
+        }
+
+        .sm-margin {
+            margin-top: 8px;
+        }
+
+        .md-margin {
+            margin-top: 16px;
+        }
+
+        .lg-margin {
+            margin-top: 24px;
+        }
+
+        .xl-margin {
+            margin-top: 32px;
+        }
+
+        .xxl-margin {
+            margin-top: 74px;
+        }
+
+        .unk-header {
+            width: 100%;
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .teacherInfo {
+            width: 100%;
+            margin-bottom: 50px;
+        }
+
+        .firstTeacherInfo {
+            width: 45%;
+            display: inline-block;
+        }
+
+        .truelabel {
+            width: 250px;
+            display: inline-block;
+        }
+
+        .truelabel2 {
+            width: 110px;
+            display: inline-block;
+        }
+
+        .truelabel3 {
+            width: 250px;
+            display: inline-block;
+        }
+
+        .secondTeacherInfo {
+            width: 54%;
+            display: inline-block;
+        }
+
+        .table-container {
+            width: 100%;
+            margin-bottom: 60px;
+        }
+
+        table {
+            border-collapse: collapse;
+            font-weight: normal;
+        }
+
+        table, th, td {
+            font-weight: normal;
+            text-align: justify;
+        }
+
+            table tr {
+                page-break-inside: avoid;
+            }
+
+        .border {
+            border: 1px solid black;
+        }
+
+        span {
+            font-weight: normal;
+        }
+
+        .negrita {
+            font-weight: bold;
+        }
+
+        .report-header .logo-container {
+            display: inline-block;
+            text-align: center;
+        }
+
+            .report-header .logo-container img {
+                top: 0;
+                left: 0;
+                height: 150px;
+                width: 100px;
+                text-align: center;
+            }
+
+            .report-header .logo-container .title {
+                font-size: 11px;
+                font-style: italic;
+            }
+
+        .un {
+            text-decoration: underline;
+            text-underline-offset: 19px;
+        }
+
+        .center {
+            margin-left: auto;
+            margin-right: auto;
+        }
+    </style>
+</head>
+<body>
+    <div class="p-br">
+        <div>
+            <h3>
+                @Model.InstitutionName
+            </h3>
+        </div>
+        <div>
+            <h3>
+                VICEPRESIDENCIA DE INVESTIGACIÓN
+            </h3>
+        </div>
+        <div>
+            <h3>
+                DIRECCIÓN GENERAL DEL INSTITUTO DE INVESTIGACIÓN
+            </h3>
+        </div>
+        <div align="center" class="report-header">
+            <div class="logo-container">
+                <img src="@Model.ImageLogoPath" />
+            </div>
+        </div>
+        <div>
+            <h3>
+                PROYECTO DE INVESTIGACIÓN
+            </h3>
+        </div>
+        <div>
+            <h3>
+                "@Model.ProjectTitle"
+            </h3>
+        </div>
+        <div>
+            <h3>
+                COORDINADOR:
+            </h3>
+        </div>
+        <div>
+            <h3>
+                @Model.UserFullName
+            </h3>
+        </div>
+        <div>
+            <h3>
+                MIEMBROS:
+            </h3>
+
+            @if (Model.UserPdfViewModel.Count == 0)
+            {
+                <h3>
+                    El equipo no cuenta con miembros
+                </h3>
+            }
+            else
+            {
+                @foreach (var m in Model.UserPdfViewModel)
+                {
+                    <h3>
+                        @m.UserFullName
+                    </h3>
+                }
+            }
+
+        </div>
+
+        <div>
+            <h3>
+                @Model.InstitutionLocation - Perú
+            </h3>
+        </div>
+
+        <div>
+            <h3>
+                @DateTime.Now.Year
+            </h3>
+        </div>
+    </div>
+    <div class="p-br">
+        <div>
+            ESTRUCTURA DEL PROYECTO DE INVESTIGACIÓN
+        </div>
+        <div>
+            <table style="width: 100%; border: 1px solid black;">
+                <tr>
+                    <th style="border: 1px solid black;" colspan="8">I. INFORMACIÓN GENERAL</th>
+                </tr>
+                <tr>
+                    <td style="border: 1px solid black;" colspan="8">1.1. Título del proyecto: @Model.ProjectTitle </td>
+                <tr />
+                <tr>
+                    <td style="border: 1px solid black;" colspan="8">1.2. Responsable del proyecto: @Model.UserFullName</td>
+                <tr />
+                <tr>
+                    <td style="border: 1px solid black;" colspan="8">1.3. Tipo de investigación: @Model.InvestigationType</td>
+                </tr>
+                <tr>
+                    <td style="border: 1px solid black;" colspan="8">
+                        1.4. Programa y línea de investigación: @Model.ResearchLineConcat
+
+                    </td>
+                </tr>
+                <tr>
+                    <td style="border: 1px solid black;" colspan="8">
+                        1.5. Tiempo de ejecución: @Model.TotalYears años @Model.TotalMonths meses y @Model.RemainingDays dias
+                    </td>
+                </tr>
+                <tr>
+                    <td style="border: 1px solid black;" colspan="8">1.6. Localización del proyecto: @Model.MainLocation</td>
+                </tr>
+                <tr>
+                    <td style="border: 1px solid black;" colspan="8">1.7. Presupuesto solicitado: @Model.Budget</td>
+                </tr>
+                <tr>
+                    <td style="border: 1px solid black;" colspan="8">II.	INFORMACIÓN DEL EQUIPO DE INVESTIGACIÓN </td>
+                </tr>
+                <tr>
+                    <td style="text-align: center; border: 1px solid black;">N°</td>
+                    <td style="text-align: center; border: 1px solid black;">NOMBRES Y APELLIDOS</td>
+                    <td style="text-align: center; border: 1px solid black;">DNI</td>
+                    <td style="text-align: center; border: 1px solid black;">ESPECIALIDAD</td>
+                    <td style="text-align: center; border: 1px solid black;">GRADO ACADÉMICO</td>
+                    <td style="text-align: center; border: 1px solid black;">ENTIDAD A LA QUE PERTENECE</td>
+                    <td style="text-align: center; border: 1px solid black;">CARGO QUE DESEMPEÑA</td>
+                    <td style="text-align: center; border: 1px solid black;">FUNCIÓN EN EL PROYECTO</td>
+                </tr>
+                @for (int i = 0; i < Model.UserPdfViewModel.Count; i++)
+                {
+                    <tr>
+                        <td style="text-align: center; border: 1px solid black;">@(i+1)</td>
+                        <td style="text-align: center; border: 1px solid black;">@Model.UserPdfViewModel[i].UserFullName</td>
+                        <td style="text-align: center; border: 1px solid black;">@Model.UserPdfViewModel[i].Dni</td>
+                        <td style="text-align: center; border: 1px solid black;">@Model.UserPdfViewModel[i].Speciality</td>
+                        <td style="text-align: center; border: 1px solid black;">@Model.UserPdfViewModel[i].AcademicDegree</td>
+                        <td style="text-align: center; border: 1px solid black;">Universidad Nacional de Barranca</td>
+                        <td style="text-align: center; border: 1px solid black;">Docente</td>
+                        <td style="text-align: center; border: 1px solid black;">@Model.UserPdfViewModel[i].MainFunction</td>
+                    </tr>
+                }
+
+                <tr>
+                    <td style="border: 1px solid black;" colspan="8">III. RESUMEN DEL PROYECTO</td>
+                </tr>
+                <tr style="height:100px;">
+                    <td style="border: 1px solid black;" colspan="8">@Model.ProblemDescription</td>
+                </tr>
+                <tr>
+                    <td style="border: 1px solid black;" colspan="8">III. RESUMEN DEL PROYECTO</td>
+                </tr>
+                <tr style="height:100px;">
+                    <td style="border: 1px solid black;" colspan="8">@Model.ProblemDescription</td>
+                </tr>
+                <tr>
+                    <td style="border: 1px solid black;" colspan="8">IV.	ANTECEDENTES Y/O ESTADO DE ARTE</td>
+                </tr>
+                <tr style="height:100px;">
+                    <td style="border: 1px solid black;" colspan="8">@Model.ProblemRecord</td>
+                </tr>
+                <tr>
+                    <td style="border: 1px solid black;" colspan="8">V.	PLANEAMIENTO DEL PROBLEMA</td>
+                </tr>
+                <tr style="height:100px;">
+                    <td style="border: 1px solid black;" colspan="8">@Model.ProblemFormulation</td>
+                </tr>
+                <tr>
+                    <td style="border: 1px solid black;" colspan="8">VI.	JUSTIFICACIÓN</td>
+                </tr>
+                <tr style="height:100px;">
+                    <td style="border: 1px solid black;" colspan="8">@Model.Justification</td>
+                </tr>
+                <tr>
+                    <td style="border: 1px solid black;" colspan="8">VII. HIPÓTESIS Y VARIABLES</td>
+                </tr>
+                <tr style="height:100px;">
+                    <td style="border: 1px solid black;" colspan="8">
+                        <p>@Model.Hypothesis</p>
+                        <p>@Model.Variable</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="border: 1px solid black;" colspan="8">VIII.	OBJETIVOS</td>
+                </tr>
+                <tr style="height:100px;">
+                    <td style="border: 1px solid black;" colspan="8">@Model.SpecificGoal</td>
+                </tr>
+                <tr>
+                    <td style="border: 1px solid black;" colspan="8">IX.	METODOLOGÍA</td>
+                </tr>
+                <tr style="height:100px;">
+                    <td style="border: 1px solid black;" colspan="8">@Model.MethodologyDescription</td>
+                </tr>
+                <tr>
+                    <td style="border: 1px solid black;" colspan="8">X. CONSIDERACIONES ÉTICAS:</td>
+                </tr>
+                <tr style="height:100px;">
+                    <td style="border: 1px solid black;" colspan="8">@Model.EthicalConsiderations</td>
+                </tr>
+                <tr>
+                    <td style="border: 1px solid black;" colspan="8">XI.	RESULTADOS ESPERADOS:</td>
+                </tr>
+                <tr style="height:100px;">
+                    <td style="border: 1px solid black;" colspan="8">@Model.ExpectedResults</td>
+                </tr>
+                <tr>
+                    <td style="border: 1px solid black;" colspan="8">XII. REFERENCIAS BIBLIOGRÁFICAS:</td>
+                </tr>
+                <tr style="height:100px;">
+                    <td style="border: 1px solid black;" colspan="8">@Model.BibliographicReferences</td>
+                </tr>
+            </table>
+        </div>
+    </div>
+    <div>
+        <div>
+            <span style="font-size: 20px; font-weight: bold; margin-bottom: 0; padding-bottom: 0;">EQUIPO DE INVESTIGACIÓN</span>
+            <hr style="width: 280px; margin-top: 0.5px; border-color: black;" />
+        </div>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <div>
+            <hr style="width: 280px; margin-top: 0.5px; border-color: black;" />
+            <span style="font-size: 20px; font-weight: bold; margin-bottom: 0; padding-bottom: 0;">@Model.UserFullName</span>
+            <br>
+            <span style="font-size: 20px; font-weight: bold; margin-bottom: 0; padding-bottom: 0;">@Model.UserDni</span>
+        </div>
+        <div>
+            @if (Model.UserPdfViewModel.Count != 0)
+            {
+                foreach (var users in Model.UserPdfViewModel.Where(x=>x.UserName != Model.UserName))
+                {
+                    <table style="height: 200px; width: 50%; float: left;">
+                        <tr>
+                            <td style="text-align: center;">
+                                <table>
+                                    <tr>
+                                        <td style="text-align: center; height:150px; width: 40%">
+                                            <hr style="width: 280px; margin-top: 0.5px; border-color: black;" />
+                                            <span style="font-size: 20px; font-weight: bold; margin-bottom: 0; padding-bottom: 0;">@users.UserFullName</span>
+                                            <br>
+                                            <span style="font-size: 20px; font-weight: bold; margin-bottom: 0; padding-bottom: 0;">@users.Dni</span>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+                    </table>
+                }
+            }
+        </div>
+    </div>
+</body>
+</html>

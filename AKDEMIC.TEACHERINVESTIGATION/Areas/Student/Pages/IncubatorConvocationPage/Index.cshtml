@@ -1,0 +1,32 @@
+﻿@page "/alumno/convocatoria-emprendimiento"
+@model AKDEMIC.TEACHERINVESTIGATION.Areas.Student.Pages.IncubatorConvocationPage.IndexModel
+@{
+    ViewBag.Breadcrumbs = new[]
+        {
+new BreadcrumbViewData {Name="Convocatorias de emprendimiento", Url= null},
+    };
+}
+
+
+<div class="m-content">
+    <div class="m-portlet " id="m_portlet">
+        <div class="m-portlet__head">
+            <div class="m-portlet__head-caption mx-auto">
+                <div class="m-portlet__head-title">
+                    <h3>
+                        Convocatoria de Incubadora de Empresa
+                    </h3>
+                </div>
+            </div>
+        </div>
+        <div class="m-portlet__body" style="padding:0">
+            <div id="convocations"></div>
+        </div>
+    </div>
+</div>
+
+
+@section Scripts
+    {
+    <script src="~/js/areas/student/incubatorconvocation/index.js" asp-append-version="true"></script>
+}

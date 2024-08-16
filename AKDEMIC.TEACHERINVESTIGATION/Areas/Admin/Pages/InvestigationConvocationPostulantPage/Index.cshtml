@@ -1,0 +1,87 @@
+﻿@page "/admin/postulaciones"
+@model AKDEMIC.TEACHERINVESTIGATION.Areas.Admin.Pages.InvestigationConvocationPostulantPage.IndexModel
+@{
+    ViewBag.Breadcrumbs = new[] {
+new BreadcrumbViewData {Name="Postulaciones", Url = null},
+};
+}
+
+<!--<input type="hidden" id="InvestigationConvocationId" value="0" />-->
+<div class="m-content">
+    <div class="m-portlet">
+        <div class="m-portlet__head">
+            <div class="m-portlet__head-caption" style="width:100%">
+                <div class="m-portlet__head-title" style="width:100%;display: block;">
+                    <h3 class="m-portlet__head-text" style="display:initial;">
+                        Lista de Postulaciones:
+                    </h3>
+                </div>
+            </div>
+        </div>
+        <div class="m-portlet__body">
+            <div class="m-form--label-align-right m--margin-bottom-20">
+                <div class="row align-items-center">
+                    <div class="col-xl-12 order-2 order-xl-1">
+                        <div class="row">
+                            <div class="form-group m-form__group col-xl-4">
+                                <label class="form-control-label">Facultad</label>
+                                <select id="Faculties" class="form-control">
+                                    <option value="0" selected>Todos</option>
+                                </select>
+                            </div>
+                            <div class="form-group m-form__group col-xl-4">
+                                <label class="form-control-label">Estado de Avance</label>
+                                <select id="Progress" class="form-control">
+                                    <option value="-1" selected>Todos</option>
+                                </select>
+                            </div>
+                            <div class="form-group m-form__group col-xl-4">
+                                <label class="form-control-label">Estado de Revisión</label>
+                                <select id="Reviews" class="form-control">
+                                    <option value="-1" selected>Todos</option>
+                                </select>
+                            </div>
+
+
+                            <div class="form-group m-form__group col-xl-4">
+                                <label class="form-control-label">Fecha de Inicio</label>
+                                <div class="input-group">
+                                    <input id="StartDate" class="form-control datepicker-input" />
+                                    <div class="input-group-append">
+                                        <span class="input-group-text"><i class="la la-calendar"></i></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group m-form__group col-xl-4">
+                                <label class="form-control-label">Fecha de Fin</label>
+                                <div class="input-group">
+                                    <input id="EndDate" class="form-control datepicker-input" />
+                                    <div class="input-group-append">
+                                        <span class="input-group-text"><i class="la la-calendar"></i></span>
+                                    </div>
+                                </div>
+                            </div>  
+                            <div class="form-group m-form__group col-xl-4">
+                                <label>&emsp;</label>
+                                <div class="m-input m-input-icon m-input-icon--left">
+                                    <input type="text" class="form-control m-input m-input--pill m-input--solid" placeholder="Buscar Convocatoria o Código..." id="search">
+                                    <span class="m-input-icon__icon m-input-icon__icon--left">
+                                        <span><i class="la la-search"></i></span>
+                                    </span>
+                                </div>
+                            </div>
+
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <table class="table table-striped table-bordered" id="data-table"></table>
+        </div>
+    </div>
+</div>
+
+
+@section Scripts{
+    <script src="~/js/areas/admin/investigationconvocationpostulant/index.js" asp-append-version="true"></script>
+}

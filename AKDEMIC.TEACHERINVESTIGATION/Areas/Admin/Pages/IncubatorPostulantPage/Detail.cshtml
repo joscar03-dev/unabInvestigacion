@@ -1,0 +1,367 @@
+﻿@page "/admin/postulantes-convocatorias-incubadoras/{incubatorPostulantId:Guid}/detalle"
+@model AKDEMIC.TEACHERINVESTIGATION.Areas.Admin.Pages.IncubatorPostulantPage.DetailModel
+@{
+    ViewBag.Breadcrumbs = new[]
+    {
+new BreadcrumbViewData {Name="Lista de Postulantes", Url= "/admin/postulantes-convocatorias-incubadoras"},
+new BreadcrumbViewData {Name="Detalle", Url = null},
+    };
+}
+
+<input id="IncubatorPostulantId" value="@Model.Input.Id" hidden />
+
+<div class="m-content">
+    <div class="m-portlet m-portlet--tabs">
+        <div class="m-portlet__head">
+            <div class="m-portlet__head-tools">
+                <ul class="nav nav-fill m-tabs-line m-tabs-line--primary m-tabs-line--2x" role="tablist">
+                    <li class="nav-item m-tabs__item">
+                        <a class="nav-link m-tabs__link active" href="#tab_1" data-toggle="tab" role="tab">
+                            <i class="la la-info-circle"></i>
+                            Información General
+                        </a>
+                    </li>
+                    <li class="nav-item m-tabs__item">
+                        <a class="nav-link m-tabs__link" href="#tab_2" data-toggle="tab" role="tab">
+                            <i class="fa fa-users"></i>
+                            Equipo de Investigación
+                        </a>
+                    </li>
+                    <li class="nav-item m-tabs__item">
+                        <a class="nav-link m-tabs__link" href="#tab_3" data-toggle="tab" role="tab">
+                            <i class="fa fa-file"></i>
+                            Idea de Negocio
+                        </a>
+                    </li>
+                    <li class="nav-item m-tabs__item">
+                        <a class="nav-link m-tabs__link" href="#tab_4" data-toggle="tab" role="tab">
+                            <i class="fa fa-users"></i>
+                            Plan de Negocios
+                        </a>
+                    </li>
+                    <li class="nav-item m-tabs__item">
+                        <a class="nav-link m-tabs__link" id="schedule_tab" href="#tab_5" data-toggle="tab" role="tab">
+                            <i class="fa fa-file"></i>
+                            Cronograma y Presupuesto
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="m-portlet__body">
+            <div class="tab-content">
+                <div class="tab-pane active" id="tab_1" role="tabpanel">
+                    <div id="general-information-form">
+                        <div class="m-portlet__body m-portlet__body--no-padding">
+                            <div class="form-group m-form__group row">
+                                <div class="m-form__group-sub col-lg-6">
+                                    <label class="form-control-label">Código de Convocatoria</label>
+                                    <input name="IncubatorConvocationCode" type="text" class="form-control m-input" autocomplete="off" disabled />
+                                </div>
+                                <div class="m-form__group-sub col-lg-6">
+                                    <label class="form-control-label">Nombre de Convocatoria</label>
+                                    <input name="IncubatorConvocationName" type="text" class="form-control m-input" autocomplete="off" disabled />
+                                </div>
+                            </div>
+                            <div class="form-group m-form__group row">
+                                <div class="m-form__group-sub col-lg-12">
+                                    <label class="required-form-label">Título del Proyecto</label>
+                                    <input name="Title" type="text" class="form-control m-input" autocomplete="off" disabled />
+                                </div>
+                            </div>
+                            <div class="form-group m-form__group row">
+                                <div class="m-form__group-sub col-lg-6">
+                                    <label class="required-form-label">Duración del Proyecto en meses</label>
+                                    <input name="MonthDuration" type="number" class="form-control m-input" autocomplete="off" disabled />
+                                </div>
+                                <div class="m-form__group-sub col-lg-6">
+                                    <label class="required-form-label">Presupuesto Solicitado</label>
+                                    <input name="Budget" type="number" class="form-control m-input" autocomplete="off" disabled />
+                                </div>
+                            </div>
+                            <div class="form-group m-form__group row">
+                                <div class="m-form__group-sub col-lg-6">
+                                    <label class="required-form-label">Objetivos Generales</label>
+                                    <textarea name="GeneralGoals" class="form-control m-input" rows="4" disabled></textarea>
+                                </div>
+                                <div class="m-form__group-sub col-lg-6">
+                                    <label class="required-form-label">Departamento</label>
+                                    <input name="DepartmentText" class="form-control m-input" autocomplete="off" disabled />
+                                </div>
+                            </div>
+                            <div class="form-group m-form__group row">
+
+                                <div class="m-form__group-sub col-lg-6">
+                                    <label class="required-form-label">Provincia</label>
+                                    <input name="ProvinceText" class="form-control m-input" autocomplete="off" disabled />
+                                </div>
+
+                                <div class="m-form__group-sub col-lg-6">
+                                    <label class="required-form-label">Distrito</label>
+                                    <input name="DistrictText" class="form-control m-input" autocomplete="off" disabled />
+                                </div>
+                            </div>
+                        </div>
+                        <br />
+                        <h5>Lista de  Objetivos Especificos o Componentes</h5>
+                        <table class="table table-striped table-bordered" id="specificGoals-datatable"></table>
+                    </div>
+                </div>
+                <div class="tab-pane" id="tab_2" role="tabpanel">
+                    <div id="investigation-team-form">
+                        <div class="m-portlet__body m-portlet__body--no-padding">
+                            <h5>Docente Asesor</h5>
+                            <div class="form-group m-form__group row">
+                                <div class="m-form__group-sub col-lg-12">
+                                    <label class="form-control-label">Nombre Completo</label>
+                                    <input name="AdviserFullName" type="text" class="form-control m-input" autocomplete="off" disabled />
+                                </div>
+                            </div>
+                            <div class="form-group m-form__group row">
+                                <div class="m-form__group-sub col-lg-6">
+                                    <label class="form-control-label">Dni</label>
+                                    <input name="AdviserDni" type="text" class="form-control m-input" autocomplete="off" disabled />
+                                </div>
+                                <div class="m-form__group-sub col-lg-6">
+                                    <label class="form-control-label">Departamento Académico</label>
+                                    <input name="AdviserAcademicDepartment" type="text" class="form-control m-input" autocomplete="off" disabled />
+                                </div>
+                            </div>
+                            <div class="form-group m-form__group row">
+                                <div class="m-form__group-sub col-lg-6">
+                                    <label class="form-control-label">Categoría</label>
+                                    <input name="AdviserCategory" type="text" class="form-control m-input" autocomplete="off" disabled />
+                                </div>
+                                <div class="m-form__group-sub col-lg-6">
+                                    <label class="form-control-label">Dedicación</label>
+                                    <input name="AdviserDedication" type="text" class="form-control m-input" autocomplete="off" disabled />
+                                </div>
+                            </div>
+                            <hr />
+                            <h5>Docente Co-Asesor</h5>
+                            <div class="form-group m-form__group row">
+                                <div class="m-form__group-sub col-lg-12">
+                                    <label class="form-control-label">Nombre Completo</label>
+                                    <input name="CoAdviserFullName" type="text" class="form-control m-input" autocomplete="off" disabled />
+                                </div>
+                            </div>
+                            <div class="form-group m-form__group row">
+                                <div class="m-form__group-sub col-lg-6">
+                                    <label class="form-control-label">Dni</label>
+                                    <input name="CoAdviserDni" type="text" class="form-control m-input" autocomplete="off" disabled />
+                                </div>
+                                <div class="m-form__group-sub col-lg-6">
+                                    <label class="form-control-label">Departamento Académico</label>
+                                    <input name="CoAdviserAcademicDepartment" type="text" class="form-control m-input" autocomplete="off" disabled />
+                                </div>
+                            </div>
+                            <div class="form-group m-form__group row">
+                                <div class="m-form__group-sub col-lg-6">
+                                    <label class="form-control-label">Categoría</label>
+                                    <input name="CoAdviserCategory" type="text" class="form-control m-input" autocomplete="off" disabled />
+                                </div>
+                                <div class="m-form__group-sub col-lg-6">
+                                    <label class="form-control-label">Dedicación</label>
+                                    <input name="CoAdviserDedication" type="text" class="form-control m-input" autocomplete="off" disabled />
+                                </div>
+                            </div>
+                        </div>
+                        <br />
+                        <hr />
+                        <br />
+                        <h5>Equipo de trabajo</h5>
+                        <table class="table table-striped table-bordered" id="teamMember-datatable"></table>
+                    </div>
+                </div>
+                <div class="tab-pane" id="tab_3" role="tabpanel">
+                    <div id="business-idea-form">
+                        <div class="m-portlet__body m-portlet__body--no-padding">
+                            <div class="form-group m-form__group row">
+                                <div class="m-form__group-sub col-lg-6">
+                                    <label class="form-control-label">Descripción de idea de negocio</label>
+                                    <div class="input-group" style="flex-wrap:initial">
+                                        <textarea rows="5" name="BusinessIdeaDescription" class="form-control m-input" disabled></textarea>
+                                    </div>
+
+                                </div>
+                                <div class="m-form__group-sub col-lg-6">
+                                    <label class="form-control-label">Ventajas Competitivas</label>
+                                    <div class="input-group" style="flex-wrap:initial">
+                                        <textarea rows="5" name="CompetitiveAdvantages" class="form-control m-input" disabled></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group m-form__group row">
+                                <div class="m-form__group-sub col-lg-6">
+                                    <label class="required-form-label">Estudio de mercado</label>
+                                    <div class="input-group" style="flex-wrap:initial">
+                                        <textarea rows="5" name="MarketStudy" class="form-control m-input" disabled></textarea>
+                                    </div>
+                                </div>
+                                <div class="m-form__group-sub col-lg-6">
+                                    <label class="required-form-label">Plan de marketing</label>
+                                    <div class="input-group" style="flex-wrap:initial">
+                                        <textarea rows="5" name="MarketingPlan" class="form-control m-input" disabled></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group m-form__group row">
+                                <div class="m-form__group-sub col-lg-6">
+                                    <label class="required-form-label">Recursos</label>
+                                    <div class="input-group" style="flex-wrap:initial">
+                                        <textarea rows="5" name="Resources" class="form-control m-input" disabled></textarea>
+                                    </div>
+                                </div>
+                                <div class="m-form__group-sub col-lg-6">
+                                    <label class="required-form-label">Potenciales Socios Estrateguicos</label>
+                                    <div class="input-group" style="flex-wrap:initial">
+                                        <textarea rows="5" name="PotentialStrategicPartners" class="form-control m-input" disabled></textarea>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="tab-pane" id="tab_4" role="tabpanel">
+                    <div id="business-plan-form">
+                        <div class="m-portlet__body m-portlet__body--no-padding">
+                            <div class="form-group m-form__group row">
+                                <div class="m-form__group-sub col-lg-6">
+                                    <label class="form-control-label">Misión y objetivos estratégicos</label>
+                                    <div class="input-group" style="flex-wrap:initial">
+                                        <textarea rows="5" name="Mission" class="form-control m-input" disabled></textarea>
+                                    </div>
+
+                                </div>
+                                <div class="m-form__group-sub col-lg-6">
+                                    <label class="form-control-label">Descripción del producto o servicio</label>
+                                    <div class="input-group" style="flex-wrap:initial">
+                                        <textarea rows="5" name="ProductDescription" class="form-control m-input" disabled></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group m-form__group row">
+                                <div class="m-form__group-sub col-lg-6">
+                                    <label class="required-form-label">Estudio de viabilidad técnica</label>
+                                    <div class="input-group" style="flex-wrap:initial">
+                                        <textarea rows="5" name="TechnicalViability" class="form-control m-input" disabled></textarea>
+                                    </div>
+                                </div>
+                                <div class="m-form__group-sub col-lg-6">
+                                    <label class="required-form-label">Estudio de viabilidad económica y financiera</label>
+                                    <div class="input-group" style="flex-wrap:initial">
+                                        <textarea rows="5" name="EconomicViability" class="form-control m-input" disabled></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group m-form__group row">
+                                <div class="m-form__group-sub col-lg-6">
+                                    <label class="required-form-label">Plan de comercialización</label>
+                                    <div class="input-group" style="flex-wrap:initial">
+                                        <textarea rows="5" name="MerchandisingPlan" class="form-control m-input" disabled></textarea>
+                                    </div>
+                                </div>
+                                <div class="m-form__group-sub col-lg-6">
+                                    <label class="required-form-label">Determinación del Punto de Equilibrio</label>
+                                    <div class="input-group" style="flex-wrap:initial">
+                                        <textarea rows="5" name="Breakeven" class="form-control m-input" disabled></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group m-form__group row">
+                                <div class="m-form__group-sub col-lg-6">
+                                    <label class="required-form-label">Nivel de afectación</label>
+                                    <div class="input-group" style="flex-wrap:initial">
+                                        <textarea rows="5" name="AffectationLevel" class="form-control m-input" disabled></textarea>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="tab-pane" id="tab_5" role="tabpanel">
+                    <div class="m-portlet__body m-portlet__body--no-padding">
+                        <div id="scheduleContainer">
+                        </div>
+                        <br />
+                        <h5>Equipos y Bienes</h5>
+                        <table class="table table-striped table-bordered" id="equipmentExpense-datatable"></table>
+                        <div class="row justify-content-end">
+                            <div class="col-lg-3 col-md-6 col-sm-6 col-xs-6 text-right col-form-label font-weight-bold"> MONTO TOTAL: </div>
+                            <input disabled id="equipmentExpense-totalAmount" value="S/. 0.00" class="form-control text-right col-lg-2 col-md-4 col-sm-4 col-xs-4" />
+                        </div>
+                        <br />
+                        @*Aqui termina el dt de equipos y bienes*@
+                        <br />
+                        <h5>Insumos y materiales (Bibliográficos, software y otros)</h5>
+                        <table class="table table-striped table-bordered" id="suppliesExpense-datatable"></table>
+                        <div class="row justify-content-end">
+                            <div class="col-lg-3 col-md-6 col-sm-6 col-xs-6 text-right col-form-label font-weight-bold"> MONTO TOTAL: </div>
+                            <input disabled id="suppliesExpense-totalAmount" value="S/. 0.00" class="form-control text-right col-lg-2 col-md-4 col-sm-4 col-xs-4" />
+                        </div>
+                        <br />
+                        @*Aqui termina el dt de insumos y materiales*@
+                        <br />
+                        <h5>Servicios de Terceros</h5>
+                        <table class="table table-striped table-bordered" id="thirdPartyServiceExpense-datatable"></table>
+                        <div class="row justify-content-end">
+                            <div class="col-lg-3 col-md-6 col-sm-6 col-xs-6 text-right col-form-label font-weight-bold"> MONTO TOTAL: </div>
+                            <input disabled id="thirdPartyServiceExpense-totalAmount" value="S/. 0.00" class="form-control text-right col-lg-2 col-md-4 col-sm-4 col-xs-4" />
+                        </div>
+                        <br />
+                        @*Aqui termina el dt de servicios de terceros*@
+                        <br />
+                        <h5>Gastos Varios</h5>
+                        <table class="table table-striped table-bordered" id="otherExpense-datatable"></table>
+                        <div class="row justify-content-end">
+                            <div class="col-lg-3 col-md-6 col-sm-6 col-xs-6 text-right col-form-label font-weight-bold"> MONTO TOTAL: </div>
+                            <input disabled id="otherExpense-totalAmount" value="S/. 0.00" class="form-control text-right col-lg-2 col-md-4 col-sm-4 col-xs-4" />
+                        </div>
+                        <br />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+    <div class="m-portlet">
+        <div class="m-portlet__head">
+            <div class="m-portlet__head-caption" style="width:100%">
+                <div class="m-portlet__head-title" style="width:100%;display: block;">
+                    <h3 class="m-portlet__head-text" style="display:initial;">
+                        Anexos
+                    </h3>
+                </div>
+            </div>
+        </div>
+        <div class="m-portlet__body">
+            <div class="m-form--label-align-right m--margin-bottom-20">
+                <div class="row align-items-center">
+                    <div class="col-xl-8 order-2 order-xl-1">
+                        <div class="row">
+                            <div class="form-group m-form__group col-xl-4">
+                                <div class="m-input m-input-icon m-input-icon--left">
+                                    <input type="text" class="form-control m-input m-input--pill m-input--solid" placeholder="Buscar..." id="search">
+                                    <span class="m-input-icon__icon m-input-icon__icon--left">
+                                        <span><i class="la la-search"></i></span>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <table class="table table-striped table-bordered" id="annex-table"></table>
+        </div>
+    </div>
+
+</div>
+
+@section Scripts{
+    <script src="~/js/areas/admin/incubatorpostulant/detail.js" asp-append-version="true"></script>
+}

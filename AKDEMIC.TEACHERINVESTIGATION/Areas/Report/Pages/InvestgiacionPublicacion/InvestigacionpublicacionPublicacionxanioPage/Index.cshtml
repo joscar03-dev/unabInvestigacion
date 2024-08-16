@@ -1,0 +1,80 @@
+﻿@page "/reporte/investigacionpublicacion/publicacionxanio"
+@model AKDEMIC.TEACHERINVESTIGATION.Areas.Report.Pages.InvestgiacionPublicacion.InvestigacionpublicacionPublicacionxanioPage.IndexModel
+@{
+
+    ViewData["Title"] = "Reporte de Publicaciones x Año";
+    ViewData["Breadcrumbs"] = new[] {
+new BreadcrumbViewData { Name = "Reporte de Publicaciones x Año" , Url = null }
+};
+    Layout = "~/Pages/Shared/Templates/Default/_Layoutinvestigacionpublicacion.cshtml";
+
+}
+<style>
+    text-right{
+        text-align:right;
+    }
+</style>
+<div class="m-content">
+    <div class="m-portlet">
+        <div class="m-portlet__head">
+            <div class="m-portlet__head-caption">
+                <div class="m-portlet__head-title">
+                    <h3 class="m-portlet__head-text">
+                        @ViewData["Title"]
+                    </h3>
+                </div>
+            </div>
+        </div>
+        <div class="m-portlet__body">
+
+
+
+
+            <div class="form-group m-form__group row" style="display:">
+
+
+                <div class="m-form__group-sub col-lg-4">
+
+                    <div class="m-form__group">
+                        <label id="algo" class="required-form-label">Años</label>
+                        <select id="lst_anio" name="lst_anio" class="form-control input_lst_anio" required>
+                            <option value="0" disabled>Seleccionar</option>
+                            @{
+                                var anio = DateTime.Now.Year.ToString();
+                                for (var i = int.Parse(anio); i >= 2020; i--)
+                                {
+
+                                    <option value="@i">@i</option>
+                                };
+                            }
+                        </select>
+                        <input type="hidden" class="form-control m-input m-input--pill m-input--solid input_search" placeholder="Buscar..." id="searchconvocatoria" autocomplete="off">
+
+                    </div>
+                </div>
+            </div>
+
+
+
+
+            <br />
+            <table class="table table-striped table-bordered" id="data-table"></table>
+        </div>
+    </div>
+</div>
+
+@*BKLID-018
+InvestigationConvocation
+StartDate
+EndDate
+Lista de Convocatorias en base a un rango de fechas
+Campos a mostrar : Codigo , Nombre , Total de Postulaciones (InvestigationConvocationPostulant) , Total de Proyectos Aprobados (InvestigationProject)
+
+*@
+
+
+
+@section Scripts {
+    <script src="~/js/lib/jquery.fileDownload/jquery.fileDownload.min.js"></script>
+    <script src="~/js/areas/report/investigacionpublicacion/investigacionpublicacionpublicacionxanio/index.js" asp-append-version="true"></script>
+}

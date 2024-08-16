@@ -1,0 +1,105 @@
+﻿@model AKDEMIC.TEACHERINVESTIGATION.Areas.Teacher.ViewModels.InvestigationConvocationViewModels.ExpectedResultViewModel
+
+<input name="InvestigationConvocationPostulantId" value="@Model.InvestigationConvocationPostulantId" hidden />
+
+<div class="m-form__heading">
+    <h3 class="m-form__heading-title">5. Resultados Esperados:</h3>
+</div>
+<div class="m-form__section m-form__section--first">
+    @if (!Model.ExpectedResultsHidden)
+    {
+        <div class="form-group m-form__group row">
+            <div class="col-lg-12 m-form__group-sub">
+                <label class="form-control-label">Resultados Esperados</label>
+                <div class="input-group" style="flex-wrap:initial">
+                    <textarea rows="5" asp-for="ExpectedResults" class="form-control m-input"></textarea>
+                    <div class="input-group-append">
+                        <span class="input-group-text requirement_weight" data-weight="@Model.ExpectedResultsWeight">@Model.ExpectedResultsWeight %</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+    @if (!Model.ThesisDevelopmentHidden)
+    {
+        <div class="form-group m-form__group row">
+            <div class="col-lg-12 m-form__group-sub">
+                <label class="form-control-label">Desarrollo de tesis para titulación</label>
+                <div class="input-group" style="flex-wrap:initial">
+                    <textarea rows="5" asp-for="ThesisDevelopment" class="form-control m-input"></textarea>
+                    <div class="input-group-append">
+                        <span class="input-group-text requirement_weight" data-weight="@Model.ThesisDevelopmentWeight">@Model.ThesisDevelopmentWeight %</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+
+    @if (!Model.PublishedArticleHidden)
+    {
+        <div class="form-group m-form__group row">
+            <div class="col-lg-12 m-form__group-sub">
+                <label class="form-control-label">Artículos publicados</label>
+                <div class="input-group" style="flex-wrap:initial">
+                    <textarea rows="5" asp-for="PublishedArticle" class="form-control m-input"></textarea>
+                    <div class="input-group-append">
+                        <span class="input-group-text requirement_weight" data-weight="@Model.PublishedArticleWeight">@Model.PublishedArticleWeight %</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+    @if (!Model.BroadcastArticleHidden)
+    {
+        <div class="form-group m-form__group row">
+            <div class="col-lg-12 m-form__group-sub">
+                <label class="form-control-label">Difusión en congreso nacional</label>
+                <div class="input-group" style="flex-wrap:initial">
+                    <textarea rows="5" asp-for="BroadcastArticle" class="form-control m-input"></textarea>
+                    <div class="input-group-append">
+                       
+                        <span class="input-group-text requirement_weight" data-weight="@Model.BroadcastArticleWeight">@Model.BroadcastArticleWeight %</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+
+    @if (!Model.ProcessDevelopmentHidden)
+    {
+        <div class="form-group m-form__group row">
+            <div class="col-lg-12 m-form__group-sub">
+                <label class="form-control-label">Desarrollo de un proceso o prototipo</label>
+                <div class="input-group" style="flex-wrap:initial">
+                    <textarea rows="5" asp-for="ProcessDevelopment" class="form-control m-input"></textarea>
+                    <div class="input-group-append">
+                        <span class="input-group-text requirement_weight" data-weight="@Model.ProcessDevelopmentWeight">@Model.ProcessDevelopmentWeight %</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+    @if (!Model.BibliographicReferencesHidden)
+    {
+        <div class="form-group m-form__group row">
+            <div class="col-lg-12 m-form__group-sub">
+                <label class="form-control-label">Referencías Bibliográficas</label>
+                <div class="input-group" style="flex-wrap:initial">
+                    <textarea rows="5" asp-for="BibliographicReferences" class="form-control m-input"></textarea>
+                    <div class="input-group-append">
+                        <span class="input-group-text requirement_weight" data-weight="@Model.BibliographicReferencesWeight">@Model.BibliographicReferencesWeight %</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+
+<script type="text/javascript" asp-append-version="true">
+    $(function () {
+        if ($("#Input_ProjectState").val() == 3 || $("#Input_ProjectState").val() == 2) {
+            $(":input").prop("disabled", true);
+            $(":button").prop("disabled", true);
+        }
+    })
+</script>

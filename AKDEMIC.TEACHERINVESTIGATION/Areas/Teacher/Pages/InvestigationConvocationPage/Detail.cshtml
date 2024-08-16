@@ -1,0 +1,274 @@
+﻿@page "/investigador/convocatoria/{investigationConvocationPostulantId:Guid}/detalle"
+@model AKDEMIC.TEACHERINVESTIGATION.Areas.Teacher.Pages.InvestigationConvocationPage.DetailModel
+@{
+    ViewBag.Breadcrumbs = new[]
+    {
+        new BreadcrumbViewData { Name = "Mis Postulaciones", Url = "/investigador/convocatoria" },
+        new BreadcrumbViewData { Name = "Detalle", Url = null }
+    };
+
+}
+
+<input type="hidden" id="InvestigationConvocationPostulantId" value="@Model.InvestigationConvocationPostulantId" />
+<input type="hidden" asp-for="InvestigationConvocationId" />
+<div class="m-content">
+    <div class="m-portlet">
+        <div class="m-portlet__head">
+            <div class="m-portlet__head-caption">
+                <div class="m-portlet__head-title">
+                    <h3 class="m-portlet__head-text">
+                        Detalle de la Convocatoria
+                    </h3>
+                </div>
+            </div>
+
+            <div class="m-portlet__head-tools">
+               <a asp-area="Teacher" asp-page="/InvestigationConvocationPage/Inscription" asp-route-investigationConvocationPostulantId="@Model.InvestigationConvocationPostulantId"  class="ml-1 btn btn-primary m-btn--icon">
+                   <span >
+                       <i class="la la-wrench"></i>
+                       <span>Formulario de Inscripcion</span>
+                   </span>
+               </a>
+            </div>
+        </div>
+        <div class="m-portlet__body">
+            <div class="row">
+                <div class="form-group m-form__group col-lg-6">
+                    <label class="form-control-label">Código</label>
+                    <input asp-for="InvestigationConvocationCode" class="form-control m-input" disabled />
+                </div>
+                <div class="form-group m-form__group col-lg-6">
+                    <label class="form-control-label">Nombre</label>
+                    <input asp-for="InvestigationConvocationName" class="form-control m-input" disabled />
+
+                </div>
+            </div>
+
+            <div class=" row">
+                <div class="form-group m-form__group col-lg-6">
+                    <label class="form-control-label">Fecha de Inicio</label>
+                    <div class="input-group">
+                        <input asp-for="InvestigationConvocationStartDate" class="form-control datepicker-input" disabled />
+                        <div class="input-group-append">
+                            <span class="input-group-text"><i class="la la-calendar"></i></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group m-form__group col-lg-6">
+                    <label class="form-control-label">Fecha de Fin</label>
+                    <div class="input-group">
+                        <input asp-for="InvestigationConvocationEndDate" class="form-control datepicker-input" disabled />
+                        <div class="input-group-append">
+                            <span class="input-group-text"><i class="la la-calendar"></i></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class=" row">
+                <div class="form-group m-form__group col-lg-4">
+                    <label class="form-control-label">Estado</label>
+                    <input asp-for="InvestigationConvocationState" class="form-control m-input" disabled />
+                </div>
+                <div class="form-group m-form__group col-lg-4">
+                    <label class="form-control-label">Puntaje Mínimo</label>
+                    <input asp-for="InvestigationConvocationMinScore" class="form-control m-input" disabled />
+                </div>
+                <div class="form-group m-form__group col-lg-4">
+                    <label class="form-control-label">¿Permite Consultas?</label>
+                    <div class="m-input-icon m-input-icon--right m--padding-left-25">
+                        <input asp-for="InvestigationConvocationAllowInquiries" type="checkbox" disabled />
+                    </div>
+                </div>
+            </div>
+            @if (Model.InvestigationConvocationAllowInquiries)
+            {
+                <div class=" row">
+                    <div class="form-group m-form__group col-lg-6">
+                        <label class="form-control-label">Fecha de Inicio de Consultas</label>
+                        <div class="input-group">
+                            <input asp-for="InvestigationConvocationInquiryStartDate" class="form-control datepicker-input" disabled />
+                            <div class="input-group-append">
+                                <span class="input-group-text"><i class="la la-calendar"></i></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group m-form__group col-lg-6">
+                        <label class="form-control-label">Fecha de Fin de Consultas</label>
+                        <div class="input-group">
+                            <input asp-for="InvestigationConvocationInquiryEndDate" class="form-control datepicker-input" disabled />
+                            <div class="input-group-append">
+                                <span class="input-group-text"><i class="la la-calendar"></i></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+
+    <div class="m-portlet">
+        <div class="m-portlet__head">
+            <div class="m-portlet__head-caption" style="width:100%">
+                <div class="m-portlet__head-title" style="width:100%;display: block;">
+                    <h3 class="m-portlet__head-text" style="display:initial;">
+                        Mis Archivos del proceso de convocatoria
+                    </h3>
+                </div>
+            </div>
+        </div>
+        <div class="m-portlet__body">
+            <div class="m-form--label-align-right m--margin-bottom-20">
+                <div class="row align-items-center">
+                    <div class="col-xl-8 order-2 order-xl-1">
+                        <div class="row">
+                            <div class="form-group m-form__group col-xl-4">
+                                <div class="m-input m-input-icon m-input-icon--left">
+                                    <input type="text" class="form-control m-input m-input--pill m-input--solid" placeholder="Buscar..." id="search">
+                                    <span class="m-input-icon__icon m-input-icon__icon--left">
+                                        <span><i class="la la-search"></i></span>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <table class="table table-striped table-bordered" id="data-table"></table>
+        </div>
+    </div>
+
+
+    @if (Model.InvestigationConvocationAllowInquiries)
+    {
+        <div class="m-portlet">
+            <div class="m-portlet__head">
+                <div class="m-portlet__head-caption" style="width:100%">
+                    <div class="m-portlet__head-title" style="width:100%;display: block;">
+                        <h3 class="m-portlet__head-text" style="display:initial;">
+                            Mis consultas del proceso de convocatoria
+                        </h3>
+                    </div>
+                </div>
+            </div>
+            <div class="m-portlet__body">
+                <div class="m-form--label-align-right m--margin-bottom-20">
+                    <div class="row align-items-center">
+                        <div class="col-xl-8 order-2 order-xl-1">
+                            <div class="row">
+                                <div class="form-group m-form__group col-xl-4">
+                                    <div class="m-input m-input-icon m-input-icon--left">
+                                        <input type="text" class="form-control m-input m-input--pill m-input--solid" placeholder="Buscar..." id="search">
+                                        <span class="m-input-icon__icon m-input-icon__icon--left">
+                                            <span><i class="la la-search"></i></span>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xl-4 order-1 order-xl-2 m--align-right">
+                            <button id="AddBtn" class="btn btn-primary m-btn m-btn--icon">
+                                <span>
+                                    <i class="la la-plus"></i>
+                                    <span>Nuevo Consulta</span>
+                                </span>
+                            </button>
+                            <div class="m-separator m-separator--dashed d-xl-none"></div>
+                        </div>
+                    </div>
+                </div>
+                <table class="table table-striped table-bordered" id="data-table-inquiries"></table>
+            </div>
+        </div>
+    }
+</div>
+
+
+<!--Add Modal-->
+<div class="modal fade" id="addModal" tabindex="-1000" role="dialog" aria-labelledby="detailLabel" aria-hidden="true">
+    <div class="modal-dialog " role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">
+                    Realizar Consulta
+                </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form id="add-form" class="m-form m-form--state" asp-area="Teacher" asp-page-handler="CreateFileAdvance" method="post" enctype="multipart/form-data">
+                <div class="modal-body">
+                    
+                    <div class="m-form__group">
+                        <label class="required-form-label">Ingrese la Consulta:</label>
+                        <textarea name="Inquiry" type="text" class="form-control m-input" placeholder="Ingrese la Consulta" required ></textarea>
+                    </div>
+                    <div class="m-form__group">
+                        <label class="required-form-label">Archivo</label>
+                        <div class="custom-file">
+                            <input class="form-control m-input custom-file-input" name="File" type="file" accept="application/pdf, application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document" placeholder="Seleccionar archivo">
+                            <label class="custom-file-label selected">Seleccionar Archivo...</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <div style="text-align:right;">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                            Cancelar
+                        </button>
+                        <button id="btnSave" type="submit" class="btn btn-primary ladda-button" data-style="slide-down">
+                            <span class="ladda-label">Enviar</span>
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!--Edit Modal-->
+<div class="modal fade" id="editModal" tabindex="-1000" role="dialog" aria-labelledby="detailLabel" aria-hidden="true">
+    <div class="modal-dialog " role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">
+                    Editar Consulta
+                </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form id="edit-form" class="m-form m-form--state" asp-area="Teacher" asp-page-handler="EditFileInquiry" method="post" enctype="multipart/form-data">
+                <input name="InvestigationConvocationFileInquiryId" hidden />
+                <div class="modal-body">
+                    
+                    <div class="m-form__group">
+                        <label class="required-form-label">Ingrese la Consulta:</label>
+                        <textarea name="Inquiry" type="text" class="form-control m-input" placeholder="Ingrese la Consulta" required ></textarea>
+                    </div>
+                    <div class="m-form__group">
+                        <label class="form-label">Archivo</label>
+                        <div class="custom-file">
+                            <input class="form-control m-input custom-file-input" name="File" type="file" accept="application/pdf, application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document" placeholder="Seleccionar archivo">
+                            <label class="custom-file-label selected">Seleccionar Archivo...</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <div style="text-align:right;">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                            Cancelar
+                        </button>
+                        <button id="btnEdit" type="submit" class="btn btn-primary ladda-button" data-style="slide-down">
+                            <span class="ladda-label">Enviar</span>
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="~/js/areas/teacher/investigationconvocation/detail.js" asp-append-version="true"></script>
+}
+

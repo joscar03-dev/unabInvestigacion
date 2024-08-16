@@ -1,0 +1,1126 @@
+﻿@page "/alumno/postulacion-convocatoria-emprendimiento/{incubatorPostulationId:Guid}/inscripcion"
+@model AKDEMIC.TEACHERINVESTIGATION.Areas.Student.Pages.IncubatorPostulationPage.InscriptionModel
+@{
+    ViewBag.Breadcrumbs = new[]
+        {
+new BreadcrumbViewData {Name="Convocatorias de emprendimiento", Url= "/alumno/postulacion-convocatoria-emprendimiento"},
+new BreadcrumbViewData {Name="Inscripción", Url = null},
+    };
+}
+
+<input id="IncubatorPostulationId" value="@Model.IncubatorPostulationId" hidden />
+<div class="m-content">
+    <div class="m-portlet m-portlet--tabs">
+        <div class="m-portlet__head">
+            <div class="m-portlet__head-tools">
+                <ul class="nav nav-fill m-tabs-line m-tabs-line--primary m-tabs-line--2x" role="tablist">
+                    <li class="nav-item m-tabs__item">
+                        <a class="nav-link m-tabs__link active" href="#tab_1" data-toggle="tab" role="tab">
+                            <i class="la la-info-circle"></i>
+                            Información General
+                        </a>
+                    </li>
+                    <li class="nav-item m-tabs__item">
+                        <a class="nav-link m-tabs__link" href="#tab_2" data-toggle="tab" role="tab">
+                            <i class="fa fa-users"></i>
+                            Equipo de Investigación
+                        </a>
+                    </li>
+                    <li class="nav-item m-tabs__item">
+                        <a class="nav-link m-tabs__link" href="#tab_3" data-toggle="tab" role="tab">
+                            <i class="fa fa-file"></i>
+                            Idea de Negocio
+                        </a>
+                    </li>
+                    <li class="nav-item m-tabs__item">
+                        <a class="nav-link m-tabs__link" href="#tab_4" data-toggle="tab" role="tab">
+                            <i class="fa fa-users"></i>
+                            Plan de Negocios
+                        </a>
+                    </li>
+                    <li class="nav-item m-tabs__item">
+                        <a class="nav-link m-tabs__link" id="schedule_tab" href="#tab_5" data-toggle="tab" role="tab">
+                            <i class="fa fa-file"></i>
+                            Cronograma y Presupuesto
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="m-portlet__body">
+            <div class="tab-content">
+                <div class="tab-pane active" id="tab_1" role="tabpanel">
+                    <form id="general-information-form" class="m-form m-form--state" asp-area="Student" asp-page-handler="GeneralInformationSave" method="post">
+                        <div class="m-portlet__body m-portlet__body--no-padding">
+                            <div class="form-group m-form__group row">
+                                <div class="m-form__group-sub col-lg-6">
+                                    <label class="form-control-label">Código de Convocatoria</label>
+                                    <input name="IncubatorConvocationCode" type="text" class="form-control m-input" autocomplete="off" disabled />
+                                </div>
+                                <div class="m-form__group-sub col-lg-6">
+                                    <label class="form-control-label">Nombre de Convocatoria</label>
+                                    <input name="IncubatorConvocationName" type="text" class="form-control m-input" autocomplete="off" disabled />
+                                </div>
+                            </div>
+                            <div class="form-group m-form__group row">
+                                <div class="m-form__group-sub col-lg-12">
+                                    <label class="required-form-label">Título del Proyecto</label>
+                                    <input name="Title" type="text" class="form-control m-input" autocomplete="off" required />
+                                </div>
+                            </div>
+                            <div class="form-group m-form__group row">
+                                <div class="m-form__group-sub col-lg-6">
+                                    <label class="required-form-label">Duración del Proyecto en meses</label>
+                                    <input name="MonthDuration" type="number" class="form-control m-input" autocomplete="off" required />
+                                </div>
+                                <div class="m-form__group-sub col-lg-6">
+                                    <label class="required-form-label">Presupuesto Solicitado</label>
+                                    <input name="Budget" type="number" class="form-control m-input" autocomplete="off" required />
+                                </div>
+                            </div>
+                            <div class="form-group m-form__group row">
+                                <div class="m-form__group-sub col-lg-6">
+                                    <label class="required-form-label">Objetivos Generales</label>
+                                    <textarea name="GeneralGoals" class="form-control m-input" rows="4" required></textarea>
+                                </div>
+                                <div class="m-form__group-sub col-lg-6">
+                                    <label class="required-form-label">Departamento</label>
+                                    <select id="DepartmentId" name="DepartmentId" class="form-control" required>
+                                        <option value="0" selected disabled>Seleccione un Departamento</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group m-form__group row">
+
+                                <div class="m-form__group-sub col-lg-6">
+                                    <label class="required-form-label">Provincia</label>
+                                    <select id="ProvinceId" name="ProvinceId" class="form-control" required>
+                                        <option value="0" selected disabled>Seleccione una Provincia</option>
+                                    </select>
+                                </div>
+
+                                <div class="m-form__group-sub col-lg-6">
+                                    <label class="required-form-label">Distrito</label>
+                                    <select id="DistrictId" name="DistrictId" class="form-control" required>
+                                        <option value="0" selected disabled>Seleccione un Distrito</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group m-form__group row">
+                            <div class="col-xl-12 col-lg-12 m-form__group-sub" style="text-align:end">
+                                <button type="button" class="btn btn-success btn-sm m-btn m-btn--icon " data-toggle="modal" data-target="#specificGoalAddModal">
+                                    <span>
+                                        <i class="la la-plus"></i>
+                                        <span>Agregar Objetivo específico</span>
+                                    </span>
+                                </button>
+                            </div>
+                        </div>
+                        <br />
+                        <h5>Lista de  Objetivos Especificos o Componentes</h5>
+                        <table class="table table-striped table-bordered" id="specificGoals-datatable"></table>
+                        <div class="m-portlet__foot m-portlet__foot--fit m--align-right m--margin-top-10">
+                            <div class="m-form__actions">
+                                <button id="btnGeneralInformationSave" class="btn btn-primary m-btn m-btn--custom m-btn--icon" type="submit">
+                                    <span>
+                                        <i class="la la-save"></i>
+                                        &nbsp;&nbsp;
+                                        <span>
+                                            Guardar
+                                        </span>
+                                    </span>
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="tab-pane" id="tab_2" role="tabpanel">
+                    <form id="investigation-team-form" class="m-form m-form--state" asp-area="Student" asp-page-handler="InvestigationTeamSave" method="post">
+                        <div class="m-portlet__body m-portlet__body--no-padding">
+                            <h5>Docente Asesor</h5>
+                            <div class="form-group m-form__group row">
+                                <div class="m-form__group-sub col-lg-12">
+                                    <label class="required-form-label">Buscar Asesor por Código o Nombre</label>
+                                    <select id="AdviserId" name="AdviserId" class="form-control"></select>
+                                </div>
+                            </div>
+                            <div class="form-group m-form__group row">
+                                <div class="m-form__group-sub col-lg-12">
+                                    <label class="form-control-label">Nombre Completo</label>
+                                    <input name="AdviserFullName" type="text" class="form-control m-input" autocomplete="off" disabled />
+                                </div>
+                            </div>
+                            <div class="form-group m-form__group row">
+                                <div class="m-form__group-sub col-lg-6">
+                                    <label class="form-control-label">Dni</label>
+                                    <input name="AdviserDni" type="text" class="form-control m-input" autocomplete="off" disabled />
+                                </div>
+                                <div class="m-form__group-sub col-lg-6">
+                                    <label class="form-control-label">Departamento Académico</label>
+                                    <input name="AdviserAcademicDepartment" type="text" class="form-control m-input" autocomplete="off" disabled />
+                                </div>
+                            </div>
+                            <div class="form-group m-form__group row">
+                                <div class="m-form__group-sub col-lg-6">
+                                    <label class="form-control-label">Categoría</label>
+                                    <input name="AdviserCategory" type="text" class="form-control m-input" autocomplete="off" disabled />
+                                </div>
+                                <div class="m-form__group-sub col-lg-6">
+                                    <label class="form-control-label">Dedicación</label>
+                                    <input name="AdviserDedication" type="text" class="form-control m-input" autocomplete="off" disabled />
+                                </div>
+                            </div>
+                            <hr />
+                            <h5>Docente Co-Asesor</h5>
+                            <div class="form-group m-form__group row">
+                                <div class="m-form__group-sub col-lg-12">
+                                    <label class="required-form-label">Buscar Co-Asesor por Código o Nombre</label>
+                                    <select id="CoAdviserId" name="CoAdviserId" class="form-control"></select>
+                                </div>
+                            </div>
+                            <div class="form-group m-form__group row">
+                                <div class="m-form__group-sub col-lg-12">
+                                    <label class="form-control-label">Nombre Completo</label>
+                                    <input name="CoAdviserFullName" type="text" class="form-control m-input" autocomplete="off" disabled />
+                                </div>
+                            </div>
+                            <div class="form-group m-form__group row">
+                                <div class="m-form__group-sub col-lg-6">
+                                    <label class="form-control-label">Dni</label>
+                                    <input name="CoAdviserDni" type="text" class="form-control m-input" autocomplete="off" disabled />
+                                </div>
+                                <div class="m-form__group-sub col-lg-6">
+                                    <label class="form-control-label">Departamento Académico</label>
+                                    <input name="CoAdviserAcademicDepartment" type="text" class="form-control m-input" autocomplete="off" disabled />
+                                </div>
+                            </div>
+                            <div class="form-group m-form__group row">
+                                <div class="m-form__group-sub col-lg-6">
+                                    <label class="form-control-label">Categoría</label>
+                                    <input name="CoAdviserCategory" type="text" class="form-control m-input" autocomplete="off" disabled />
+                                </div>
+                                <div class="m-form__group-sub col-lg-6">
+                                    <label class="form-control-label">Dedicación</label>
+                                    <input name="CoAdviserDedication" type="text" class="form-control m-input" autocomplete="off" disabled />
+                                </div>
+                            </div>
+                        </div>
+                        <br />
+                        <hr />
+                        <div class="form-group m-form__group row">
+                            <div class="col-xl-12 col-lg-12 m-form__group-sub" style="text-align:end">
+                                <button type="button" class="btn btn-success btn-sm m-btn m-btn--icon " data-toggle="modal" data-target="#teamMemberAddModal">
+                                    <span>
+                                        <i class="la la-plus"></i>
+                                        <span>Agregar Equipo de Trabajo</span>
+                                    </span>
+                                </button>
+                            </div>
+                        </div>
+                        <br />
+                        <h5>Equipo de trabajo</h5>
+                        <table class="table table-striped table-bordered" id="teamMember-datatable"></table>
+                        <div class="m-portlet__foot m-portlet__foot--fit m--align-right m--margin-top-10">
+                            <div class="m-form__actions">
+                                <button id="btnInvestigationTeamSave" class="btn btn-primary m-btn m-btn--custom m-btn--icon" type="submit">
+                                    <span>
+                                        <i class="la la-save"></i>
+                                        &nbsp;&nbsp;
+                                        <span>
+                                            Guardar
+                                        </span>
+                                    </span>
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="tab-pane" id="tab_3" role="tabpanel">
+                    <form id="business-idea-form" class="m-form m-form--state" asp-area="Student" asp-page-handler="BusinessIdeaSave" method="post">
+                        <div class="m-portlet__body m-portlet__body--no-padding">
+                            <div class="form-group m-form__group row">
+                                <div class="m-form__group-sub col-lg-6">
+                                    <label class="form-control-label">Descripción de idea de negocio</label>
+                                    <div class="input-group" style="flex-wrap:initial">
+                                        <textarea rows="5" name="BusinessIdeaDescription" class="form-control m-input" required></textarea>
+                                    </div>
+
+                                </div>
+                                <div class="m-form__group-sub col-lg-6">
+                                    <label class="form-control-label">Ventajas Competitivas</label>
+                                    <div class="input-group" style="flex-wrap:initial">
+                                        <textarea rows="5" name="CompetitiveAdvantages" class="form-control m-input" required></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group m-form__group row">
+                                <div class="m-form__group-sub col-lg-6">
+                                    <label class="required-form-label">Estudio de mercado</label>
+                                    <div class="input-group" style="flex-wrap:initial">
+                                        <textarea rows="5" name="MarketStudy" class="form-control m-input" required></textarea>
+                                    </div>
+                                </div>
+                                <div class="m-form__group-sub col-lg-6">
+                                    <label class="required-form-label">Plan de marketing</label>
+                                    <div class="input-group" style="flex-wrap:initial">
+                                        <textarea rows="5" name="MarketingPlan" class="form-control m-input" required></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group m-form__group row">
+                                <div class="m-form__group-sub col-lg-6">
+                                    <label class="required-form-label">Recursos</label>
+                                    <div class="input-group" style="flex-wrap:initial">
+                                        <textarea rows="5" name="Resources" class="form-control m-input" required></textarea>
+                                    </div>
+                                </div>
+                                <div class="m-form__group-sub col-lg-6">
+                                    <label class="required-form-label">Potenciales Socios Estrateguicos</label>
+                                    <div class="input-group" style="flex-wrap:initial">
+                                        <textarea rows="5" name="PotentialStrategicPartners" class="form-control m-input" required></textarea>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="m-portlet__foot m-portlet__foot--fit m--align-right m--margin-top-10">
+                            <div class="m-form__actions">
+                                <button id="btnBusinessIdeaSave" class="btn btn-primary m-btn m-btn--custom m-btn--icon" type="submit">
+                                    <span>
+                                        <i class="la la-save"></i>
+                                        &nbsp;&nbsp;
+                                        <span>
+                                            Guardar
+                                        </span>
+                                    </span>
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="tab-pane" id="tab_4" role="tabpanel">
+                    <form id="business-plan-form" class="m-form m-form--state" asp-area="Student" asp-page-handler="BusinessPlanSave" method="post">
+                        <div class="m-portlet__body m-portlet__body--no-padding">
+                            <div class="form-group m-form__group row">
+                                <div class="m-form__group-sub col-lg-6">
+                                    <label class="form-control-label">Misión y objetivos estratégicos</label>
+                                    <div class="input-group" style="flex-wrap:initial">
+                                        <textarea rows="5" name="Mission" class="form-control m-input" required></textarea>
+                                    </div>
+
+                                </div>
+                                <div class="m-form__group-sub col-lg-6">
+                                    <label class="form-control-label">Descripción del producto o servicio</label>
+                                    <div class="input-group" style="flex-wrap:initial">
+                                        <textarea rows="5" name="ProductDescription" class="form-control m-input" required></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group m-form__group row">
+                                <div class="m-form__group-sub col-lg-6">
+                                    <label class="required-form-label">Estudio de viabilidad técnica</label>
+                                    <div class="input-group" style="flex-wrap:initial">
+                                        <textarea rows="5" name="TechnicalViability" class="form-control m-input" required></textarea>
+                                    </div>
+                                </div>
+                                <div class="m-form__group-sub col-lg-6">
+                                    <label class="required-form-label">Estudio de viabilidad económica y financiera</label>
+                                    <div class="input-group" style="flex-wrap:initial">
+                                        <textarea rows="5" name="EconomicViability" class="form-control m-input" required></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group m-form__group row">
+                                <div class="m-form__group-sub col-lg-6">
+                                    <label class="required-form-label">Plan de comercialización</label>
+                                    <div class="input-group" style="flex-wrap:initial">
+                                        <textarea rows="5" name="MerchandisingPlan" class="form-control m-input" required></textarea>
+                                    </div>
+                                </div>
+                                <div class="m-form__group-sub col-lg-6">
+                                    <label class="required-form-label">Determinación del Punto de Equilibrio</label>
+                                    <div class="input-group" style="flex-wrap:initial">
+                                        <textarea rows="5" name="Breakeven" class="form-control m-input" required></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group m-form__group row">
+                                <div class="m-form__group-sub col-lg-6">
+                                    <label class="required-form-label">Nivel de afectación</label>
+                                    <div class="input-group" style="flex-wrap:initial">
+                                        <textarea rows="5" name="AffectationLevel" class="form-control m-input" required></textarea>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                        </div>
+                        <div class="m-portlet__foot m-portlet__foot--fit m--align-right m--margin-top-10">
+                            <div class="m-form__actions">
+                                <button id="btnBusinessPlanSave" class="btn btn-primary m-btn m-btn--custom m-btn--icon" type="submit">
+                                    <span>
+                                        <i class="la la-save"></i>
+                                        &nbsp;&nbsp;
+                                        <span>
+                                            Guardar
+                                        </span>
+                                    </span>
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="tab-pane" id="tab_5" role="tabpanel">
+                    <div class="m-portlet__body m-portlet__body--no-padding">
+                        <div id="scheduleContainer">
+                        </div>
+                        <div class="form-group m-form__group row">
+                            <div class="col-xl-12 col-lg-12 m-form__group-sub" style="text-align:end">
+                                <button type="button" class="btn btn-success btn-sm m-btn m-btn--icon " data-toggle="modal" data-target="#equipmentExpenseAddModal">
+                                    <span>
+                                        <i class="la la-plus"></i>
+                                        <span>Agregar un Gasto de Equipo o Bien</span>
+                                    </span>
+                                </button>
+                            </div>
+                        </div>
+                        <br />
+                        <h5>Equipos y Bienes</h5>
+                        <table class="table table-striped table-bordered" id="equipmentExpense-datatable"></table>
+                        <div class="row justify-content-end">
+                            <div class="col-lg-3 col-md-6 col-sm-6 col-xs-6 text-right col-form-label font-weight-bold"> MONTO TOTAL: </div>
+                            <input disabled id="equipmentExpense-totalAmount" value="S/. 0.00" class="form-control text-right col-lg-2 col-md-4 col-sm-4 col-xs-4" />
+                        </div>
+                        <br />
+                        @*Aqui termina el dt de equipos y bienes*@
+                        <div class="form-group m-form__group row">
+                            <div class="col-xl-12 col-lg-12 m-form__group-sub" style="text-align:end">
+                                <button type="button" class="btn btn-success btn-sm m-btn m-btn--icon " data-toggle="modal" data-target="#suppliesExpenseAddModal">
+                                    <span>
+                                        <i class="la la-plus"></i>
+                                        <span>Agregar un Insumo o Material</span>
+                                    </span>
+                                </button>
+                            </div>
+                        </div>
+                        <br />
+                        <h5>Insumos y materiales (Bibliográficos, software y otros)</h5>
+                        <table class="table table-striped table-bordered" id="suppliesExpense-datatable"></table>
+                        <div class="row justify-content-end">
+                            <div class="col-lg-3 col-md-6 col-sm-6 col-xs-6 text-right col-form-label font-weight-bold"> MONTO TOTAL: </div>
+                            <input disabled id="suppliesExpense-totalAmount" value="S/. 0.00" class="form-control text-right col-lg-2 col-md-4 col-sm-4 col-xs-4" />
+                        </div>
+                        <br />
+                        @*Aqui termina el dt de insumos y materiales*@
+                        <div class="form-group m-form__group row">
+                            <div class="col-xl-12 col-lg-12 m-form__group-sub" style="text-align:end">
+                                <button type="button" class="btn btn-success btn-sm m-btn m-btn--icon " data-toggle="modal" data-target="#thirdPartyServiceExpenseAddModal">
+                                    <span>
+                                        <i class="la la-plus"></i>
+                                        <span>Agregar un Servicio de Tercero</span>
+                                    </span>
+                                </button>
+                            </div>
+                        </div>
+                        <br />
+                        <h5>Servicios de Terceros</h5>
+                        <table class="table table-striped table-bordered" id="thirdPartyServiceExpense-datatable"></table>
+                        <div class="row justify-content-end">
+                            <div class="col-lg-3 col-md-6 col-sm-6 col-xs-6 text-right col-form-label font-weight-bold"> MONTO TOTAL: </div>
+                            <input disabled id="thirdPartyServiceExpense-totalAmount" value="S/. 0.00" class="form-control text-right col-lg-2 col-md-4 col-sm-4 col-xs-4" />
+                        </div>
+                        <br />
+                        @*Aqui termina el dt de servicios de terceros*@
+                        <div class="form-group m-form__group row">
+                            <div class="col-xl-12 col-lg-12 m-form__group-sub" style="text-align:end">
+                                <button type="button" class="btn btn-success btn-sm m-btn m-btn--icon " data-toggle="modal" data-target="#otherExpenseAddModal">
+                                    <span>
+                                        <i class="la la-plus"></i>
+                                        <span>Agregar Gastos varios</span>
+                                    </span>
+                                </button>
+                            </div>
+                        </div>
+                        <br />
+                        <h5>Gastos Varios</h5>
+                        <table class="table table-striped table-bordered" id="otherExpense-datatable"></table>
+                        <div class="row justify-content-end">
+                            <div class="col-lg-3 col-md-6 col-sm-6 col-xs-6 text-right col-form-label font-weight-bold"> MONTO TOTAL: </div>
+                            <input disabled id="otherExpense-totalAmount" value="S/. 0.00" class="form-control text-right col-lg-2 col-md-4 col-sm-4 col-xs-4" />
+                        </div>
+                        <br />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--Add Modal Objetivo Específico-->
+<div class="modal fade" id="specificGoalAddModal" tabindex="-1000" role="dialog" aria-labelledby="detailLabel" aria-hidden="true">
+    <div class="modal-dialog " role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">
+                    Agregar Objetivo Específico/Componente
+                </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form id="specific-goal-add-form" class="m-form m-form--state" asp-area="Student" asp-page-handler="SpecificGoalAdd" method="post">
+                <input name="IncubatorPostulationId" value="@Model.IncubatorPostulationId" hidden />
+                <div class="modal-body">
+                    <div class="m-form__group">
+                        <label class="required-form-label">Descripción:</label>
+                        <input name="Description" type="text" class="form-control m-input" autocomplete="off" required />
+                    </div>
+                    <div class="m-form__group">
+                        <label class="required-form-label">Orden:</label>
+                        <input name="OrderNumber" type="text" class="form-control m-input" autocomplete="off" required />
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <div style="text-align:right;">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                            Cancelar
+                        </button>
+                        <button id="btnSpecificGoalAdd" type="submit" class="btn btn-primary ladda-button" data-style="slide-down">
+                            <span class="ladda-label">Guardar</span>
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!--Edit Modal Objetivo Específico-->
+<div class="modal fade" id="specificGoalEditModal" tabindex="-1000" role="dialog" aria-labelledby="detailLabel" aria-hidden="true">
+    <div class="modal-dialog " role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">
+                    Editar Objetivo Específico/Componente
+                </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form id="specific-goal-edit-form" class="m-form m-form--state" asp-area="Student" asp-page-handler="SpecificGoalEdit" method="post">
+                <input name="IncubatorPostulationId" value="@Model.IncubatorPostulationId" hidden />
+                <input name="Id" hidden />
+                <div class="modal-body">
+                    <div class="m-form__group">
+                        <label class="required-form-label">Descripción:</label>
+                        <input name="Description" type="text" class="form-control m-input" autocomplete="off" required />
+                    </div>
+                    <div class="m-form__group">
+                        <label class="required-form-label">Orden:</label>
+                        <input name="OrderNumber" type="text" class="form-control m-input" autocomplete="off" required />
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <div style="text-align:right;">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                            Cancelar
+                        </button>
+                        <button id="btnSpecificGoalEdit" type="submit" class="btn btn-primary ladda-button" data-style="slide-down">
+                            <span class="ladda-label">Guardar</span>
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+<!--Add Modal Gastos de Equipos y Bienes-->
+<div class="modal fade" id="equipmentExpenseAddModal" tabindex="-1000" role="dialog" aria-labelledby="detailLabel" aria-hidden="true">
+    <div class="modal-dialog " role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">
+                    Agregar Gastos de Equipos y Bienes
+                </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form id="equipment-expense-add-form" class="m-form m-form--state" asp-area="Student" asp-page-handler="EquipmentExpenseAdd" method="post">
+                <input name="IncubatorPostulationId" value="@Model.IncubatorPostulationId" hidden />
+                <div class="modal-body">
+                    <div class="m-form__group">
+                        <label class="required-form-label">Especifica de Gasto:</label>
+                        <input name="ExpenseCode" type="text" class="form-control m-input" autocomplete="off" required />
+                    </div>
+                    <div class="m-form__group">
+                        <label class="required-form-label">Descripción:</label>
+                        <input name="Description" type="text" class="form-control m-input" autocomplete="off" required />
+                    </div>
+                    <div class="m-form__group">
+                        <label class="required-form-label">Unidad de Medida:</label>
+                        <input name="MeasureUnit" type="text" class="form-control m-input" autocomplete="off" required />
+                    </div>
+                    <div class="m-form__group">
+                        <label class="required-form-label">Cantidad:</label>
+                        <input name="Quantity" type="number" class="form-control m-input" autocomplete="off" required />
+                    </div>
+                    <div class="m-form__group">
+                        <label class="required-form-label">Costo Unitario:</label>
+                        <input name="UnitPrice" type="number" class="form-control m-input" autocomplete="off" required />
+                    </div>
+                    <div class="m-form__group">
+                        <label class="required-form-label">Actividad en la que se emplea:</label>
+                        <input name="ActivityJustification" type="text" class="form-control m-input" autocomplete="off" required />
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <div style="text-align:right;">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                            Cancelar
+                        </button>
+                        <button id="btnEquipmentExpenseAdd" type="submit" class="btn btn-primary ladda-button" data-style="slide-down">
+                            <span class="ladda-label">Guardar</span>
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!--Edit Modal Gastos de Equipos y Bienes-->
+<div class="modal fade" id="equipmentExpenseEditModal" tabindex="-1000" role="dialog" aria-labelledby="detailLabel" aria-hidden="true">
+    <div class="modal-dialog " role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">
+                    Editar Gastos de Equipos y Bienes
+                </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form id="equipment-expense-edit-form" class="m-form m-form--state" asp-area="Student" asp-page-handler="EquipmentExpenseEdit" method="post">
+                <input name="IncubatorPostulationId" value="@Model.IncubatorPostulationId" hidden />
+                <input name="Id" hidden />
+                <div class="modal-body">
+                    <div class="m-form__group">
+                        <label class="required-form-label">Especifica de Gasto:</label>
+                        <input name="ExpenseCode" type="text" class="form-control m-input" autocomplete="off" required />
+                    </div>
+                    <div class="m-form__group">
+                        <label class="required-form-label">Descripción:</label>
+                        <input name="Description" type="text" class="form-control m-input" autocomplete="off" required />
+                    </div>
+                    <div class="m-form__group">
+                        <label class="required-form-label">Unidad de Medida:</label>
+                        <input name="MeasureUnit" type="text" class="form-control m-input" autocomplete="off" required />
+                    </div>
+                    <div class="m-form__group">
+                        <label class="required-form-label">Cantidad:</label>
+                        <input name="Quantity" type="number" class="form-control m-input" autocomplete="off" required />
+                    </div>
+                    <div class="m-form__group">
+                        <label class="required-form-label">Costo Unitario:</label>
+                        <input name="UnitPrice" type="number" class="form-control m-input" autocomplete="off" required />
+                    </div>
+                    <div class="m-form__group">
+                        <label class="required-form-label">Actividad en la que se emplea:</label>
+                        <input name="ActivityJustification" type="text" class="form-control m-input" autocomplete="off" required />
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <div style="text-align:right;">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                            Cancelar
+                        </button>
+                        <button id="btnEquipmentExpenseEdit" type="submit" class="btn btn-primary ladda-button" data-style="slide-down">
+                            <span class="ladda-label">Guardar</span>
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!--Add Modal Insumos y Materiales-->
+<div class="modal fade" id="suppliesExpenseAddModal" tabindex="-1000" role="dialog" aria-labelledby="detailLabel" aria-hidden="true">
+    <div class="modal-dialog " role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">
+                    Agregar Insumo o Material
+                </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form id="supplies-expense-add-form" class="m-form m-form--state" asp-area="Student" asp-page-handler="SuppliesExpenseAdd" method="post">
+                <input name="IncubatorPostulationId" value="@Model.IncubatorPostulationId" hidden />
+                <div class="modal-body">
+                    <div class="m-form__group">
+                        <label class="required-form-label">Especifica de Gasto:</label>
+                        <input name="ExpenseCode" type="text" class="form-control m-input" autocomplete="off" required />
+                    </div>
+                    <div class="m-form__group">
+                        <label class="required-form-label">Descripción:</label>
+                        <input name="Description" type="text" class="form-control m-input" autocomplete="off" required />
+                    </div>
+                    <div class="m-form__group">
+                        <label class="required-form-label">Unidad de Medida:</label>
+                        <input name="MeasureUnit" type="text" class="form-control m-input" autocomplete="off" required />
+                    </div>
+                    <div class="m-form__group">
+                        <label class="required-form-label">Cantidad:</label>
+                        <input name="Quantity" type="number" class="form-control m-input" autocomplete="off" required />
+                    </div>
+                    <div class="m-form__group">
+                        <label class="required-form-label">Costo Unitario:</label>
+                        <input name="UnitPrice" type="number" class="form-control m-input" autocomplete="off" required />
+                    </div>
+                    <div class="m-form__group">
+                        <label class="required-form-label">Actividad en la que se emplea:</label>
+                        <input name="ActivityJustification" type="text" class="form-control m-input" autocomplete="off" required />
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <div style="text-align:right;">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                            Cancelar
+                        </button>
+                        <button id="btnSuppliesExpenseAdd" type="submit" class="btn btn-primary ladda-button" data-style="slide-down">
+                            <span class="ladda-label">Guardar</span>
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!--Edit Modal Insumos y Materiales-->
+<div class="modal fade" id="suppliesExpenseEditModal" tabindex="-1000" role="dialog" aria-labelledby="detailLabel" aria-hidden="true">
+    <div class="modal-dialog " role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">
+                    Editar Insumo o Material
+                </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form id="supplies-expense-edit-form" class="m-form m-form--state" asp-area="Student" asp-page-handler="SuppliesExpenseEdit" method="post">
+                <input name="IncubatorPostulationId" value="@Model.IncubatorPostulationId" hidden />
+                <input name="Id" hidden />
+                <div class="modal-body">
+                    <div class="m-form__group">
+                        <label class="required-form-label">Especifica de Gasto:</label>
+                        <input name="ExpenseCode" type="text" class="form-control m-input" autocomplete="off" required />
+                    </div>
+                    <div class="m-form__group">
+                        <label class="required-form-label">Descripción:</label>
+                        <input name="Description" type="text" class="form-control m-input" autocomplete="off" required />
+                    </div>
+                    <div class="m-form__group">
+                        <label class="required-form-label">Unidad de Medida:</label>
+                        <input name="MeasureUnit" type="text" class="form-control m-input" autocomplete="off" required />
+                    </div>
+                    <div class="m-form__group">
+                        <label class="required-form-label">Cantidad:</label>
+                        <input name="Quantity" type="number" class="form-control m-input" autocomplete="off" required />
+                    </div>
+                    <div class="m-form__group">
+                        <label class="required-form-label">Costo Unitario:</label>
+                        <input name="UnitPrice" type="number" class="form-control m-input" autocomplete="off" required />
+                    </div>
+                    <div class="m-form__group">
+                        <label class="required-form-label">Actividad en la que se emplea:</label>
+                        <input name="ActivityJustification" type="text" class="form-control m-input" autocomplete="off" required />
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <div style="text-align:right;">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                            Cancelar
+                        </button>
+                        <button id="btnSuppliesExpenseEdit" type="submit" class="btn btn-primary ladda-button" data-style="slide-down">
+                            <span class="ladda-label">Guardar</span>
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!--Add Modal Servicio de Terceros-->
+<div class="modal fade" id="thirdPartyServiceExpenseAddModal" tabindex="-1000" role="dialog" aria-labelledby="detailLabel" aria-hidden="true">
+    <div class="modal-dialog " role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">
+                    Agregar Servicio de Tercero
+                </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form id="third-party-service-expense-add-form" class="m-form m-form--state" asp-area="Student" asp-page-handler="ThirdPartyServiceExpenseAdd" method="post">
+                <input name="IncubatorPostulationId" value="@Model.IncubatorPostulationId" hidden />
+                <div class="modal-body">
+                    <div class="m-form__group">
+                        <label class="required-form-label">Especifica de Gasto:</label>
+                        <input name="ExpenseCode" type="text" class="form-control m-input" autocomplete="off" required />
+                    </div>
+                    <div class="m-form__group">
+                        <label class="required-form-label">Descripción:</label>
+                        <input name="Description" type="text" class="form-control m-input" autocomplete="off" required />
+                    </div>
+                    <div class="m-form__group">
+                        <label class="required-form-label">Unidad de Medida:</label>
+                        <input name="MeasureUnit" type="text" class="form-control m-input" autocomplete="off" required />
+                    </div>
+                    <div class="m-form__group">
+                        <label class="required-form-label">Cantidad:</label>
+                        <input name="Quantity" type="number" class="form-control m-input" autocomplete="off" required />
+                    </div>
+                    <div class="m-form__group">
+                        <label class="required-form-label">Costo Unitario:</label>
+                        <input name="UnitPrice" type="number" class="form-control m-input" autocomplete="off" required />
+                    </div>
+                    <div class="m-form__group">
+                        <label class="required-form-label">Actividad en la que se emplea:</label>
+                        <input name="ActivityJustification" type="text" class="form-control m-input" autocomplete="off" required />
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <div style="text-align:right;">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                            Cancelar
+                        </button>
+                        <button id="btnThirdPartyServiceExpenseAdd" type="submit" class="btn btn-primary ladda-button" data-style="slide-down">
+                            <span class="ladda-label">Guardar</span>
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!--Edit Modal Servicio de Terceros-->
+<div class="modal fade" id="thirdPartyServiceExpenseEditModal" tabindex="-1000" role="dialog" aria-labelledby="detailLabel" aria-hidden="true">
+    <div class="modal-dialog " role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">
+                    Editar Servicio de Tercero
+                </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form id="third-party-service-expense-edit-form" class="m-form m-form--state" asp-area="Student" asp-page-handler="ThirdPartyServiceExpenseEdit" method="post">
+                <input name="IncubatorPostulationId" value="@Model.IncubatorPostulationId" hidden />
+                <input name="Id" hidden />
+                <div class="modal-body">
+                    <div class="m-form__group">
+                        <label class="required-form-label">Especifica de Gasto:</label>
+                        <input name="ExpenseCode" type="text" class="form-control m-input" autocomplete="off" required />
+                    </div>
+                    <div class="m-form__group">
+                        <label class="required-form-label">Descripción:</label>
+                        <input name="Description" type="text" class="form-control m-input" autocomplete="off" required />
+                    </div>
+                    <div class="m-form__group">
+                        <label class="required-form-label">Unidad de Medida:</label>
+                        <input name="MeasureUnit" type="text" class="form-control m-input" autocomplete="off" required />
+                    </div>
+                    <div class="m-form__group">
+                        <label class="required-form-label">Cantidad:</label>
+                        <input name="Quantity" type="number" class="form-control m-input" autocomplete="off" required />
+                    </div>
+                    <div class="m-form__group">
+                        <label class="required-form-label">Costo Unitario:</label>
+                        <input name="UnitPrice" type="number" class="form-control m-input" autocomplete="off" required />
+                    </div>
+                    <div class="m-form__group">
+                        <label class="required-form-label">Actividad en la que se emplea:</label>
+                        <input name="ActivityJustification" type="text" class="form-control m-input" autocomplete="off" required />
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <div style="text-align:right;">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                            Cancelar
+                        </button>
+                        <button id="btnThirdPartyServiceExpenseEdit" type="submit" class="btn btn-primary ladda-button" data-style="slide-down">
+                            <span class="ladda-label">Guardar</span>
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!--Add Modal Gastos Varios-->
+<div class="modal fade" id="otherExpenseAddModal" tabindex="-1000" role="dialog" aria-labelledby="detailLabel" aria-hidden="true">
+    <div class="modal-dialog " role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">
+                    Agregar Gastos Varios
+                </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form id="other-expense-add-form" class="m-form m-form--state" asp-area="Student" asp-page-handler="OtherExpenseAdd" method="post">
+                <input name="IncubatorPostulationId" value="@Model.IncubatorPostulationId" hidden />
+                <div class="modal-body">
+                    <div class="m-form__group">
+                        <label class="required-form-label">Especifica de Gasto:</label>
+                        <input name="ExpenseCode" type="text" class="form-control m-input" autocomplete="off" required />
+                    </div>
+                    <div class="m-form__group">
+                        <label class="required-form-label">Descripción:</label>
+                        <input name="Description" type="text" class="form-control m-input" autocomplete="off" required />
+                    </div>
+                    <div class="m-form__group">
+                        <label class="required-form-label">Unidad de Medida:</label>
+                        <input name="MeasureUnit" type="text" class="form-control m-input" autocomplete="off" required />
+                    </div>
+                    <div class="m-form__group">
+                        <label class="required-form-label">Cantidad:</label>
+                        <input name="Quantity" type="number" class="form-control m-input" autocomplete="off" required />
+                    </div>
+                    <div class="m-form__group">
+                        <label class="required-form-label">Costo Unitario:</label>
+                        <input name="UnitPrice" type="number" class="form-control m-input" autocomplete="off" required />
+                    </div>
+                    <div class="m-form__group">
+                        <label class="required-form-label">Actividad en la que se emplea:</label>
+                        <input name="ActivityJustification" type="text" class="form-control m-input" autocomplete="off" required />
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <div style="text-align:right;">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                            Cancelar
+                        </button>
+                        <button id="btnOtherExpenseAdd" type="submit" class="btn btn-primary ladda-button" data-style="slide-down">
+                            <span class="ladda-label">Guardar</span>
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!--Edit Modal Gastos Varios-->
+<div class="modal fade" id="otherExpenseEditModal" tabindex="-1000" role="dialog" aria-labelledby="detailLabel" aria-hidden="true">
+    <div class="modal-dialog " role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">
+                    Editar Gastos Varios
+                </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form id="other-expense-edit-form" class="m-form m-form--state" asp-area="Student" asp-page-handler="OtherExpenseEdit" method="post">
+                <input name="IncubatorPostulationId" value="@Model.IncubatorPostulationId" hidden />
+                <input name="Id" hidden />
+                <div class="modal-body">
+                    <div class="m-form__group">
+                        <label class="required-form-label">Especifica de Gasto:</label>
+                        <input name="ExpenseCode" type="text" class="form-control m-input" autocomplete="off" required />
+                    </div>
+                    <div class="m-form__group">
+                        <label class="required-form-label">Descripción:</label>
+                        <input name="Description" type="text" class="form-control m-input" autocomplete="off" required />
+                    </div>
+                    <div class="m-form__group">
+                        <label class="required-form-label">Unidad de Medida:</label>
+                        <input name="MeasureUnit" type="text" class="form-control m-input" autocomplete="off" required />
+                    </div>
+                    <div class="m-form__group">
+                        <label class="required-form-label">Cantidad:</label>
+                        <input name="Quantity" type="number" class="form-control m-input" autocomplete="off" required />
+                    </div>
+                    <div class="m-form__group">
+                        <label class="required-form-label">Costo Unitario:</label>
+                        <input name="UnitPrice" type="number" class="form-control m-input" autocomplete="off" required />
+                    </div>
+                    <div class="m-form__group">
+                        <label class="required-form-label">Actividad en la que se emplea:</label>
+                        <input name="ActivityJustification" type="text" class="form-control m-input" autocomplete="off" required />
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <div style="text-align:right;">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                            Cancelar
+                        </button>
+                        <button id="btnOtherExpenseEdit" type="submit" class="btn btn-primary ladda-button" data-style="slide-down">
+                            <span class="ladda-label">Guardar</span>
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="teamMemberAddModal" tabindex="-1" role="dialog" aria-labelledby="addLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title text-primary font-weight-bold" id="add-label">
+                    Agregar Equipo de Trabajo
+                </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form id="teamMember-add-form" class="m-form m-form--state" asp-area="Student" asp-page-handler="TeamMemberAdd" method="post">
+                <div class="modal-body">
+                    <div class="form-group m-form__group">
+                        <label class="required-form-label">Buscar Estudiante por Código o Nombre</label>
+                        <select name="UserId" class="form-control"></select>
+                    </div>
+                    <div class="form-group m-form__group">
+                        <label class="form-control-label">Usuario</label>
+                        <input id="UserName" type="text" name="UserName" placeholder="Usuario" class="form-control m-input" disabled />
+                    </div>
+                    <div class="form-group m-form__group">
+                        <label class="form-control-label">Apellido Paterno</label>
+                        <input id="PaternalSurName" type="text" name="PaternalSurname" placeholder="Apellido Paterno" class="form-control m-input" disabled />
+                    </div>
+                    <div class="form-group m-form__group">
+                        <label class="form-control-label">Apellido Materno</label>
+                        <input id="MaternalSurName" type="text" name="MaternalSurname" placeholder="Apellido Materno" class="form-control m-input" disabled />
+                    </div>
+                    <div class="form-group m-form__group">
+                        <label class="form-control-label">Nombres</label>
+                        <input id="Name" type="text" name="Name" placeholder="Nombres" class="form-control m-input" disabled />
+                    </div>
+                    <input name="Sex" hidden />
+                    <div class="form-group m-form__group">
+                        <label class="form-control-label">Escuela Profesional</label>
+                        <input id="CareerText" type="text" name="CareerText" placeholder="Escuela Profesional" class="form-control m-input" disabled />
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                        Cerrar
+                    </button>
+                    <button id="btnTeamMemberAdd" type="submit" class="btn btn-primary ladda-button" data-style="slide-down">
+                        <span class="ladda-label">Guardar</span>
+                        <span class="ladda-spinner"></span>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fade" id="activityAddModal" tabindex="-1" role="dialog" aria-labelledby="addLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title text-primary font-weight-bold" id="add-label">
+                    Agregar Actividad al Objetivo Especifico
+                </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form id="activity-add-form" class="m-form m-form--state" asp-area="Student" asp-page-handler="ActivityAdd" method="post">
+                <input name="IncubatorPostulationSpecificGoalId" hidden />
+                <div class="modal-body">
+                    <div class="form-group m-form__group">
+                        <label class="form-control-label">Objetivo Específico</label>
+                        <input type="text" name="SpecificGoalDescription" class="form-control m-input" disabled />
+                    </div>
+                    <div class="form-group m-form__group">
+                        <label class="required-form-label">Descripción de la Actividad</label>
+                        <input type="text" name="Description" class="form-control m-input" required />
+                    </div>
+                    <div class="form-group m-form__group">
+                        <label class="required-form-label">N° de Orden</label>
+                        <input type="number" name="OrderNumber" class="form-control m-input" required />
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                        Cerrar
+                    </button>
+                    <button id="btnActivityAdd" type="submit" class="btn btn-primary ladda-button" data-style="slide-down">
+                        <span class="ladda-label">Guardar</span>
+                        <span class="ladda-spinner"></span>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="activityEditModal" tabindex="-1" role="dialog" aria-labelledby="editLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title text-primary font-weight-bold" id="add-label">
+                    Editar Actividad
+                </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form id="activity-edit-form" class="m-form m-form--state" asp-area="Student" asp-page-handler="ActivityEdit" method="post">
+                <input name="Id" hidden />
+                <input name="IncubatorPostulationSpecificGoalId" hidden />
+                <div class="modal-body">
+                    <div class="form-group m-form__group">
+                        <label class="form-control-label">Objetivo Específico</label>
+                        <input type="text" name="SpecificGoalDescription" class="form-control m-input" disabled />
+                    </div>
+                    <div class="form-group m-form__group">
+                        <label class="required-form-label">Descripción de la Actividad</label>
+                        <input type="text" name="Description" class="form-control m-input" required />
+                    </div>
+                    <div class="form-group m-form__group">
+                        <label class="required-form-label">N° de Orden</label>
+                        <input type="number" name="OrderNumber" class="form-control m-input" required />
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                        Cerrar
+                    </button>
+                    <button id="btnActivityEdit" type="submit" class="btn btn-primary ladda-button" data-style="slide-down">
+                        <span class="ladda-label">Guardar</span>
+                        <span class="ladda-spinner"></span>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+
+
+@section Scripts {
+    <script src="~/js/areas/student/incubatorpostulation/inscription.js" asp-append-version="true"></script>
+}

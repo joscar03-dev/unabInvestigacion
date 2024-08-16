@@ -1,0 +1,1228 @@
+﻿@page "/investigador/convocatoria/{investigationConvocationPostulantId:Guid}/inscripcion"
+@model AKDEMIC.TEACHERINVESTIGATION.Areas.Teacher.Pages.InvestigationConvocationPage.InscriptionModel
+@{
+    ViewBag.Breadcrumbs = new[]
+    {
+        new BreadcrumbViewData {Name="Postulaciones a Convocatorias", Url = "/investigador/convocatoria"},
+        new BreadcrumbViewData {Name="Detalle", Url = $"/investigador/convocatoria/{Model.Input.InvestigationConvocationPostulantId}/detalle"},
+        new BreadcrumbViewData {Name="Formulario", Url = null},
+    };
+
+}
+
+<style>
+    .m-form .m-form__section {
+        margin: 20px 0 20px 0 !important;
+    }
+
+    .note-editor.note-frame {
+        width: 100%;
+    }
+
+    .convocation_wizard .m-wizard.m-wizard--3 .m-wizard__head .m-wizard__nav .m-wizard__steps .m-wizard__step .m-wizard__step-info .m-wizard__step-number > span {
+        border-radius: 8px;
+    }
+
+    .convocation_wizard .m-wizard__step-number span span {
+        font-size: 15px !important;
+    }
+
+    .convocation_wizard .m-wizard.m-wizard--3 .m-wizard__head .m-wizard__nav .m-wizard__steps .m-wizard__step .m-wizard__step-info a.m-wizard__step-number > span {
+        background-color: white;
+    }
+
+    .m-accordion .m-accordion__item {
+        border-radius: 0px !important;
+    }
+
+        .m-accordion .m-accordion__item .m-accordion__item-body > span, .m-accordion .m-accordion__item .m-accordion__item-body .m-accordion__item-content {
+            padding: 0;
+        }
+
+    .m-accordion.m-accordion--default .m-accordion__item {
+        margin-bottom: 2rem;
+    }
+
+    .m-accordion .m-accordion__item .m-accordion__item-head .m-accordion__item-title {
+        display: table-cell;
+        vertical-align: middle;
+        width: 100%;
+        font-size: 1.2rem;
+        line-height: 42px;
+    }
+
+    .m-accordion.m-accordion--solid .m-accordion__item .m-accordion__item-head, .m-accordion.m-accordion--solid .m-accordion__item .m-accordion__item-head:hover {
+        cursor: default;
+    }
+
+    .label-toedit {
+        background-color: #ffc9038c;
+        margin: 2px;
+        cursor: pointer;
+    }
+
+    .label-toedit-example {
+        background-color: #ffc9038c;
+        margin: 2px;
+        cursor: pointer;
+    }
+
+    .temp_input {
+        border-color: black;
+    }
+
+    .note-editor.note-frame {
+        margin-left: 15px;
+        margin-right: 15px;
+    }
+
+    .LearningAchievement_ReadOnly {
+        border: 2px dashed black;
+        padding: 20px !important;
+    }
+
+    @@media (min-width: 1200px) {
+        .col-xl-2 {
+            -webkit-box-flex: 0;
+            -ms-flex: 0 0 16.66667%;
+            flex: 0 0 16.66667%;
+            max-width: 12%;
+        }
+    }
+
+    .header_space {
+        height: 1px;
+        margin-bottom: 28px;
+    }
+
+    .option {
+        border: 1px #dfe4ed solid;
+        border-radius: 15px;
+        padding: 5px 12px;
+        transition: 0.3s;
+        cursor: pointer;
+        user-select: none;
+    }
+
+        .option:hover {
+            background-color: #e6eaf0;
+        }
+
+        .option input {
+            position: absolute;
+            clip: rect(0,0,0,0);
+            pointer-events: none;
+        }
+</style>
+
+<input asp-for="Input.InvestigationConvocationPostulantId" hidden />
+<input asp-for="Input.UserId" hidden />
+<input asp-for="Input.InvestigationConvocationId" hidden />
+<input asp-for="Input.InvestigationConvocationRequirementId" hidden />
+<input asp-for="Input.ProjectState" hidden />
+<div class="m-content">
+    <div class="m-portlet m-portlet--tabs">
+        <!--begin: Portlet Head-->
+        <div class="m-portlet__head">
+            <div class="m-portlet__head-tools">
+                <ul class="nav nav-fill m-tabs-line m-tabs-line--primary m-tabs-line--2x" role="tablist">
+                    <li class="nav-item m-tabs__item">
+                        <a class="nav-link m-tabs__link active" href="#tab_1" data-toggle="tab" role="tab">
+                            <i class="la la-info-circle"></i>
+                            Inscripción
+                        </a>
+                    </li>
+                    <li class="nav-item m-tabs__item">
+                        <a class="nav-link m-tabs__link" href="#tab_2" data-toggle="tab" role="tab">
+                            <i class="fa fa-users"></i>
+                            Avances
+                        </a>
+                    </li>
+                    @if (Model.Input.ProjectState == TeacherInvestigationConstants.ConvocationPostulant.ProjectState.REQUESTDOCUMENT)
+                    {
+                        <li class="nav-item m-tabs__item">
+                            <a class="nav-link m-tabs__link" href="#tab_3" data-toggle="tab" role="tab">
+                                <i class="fa fa-file"></i>
+                                Documentos
+                            </a>
+                        </li>
+                    }
+                </ul>
+            </div>
+        </div>
+        <div class="m-portlet__body">
+            <div class="tab-content">
+                <div class="tab-pane active" id="tab_1" role="tabpanel">
+                    <!--end: Portlet Head-->
+                    <div class="m-portlet__body m-portlet__body--no-padding">
+                        <div style="margin-bottom:15px;text-align:end">
+                            <button data-toggle="modal" data-target="#observationModal" title="Observaciones" class="ml-1 btn btn-primary m-btn--icon">
+                                <span>
+                                    <i class="la la-wrench"></i>
+                                    <span>Observaciones</span>
+                                </span>
+                            </button>
+                        </div>
+                        <div>
+                            <label>Estado del Proyecto: <span class="text-info" style="font-weight:bold">@Model.Input.ProjectStateText</span>  </label>
+                        </div>
+                        <div>
+                            <label>Estado de Revisión: <span class="text-info" style="font-weight:bold">@Model.Input.ReviewStateText</span>  </label>
+                        </div>
+                        <div>
+                            <label>Estado de Avance: <span class="text-info" style="font-weight:bold">@Model.Input.ProgressStateText</span>  </label>
+                        </div>
+                        <div>
+                            <label>Avance</label>
+                            <div class="progress" style="height:20px">
+                                <div id="progressBarComplete" class="progress-bar progress-bar-striped progress-bar-animated " role="progressbar" style="width: " aria-valuenow="" aria-valuemin="0" aria-valuemax="100"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="m-portlet__body-separator" style="margin-bottom:0px"></div>
+                    <!--begin: Portlet Body-->
+                    <div class="m-portlet__body m-portlet__body--no-padding convocation_wizard">
+                        <!--begin: Form Wizard-->
+                        <div class="m-wizard m-wizard--3 m-wizard--primary m-wizard--step-between" id="m_wizard">
+                            <div class="row m-row--no-padding">
+                                <div class="col-xl-3 col-lg-12">
+                                    <!--begin: Form Wizard Head -->
+                                    <div class="m-wizard__head">
+                                        <!--begin: Form Wizard Nav -->
+                                        <div class="m-wizard__nav d-flex justify-content-center">
+                                            <div class="m-wizard__steps">
+                                                <div class="m-wizard__step m-wizard__step--current" m-wizard-target="m_wizard_form_step_1">
+                                                    <div class="m-wizard__step-info">
+                                                        <a href="#" class="m-wizard__step-number" data-step="1">
+                                                            <span><span>1</span></span>
+                                                        </a>
+                                                        <div class="m-wizard__step-label" style="font-size: 15px; padding-left: 15px;display:flex">
+                                                            Datos Generales
+                                                        </div>
+                                                        <span id="generalInformation-percentage" class="m-form__help" style="font-size: 13px;padding-left: 15px;color: red;"></span>
+                                                    </div>
+                                                </div>
+                                                <div class="m-wizard__step" m-wizard-target="m_wizard_form_step_2">
+                                                    <div class="m-wizard__step-info">
+                                                        <a href="#" class="m-wizard__step-number" data-step="2">
+                                                            <span><span>2</span></span>
+                                                        </a>
+                                                        <div class="m-wizard__step-label" style="font-size: 15px; padding-left: 15px;display:flex">
+                                                            Descripción del problema o Resumen del Proyecto
+                                                        </div>
+                                                        <span id="problemDescription-percentage" class="m-form__help" style="font-size: 13px;padding-left: 15px;color: red;"></span>
+                                                    </div>
+                                                </div>
+                                                <div class="m-wizard__step" m-wizard-target="m_wizard_form_step_3">
+                                                    <div class="m-wizard__step-info">
+                                                        <a href="#" class="m-wizard__step-number" data-step="3">
+                                                            <span><span>3</span></span>
+                                                        </a>
+                                                        <div class="m-wizard__step-label" style="font-size: 15px; padding-left: 15px;display:flex">
+                                                            Marco de Referencia
+                                                        </div>
+                                                        <span id="markReferences-percentage" class="m-form__help" style="font-size: 13px;padding-left: 15px;color: red;"></span>
+                                                    </div>
+                                                </div>
+                                                <div class="m-wizard__step" m-wizard-target="m_wizard_form_step_4">
+                                                    <div class="m-wizard__step-info">
+                                                        <a href="#" class="m-wizard__step-number" data-step="4">
+                                                            <span><span>4</span></span>
+                                                        </a>
+                                                        <div class="m-wizard__step-label" style="font-size: 15px; padding-left: 15px;display:flex">
+                                                            Metodología
+                                                        </div>
+                                                        <span id="methodology-percentage" class="m-form__help" style="font-size: 13px;padding-left: 15px;color: red;"></span>
+                                                    </div>
+                                                </div>
+                                                <div class="m-wizard__step" m-wizard-target="m_wizard_form_step_5">
+                                                    <div class="m-wizard__step-info">
+                                                        <a href="#" class="m-wizard__step-number" data-step="5">
+                                                            <span><span>5</span></span>
+                                                        </a>
+                                                        <div class="m-wizard__step-label" style="font-size: 15px; padding-left: 15px;display:flex">
+                                                            Resultados Esperados
+                                                        </div>
+                                                        <span id="expectedResult-percentage" class="m-form__help" style="font-size: 13px;padding-left: 15px;color: red;"></span>
+                                                    </div>
+                                                </div>
+                                                <div class="m-wizard__step" m-wizard-target="m_wizard_form_step_6">
+                                                    <div class="m-wizard__step-info">
+                                                        <a href="#" class="m-wizard__step-number" data-step="6">
+                                                            <span><span>6</span></span>
+                                                        </a>
+                                                        <div class="m-wizard__step-label" style="font-size: 15px; padding-left: 15px;display:flex">
+                                                            Equipo de trabajo
+                                                        </div>
+                                                        <span id="team-member-percentage" class="m-form__help" style="font-size: 13px;padding-left: 15px;color: red;"></span>
+                                                    </div>
+                                                </div>
+                                                <div class="m-wizard__step" m-wizard-target="m_wizard_form_step_7">
+                                                    <div class="m-wizard__step-info">
+                                                        <a href="#" class="m-wizard__step-number" data-step="7">
+                                                            <span><span>7</span></span>
+                                                        </a>
+                                                        <div class="m-wizard__step-label" style="font-size: 15px; padding-left: 15px;display:flex">
+                                                            Anexos Adjuntos
+                                                        </div>
+                                                        <span id="annexFiles-percentage" class="m-form__help" style="font-size: 13px;padding-left: 15px;color: red;"></span>
+                                                    </div>
+                                                </div>
+                                                <div class="m-wizard__step" m-wizard-target="m_wizard_form_step_8">
+                                                    <div class="m-wizard__step-info">
+                                                        <a href="#" class="m-wizard__step-number" data-step="8">
+                                                            <span><span>8</span></span>
+                                                        </a>
+                                                        <div class="m-wizard__step-label" style="font-size: 15px; padding-left: 15px;display:flex">
+                                                            Preguntas Adicionales
+                                                        </div>
+                                                        <span id="additionalQuestions-percentage" class="m-form__help" style="font-size: 13px;padding-left: 15px;color: red;"></span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <!--end: Form Wizard Nav -->
+                                    </div>
+
+                                    <!--end: Form Wizard Head -->
+                                </div>
+                                <div class="col-xl-9 col-lg-12">
+
+                                    <!--begin: Form Wizard Form-->
+                                    <div class="m-wizard__form" style="height:100%;">
+                                        <div class="m-portlet__body m-portlet__body--no-padding">
+                                            <!--begin: Form Wizard Step 1-->
+                                            <form id="generalInformation-form" class="m-form m-form--label-align-left- m-form--state-" asp-area="Teacher" asp-page="/InvestigationConvocationPage/Inscription" asp-page-handler="GeneralInformationSave" method="post" enctype="multipart/form-data">
+                                                <div class="m-wizard__form-step" id="m_wizard_form_step_1">
+                                                    <div id="generalInformation-container">
+                                                    </div>
+
+                                                    <div class="m-portlet__foot m-portlet__foot--fit m--margin-top-40">
+                                                        <div class="m-form__actions">
+                                                            <div class="row">
+                                                                <div class="col-lg-6 m--align-left">
+                                                                </div>
+                                                                <div class="col-lg-6 m--align-right">
+                                                                    <button id="btnGeneralInformationSave" type="submit" class="btn btn-primary m-btn m-btn--custom m-btn--icon">
+                                                                        <span>
+                                                                            <i class="la la-save"></i>&nbsp;&nbsp;
+                                                                            <span>Guardar</span>
+                                                                        </span>
+                                                                    </button>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </form>
+                                            <!--end: Form Wizard Step 1-->
+                                            <!--begin: Form Wizard Step 2-->
+                                            <form id="problemDescription-form" class="m-form m-form--label-align-left- m-form--state-" asp-area="Teacher" asp-page="/InvestigationConvocationPage/Inscription" asp-page-handler="ProblemDescriptionSave" method="post" enctype="multipart/form-data">
+                                                <div class="m-wizard__form-step" id="m_wizard_form_step_2">
+                                                    <div id="problemDescription-container">
+                                                    </div>
+
+                                                    <div class="m-portlet__foot m-portlet__foot--fit m--margin-top-40">
+                                                        <div class="m-form__actions">
+                                                            <div class="row">
+                                                                <div class="col-lg-6 m--align-left">
+                                                                </div>
+                                                                <div class="col-lg-6 m--align-right">
+                                                                    <button id="btnProblemDescriptionSave" type="submit" class="btn btn-primary m-btn m-btn--custom m-btn--icon">
+                                                                        <span>
+                                                                            <i class="la la-save"></i>&nbsp;&nbsp;
+                                                                            <span>Guardar</span>
+                                                                        </span>
+                                                                    </button>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </form>
+                                            <!--end: Form Wizard Step 2-->
+                                            <!--begin: Form Wizard Step 3-->
+                                            <form id="markReference-form" class="m-form m-form--label-align-left- m-form--state-" asp-area="Teacher" asp-page="/InvestigationConvocationPage/Inscription" asp-page-handler="MarkReferenceSave" method="post" enctype="multipart/form-data">
+                                                <div class="m-wizard__form-step" id="m_wizard_form_step_3">
+                                                    <div id="markReference-container">
+                                                    </div>
+
+                                                    <div class="m-portlet__foot m-portlet__foot--fit m--margin-top-40">
+                                                        <div class="m-form__actions">
+                                                            <div class="row">
+                                                                <div class="col-lg-6 m--align-left">
+                                                                </div>
+                                                                <div class="col-lg-6 m--align-right">
+                                                                    <button id="btnMarkReferenceSave" type="submit" class="btn btn-primary m-btn m-btn--custom m-btn--icon">
+                                                                        <span>
+                                                                            <i class="la la-save"></i>&nbsp;&nbsp;
+                                                                            <span>Guardar</span>
+                                                                        </span>
+                                                                    </button>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </form>
+                                            <!--end: Form Wizard Step 3-->
+                                            <!--begin: Form Wizard Step 4-->
+                                            <form id="methodology-form" class="m-form m-form--label-align-left- m-form--state-" asp-area="Teacher" asp-page="/InvestigationConvocationPage/Inscription" asp-page-handler="MethodologySave" method="post" enctype="multipart/form-data">
+                                                <div class="m-wizard__form-step" id="m_wizard_form_step_4">
+                                                    <div id="methodology-container">
+                                                    </div>
+
+                                                    <div class="m-portlet__foot m-portlet__foot--fit m--margin-top-40">
+                                                        <div class="m-form__actions">
+                                                            <div class="row">
+                                                                <div class="col-lg-6 m--align-left">
+                                                                </div>
+                                                                <div class="col-lg-6 m--align-right">
+                                                                    <button id="btnMethodologySave" type="submit" class="btn btn-primary m-btn m-btn--custom m-btn--icon">
+                                                                        <span>
+                                                                            <i class="la la-save"></i>&nbsp;&nbsp;
+                                                                            <span>Guardar</span>
+                                                                        </span>
+                                                                    </button>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </form>
+                                            <!--end: Form Wizard Step 4-->
+                                            <!--begin: Form Wizard Step 5-->
+                                            <form id="expected-result-form" class="m-form m-form--label-align-left- m-form--state-" asp-area="Teacher" asp-page="/InvestigationConvocationPage/Inscription" asp-page-handler="ExpectedResultSave" method="post" enctype="multipart/form-data">
+                                                <div class="m-wizard__form-step" id="m_wizard_form_step_5">
+                                                    <div id="expected-result-container">
+                                                    </div>
+
+                                                    <div class="m-portlet__foot m-portlet__foot--fit m--margin-top-40">
+                                                        <div class="m-form__actions">
+                                                            <div class="row">
+                                                                <div class="col-lg-6 m--align-left">
+                                                                </div>
+                                                                <div class="col-lg-6 m--align-right">
+                                                                    <button id="btnExpectedResultSave" type="submit" class="btn btn-primary m-btn m-btn--custom m-btn--icon">
+                                                                        <span>
+                                                                            <i class="la la-save"></i>&nbsp;&nbsp;
+                                                                            <span>Guardar</span>
+                                                                        </span>
+                                                                    </button>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </form>
+                                            <!--end: Form Wizard Step 5-->
+                                            <!--begin: Form Wizard Step 6-->
+                                            <form id="team-member-form" class="m-form m-form--label-align-left- m-form--state-" asp-area="Teacher" asp-page="/InvestigationConvocationPage/Inscription" asp-page-handler="TeamMemberSave" method="post" enctype="multipart/form-data">
+                                                <div class="m-wizard__form-step" id="m_wizard_form_step_6">
+                                                    <div class="m-form__heading">
+                                                        <h3 class="m-form__heading-title">6. Equipo de Trabajo:</h3>
+                                                    </div>
+                                                    @if (!Model.Input.TeamMemberUserHidden)
+                                                    {
+                                                        <input name="InvestigationConvocationPostulantId" value="@Model.Input.InvestigationConvocationPostulantId" hidden />
+
+                                                        <div class="m-form__section m-form__section--first">
+
+                                                            <div class="form-group m-form__group row">
+                                                                <label class="col-xl-3 col-lg-3 required-form-label">Selecionar Usuario Investigador</label>
+                                                                <div class="col-xl-9 col-lg-9 m-form__group-sub">
+                                                                    <select name="ResearcherUserId" class="form-control" required>
+                                                                    </select>
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="form-group m-form__group row">
+                                                                <label class="col-xl-3 col-lg-3 required-form-label">Seleciona el tipo de Rol del Usuario</label>
+                                                                <div class="col-xl-9 col-lg-9 m-form__group-sub">
+                                                                    <select name="ResearcherUserRoleId" class="form-control" required>
+                                                                        <option value="0" selected disabled>Seleccione Tipo de Rol del Usuario</option>
+                                                                    </select>
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="form-group m-form__group row">
+                                                                <label class="col-xl-3 col-lg-3 col-form-label">Agregar CV</label>
+                                                                <div class="col-xl-9 col-lg-9 m-form__group-sub">
+                                                                    <div class="custom-file">
+                                                                        <input class="form-control m-input custom-file-input" name="CvFile" type="file" accept="application/pdf, application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document" placeholder="Seleccionar archivo">
+                                                                        <label class="custom-file-label selected">Seleccionar Archivo...</label>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="form-group m-form__group row">
+                                                                <label class="col-xl-3 col-lg-3 col-form-label">Agregar Objetivos</label>
+                                                                <div class="col-xl-9 col-lg-9 m-form__group-sub">
+                                                                    <input name="Objectives" class="form-control m-input" />
+                                                                </div>
+                                                            </div>
+
+                                                        </div>
+
+                                                        <div class="m-form__actions">
+                                                            <div class="row">
+                                                                <div class="col-lg-6 m--align-left">
+                                                                </div>
+                                                                <div class="col-lg-6 m--align-right">
+                                                                    <button id="btnTeamMemberSave" type="submit" class="btn btn-primary m-btn m-btn--custom m-btn--icon">
+                                                                        <span>
+                                                                            <i class="la la-save"></i>&nbsp;&nbsp;
+                                                                            <span>Guardar</span>
+                                                                        </span>
+                                                                    </button>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <h5>Lista de miembros de equipo <span id="team-member-weight"></span></h5>
+                                                        <table class="table table-striped table-bordered" id="team-member-datatable"></table>
+                                                    }
+                                                    else
+                                                    {
+                                                        <div class="m-alert m-alert--icon m-alert--icon-solid m-alert--outline alert alert-primary alert-dismissible fade show" role="alert">
+                                                            <div class="m-alert__icon">
+                                                                <i class="flaticon-exclamation-2"></i>
+                                                                <span></span>
+                                                            </div>
+                                                            <div class="m-alert__text">
+                                                                <strong>Información</strong> La sección de equipo de trabajo no ha sido configurada para esta convocatoria.
+                                                            </div>
+                                                            <div class="m-alert__close">
+                                                            </div>
+                                                        </div>
+                                                    }
+                                                    @if (!Model.Input.ExternalMemberHidden)
+                                                    {
+                                                        <div class="form-group m-form__group row">
+                                                            <div class="col-xl-12 col-lg-12 m-form__group-sub" style="text-align:end">
+                                                                <button type="button" class="btn btn-success btn-sm m-btn m-btn--icon" data-toggle="modal" data-target="#externalMemberModal">
+                                                                    <span>
+                                                                        <i class="la la-plus"></i>
+                                                                        <span>Agregar Colaborador Externo</span>
+                                                                    </span>
+                                                                </button>
+                                                            </div>
+                                                        </div>
+                                                        <h5>Lista de Colaboradores externos <span id="external-member-weight"></span></h5>
+                                                        <table class="table table-striped table-bordered" id="external-member-datatable"></table>
+                                                    }
+
+                                                </div>
+                                            </form>
+                                            <!--end: Form Wizard Step 6-->
+                                            <!--begin: Form Wizard Step 7-->
+                                            <form id="annexed-file-form" class="m-form m-form--label-align-left- m-form--state-" asp-area="Teacher" asp-page="/InvestigationConvocationPage/Inscription" asp-page-handler="AnnexedFileSave" method="post" enctype="multipart/form-data">
+                                                <div class="m-wizard__form-step" id="m_wizard_form_step_7">
+                                                    <div class="m-form__heading">
+                                                        <h3 class="m-form__heading-title">7. Anexos Adjuntos:</h3>
+                                                    </div>
+                                                    <div class="m-form__section m-form__section--first">
+                                                        @if (!Model.Input.ProjectDurationHidden)
+                                                        {
+                                                            <div class="form-group m-form__group row">
+                                                                <div class="col-lg-12 m-form__group-sub">
+                                                                    <label class="form-control-label">Duración en meses del proyecto</label>
+                                                                    <div class="input-group" style="flex-wrap:initial">
+                                                                        <input name="ProjectDuration" type="number" class="form-control m-input" />
+                                                                        <div class="input-group-append">
+                                                                            <span class="input-group-text requirement_weight" data-weight="0" id="projectDurationWeight"></span>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        }
+
+                                                        @if (!Model.Input.PostulationAttachmentFilesHidden)
+                                                        {
+                                                            <div class="form-group m-form__group row">
+                                                                <div class="col-xl-12 col-lg-12 m-form__group-sub" style="text-align:end">
+                                                                    <button type="button" class="btn btn-success btn-sm m-btn m-btn--icon btn-add-question" data-toggle="modal" data-target="#annexedFileModal">
+                                                                        <span>
+                                                                            <i class="la la-plus"></i>
+                                                                            <span>Agregar Anexo</span>
+                                                                        </span>
+                                                                    </button>
+                                                                </div>
+                                                            </div>
+                                                        }
+
+
+                                                    </div>
+                                                    @if (!Model.Input.PostulationAttachmentFilesHidden)
+                                                    {
+                                                        <h5>Lista de archivos anexos <span id="postulationAttachmentFilesWeight"></span></h5>
+                                                        <table class="table table-striped table-bordered" id="annexedFile-datatable"></table>
+                                                    }
+
+                                                    <div class="m-portlet__foot m-portlet__foot--fit m--margin-top-40">
+                                                        <div class="m-form__actions">
+                                                            <div class="row">
+                                                                <div class="col-lg-6 m--align-left">
+                                                                </div>
+                                                                <div class="col-lg-6 m--align-right">
+                                                                    <button id="btnAnnexedFileSave" type="submit" class="btn btn-primary m-btn m-btn--custom m-btn--icon">
+                                                                        <span>
+                                                                            <i class="la la-save"></i>&nbsp;&nbsp;
+                                                                            <span>Guardar</span>
+                                                                        </span>
+                                                                    </button>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </form>
+                                            <!--end: Form Wizard Step 7-->
+                                            <!--begin: Form Wizard Step 8-->
+                                            <form id="additional-question-form" class="m-form m-form--label-align-left- m-form--state-" asp-area="Teacher" asp-page="/InvestigationConvocationPage/Inscription" asp-page-handler="AdditionalQuestionSave" method="post" enctype="multipart/form-data">
+                                                <div class="m-wizard__form-step" id="m_wizard_form_step_8">
+                                                    <div class="m-form__heading">
+                                                        <h3 class="m-form__heading-title">8. Preguntas Adicionales:</h3>
+                                                    </div>
+                                                    <input name="InvestigationConvocationPostulantId" value="@Model.Input.InvestigationConvocationPostulantId" hidden>
+                                                    <input name="UserId" value="@Model.Input.UserId" hidden>
+                                                    <input name="InvestigationConvocationId" value="@Model.Input.InvestigationConvocationId" hidden>
+                                                    <input name="InvestigationConvocationRequirementId" value="@Model.Input.InvestigationConvocationRequirementId" hidden>
+                                                    <input name="QuestionsHidden" value="@Model.Input.QuestionsHidden" hidden>
+
+                                                    @if (!Model.Input.QuestionsHidden)
+                                                    {
+                                                        <div class="row">
+                                                            @for (int i = 0; i < Model.Input.InvestigationQuestions.Count(); i++)
+                                                            {
+                                                                <div class="col-12">
+                                                                    <input name="InvestigationQuestions[@i].Id" value="@Model.Input.InvestigationQuestions[i].Id" hidden />
+                                                                    <div class="p-3 row">
+                                                                        @(i + 1).&emsp;@Model.Input.InvestigationQuestions[i].QuestionDescription
+                                                                    </div>
+                                                                    <div class="p-2 row">
+                                                                        <input name="InvestigationQuestions[@i].Type" value="@Model.Input.InvestigationQuestions[i].Type" hidden />
+                                                                        @switch (Model.Input.InvestigationQuestions[i].Type)
+                                                                        {
+                                                                            case TeacherInvestigationConstants.InscriptionForm.QuestionType.TEXT_QUESTION:
+                                                                                <input name="InvestigationQuestions[@i].AnswerDescription" value="@Model.Input.InvestigationQuestions[i].AnswerDescription" class="form-control" />
+                                                                                break;
+                                                                            case TeacherInvestigationConstants.InscriptionForm.QuestionType.MULTIPLE_SELECTION_QUESTION:
+                                                                                for (int j = 0; j < Model.Input.InvestigationQuestions[i].InvestigationAnswers.Count; j++)
+                                                                                {
+                                                                                    <input name="InvestigationQuestions[@i].InvestigationAnswers[@j].Id" value="@Model.Input.InvestigationQuestions[i].InvestigationAnswers[j].Id" hidden />
+                                                                                    <label class="option @(Model.Input.InvestigationQuestions[i].InvestigationAnswers[j].Selected ? "bg-selected" : "")">
+                                                                                        <input type="checkbox" name="InvestigationQuestions[@i].InvestigationAnswers[@j].Selected" asp-for="Input.InvestigationQuestions[i].InvestigationAnswers[j].Selected"> @Model.Input.InvestigationQuestions[i].InvestigationAnswers[j].Description
+                                                                                    </label>
+                                                                                    @:&emsp;
+                                                                                }
+                                                                                break;
+                                                                            case TeacherInvestigationConstants.InscriptionForm.QuestionType.UNIQUE_SELECTION_QUESTION:
+                                                                                for (int j = 0; j < Model.Input.InvestigationQuestions[i].InvestigationAnswers.Count; j++)
+                                                                                {
+                                                                                    <input name="InvestigationQuestions[@i].InvestigationAnswers[@j].Id" value="@Model.Input.InvestigationQuestions[i].InvestigationAnswers[j].Id" hidden />
+                                                                                    <label class="option @(Model.Input.InvestigationQuestions[i].InvestigationAnswers[j].Selected ? "bg-selected" : "")">
+                                                                                        <input type="radio" name="InvestigationQuestions[@i].UniqueAnswer" asp-for="Input.InvestigationQuestions[i].UniqueAnswer" value="@Model.Input.InvestigationQuestions[i].InvestigationAnswers[j].Id"> @Model.Input.InvestigationQuestions[i].InvestigationAnswers[j].Description
+                                                                                    </label>
+                                                                                    @:&emsp;
+                                                                                }
+                                                                                break;
+                                                                        }
+                                                                    </div>
+                                                                </div>
+                                                            }
+                                                        </div>
+                                                    }
+
+                                                    <div class="m-portlet__foot m-portlet__foot--fit m--margin-top-40">
+                                                        <div class="m-form__actions">
+                                                            <div class="row">
+                                                                <div class="col-lg-6 m--align-left">
+                                                                </div>
+                                                                <div class="col-lg-6 m--align-right">
+                                                                    <button id="btnAdditionalQuestionSave" type="submit" class="btn btn-primary m-btn m-btn--custom m-btn--icon">
+                                                                        <span>
+                                                                            <i class="la la-save"></i>&nbsp;&nbsp;
+                                                                            <span>Guardar</span>
+                                                                        </span>
+                                                                    </button>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </form>
+                                            <!--end: Form Wizard Step 5-->
+                                        </div>
+                                    </div>
+
+                                    <!--end: Form Wizard Form-->
+                                </div>
+                            </div>
+                        </div>
+
+                        <!--end: Form Wizard-->
+                    </div>
+
+                    <!--end: Portlet Body-->
+                </div>
+                <div class="tab-pane" id="tab_2" role="tabpanel">
+                    <div class="m-portlet__body m-portlet__body--no-padding">
+                        <div class="m-form--label-align-right m--margin-top-20 m--margin-bottom-30">
+                            <div class="row align-items-center">
+                                <div class="col-xl-8 order-2 order-xl-1">
+                                    <div class="row">
+                                        <div class="form-group m-form__group col-xl-4">
+                                            <label></label>
+                                            <div class="m-input m-input-icon m-input-icon--left">
+                                                <input type="text" class="form-control m-input m-input--solid m-input--pill" placeholder="Buscar..." id="searchSection">
+                                                <span class="m-input-icon__icon m-input-icon__icon--left">
+                                                    <span><i class="la la-search"></i></span>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-xl-4 order-1 order-xl-2 m--align-right">
+                                    <button data-toggle="modal" data-target="#addModal" class="btn btn-primary m-btn m-btn--air m-btn--icon">
+                                        <span>
+                                            <i class="la la-plus"></i>
+                                            <span>Nuevo Avance</span>
+                                        </span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <table class="table table-striped table-bordered" id="progressfileconvocationpostulant-datatable"></table>
+                    </div>
+                </div>
+                <div class="tab-pane" id="tab_3" role="tabpanel">
+                    <div class="m-portlet__body m-portlet__body--no-padding">
+                        <h5>Lista de Archivos Financieros </h5>
+                        <div class="m-form--label-align-right m--margin-top-20 m--margin-bottom-30">
+                            <div class="row align-items-center">
+                                <div class="col-xl-8 order-2 order-xl-1">
+                                    <div class="row">
+                                        <div class="form-group m-form__group col-xl-4">
+                                            <label></label>
+                                            <div class="m-input m-input-icon m-input-icon--left">
+                                                <input type="text" class="form-control m-input m-input--solid m-input--pill" placeholder="Buscar..." id="searchSection">
+                                                <span class="m-input-icon__icon m-input-icon__icon--left">
+                                                    <span><i class="la la-search"></i></span>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-xl-4 order-1 order-xl-2 m--align-right">
+                                    <button data-toggle="modal" data-target="#financialDocumentModal" class="btn btn-primary m-btn m-btn--air m-btn--icon">
+                                        <span>
+                                            <i class="la la-plus"></i>
+                                            <span>Nuevo Documento Financiero</span>
+                                        </span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <table class="table table-striped table-bordered" id="postulantfinancialfile-datatable"></table>
+                    </div>
+                    <div class="m-portlet__body m-portlet__body--no-padding">
+                        <h5>Lista de Archivos Técnicos </h5>
+                        <div class="m-form--label-align-right m--margin-top-20 m--margin-bottom-30">
+                            <div class="row align-items-center">
+                                <div class="col-xl-8 order-2 order-xl-1">
+                                    <div class="row">
+                                        <div class="form-group m-form__group col-xl-4">
+                                            <label></label>
+                                            <div class="m-input m-input-icon m-input-icon--left">
+                                                <input type="text" class="form-control m-input m-input--solid m-input--pill" placeholder="Buscar..." id="searchSection">
+                                                <span class="m-input-icon__icon m-input-icon__icon--left">
+                                                    <span><i class="la la-search"></i></span>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-xl-4 order-1 order-xl-2 m--align-right">
+                                    <button data-toggle="modal" data-target="#techDocumentModal" class="btn btn-primary m-btn m-btn--air m-btn--icon">
+                                        <span>
+                                            <i class="la la-plus"></i>
+                                            <span>Nuevo Documento Técnico</span>
+                                        </span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <table class="table table-striped table-bordered" id="postulanttechnicalfile-datatable"></table>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<div class="modal fade" id="observationModal" tabindex="-10" role="dialog" aria-labelledby="addLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title text-primary font-weight-bold">
+                    Observaciones
+                </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                @Html.AntiForgeryToken()
+                <table class="table table-striped table-bordered" id="observation-table"></table>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                    Cerrar
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!--Add Modal Anexos de Postulacion-->
+<div class="modal fade" id="annexedFileModal" tabindex="-1000" role="dialog" aria-labelledby="detailLabel" aria-hidden="true">
+    <div class="modal-dialog " role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">
+                    Subir anexo de postulación
+                </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form id="annexed-file-modal-form" class="m-form m-form--state" asp-area="Teacher" asp-page-handler="CreateAnnexedFile" method="post" enctype="multipart/form-data">
+                <input name="InvestigationConvocationPostulantId" value="@Model.Input.InvestigationConvocationPostulantId" type="hidden">
+                <div class="modal-body">
+                    <div class="m-form__group">
+                        <label class="required-form-label">Ingrese nombre del anexo:</label>
+                        <input name="AnnexedFileName" type="text" class="form-control m-input" required />
+                    </div>
+                    <div class="m-form__group">
+                        <label class="required-form-label">Archivo de anexo de postulación:</label>
+                        <div class="custom-file">
+                            <input class="form-control m-input custom-file-input" name="AnnexedFileDocument" type="file" accept="application/pdf, application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document" placeholder="Seleccionar archivo" required>
+                            <label class="custom-file-label selected">Seleccionar Archivo...</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <div style="text-align:right;">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                            Cancelar
+                        </button>
+                        <button id="btnSaveAnnexedFile" type="submit" class="btn btn-primary ladda-button" data-style="slide-down">
+                            <span class="ladda-label">Guardar</span>
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!--Add Modal Tecnico-->
+<div class="modal fade" id="techDocumentModal" tabindex="-1000" role="dialog" aria-labelledby="detailLabel" aria-hidden="true">
+    <div class="modal-dialog " role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">
+                    Subir Documento Técnico
+                </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form id="tech-document-form" class="m-form m-form--state" asp-area="Teacher" asp-page-handler="CreateUploadTechDocumentFile" method="post" enctype="multipart/form-data">
+                <input name="InvestigationConvocationPostulantId" value="@Model.Input.InvestigationConvocationPostulantId" type="hidden">
+                <div class="modal-body">
+                    <div class="m-form__group">
+                        <label class="required-form-label">Ingrese Nombre de Documento Tecnico:</label>
+                        <input name="Name" type="text" class="form-control m-input" required />
+                    </div>
+                    <div class="m-form__group">
+                        <label class="required-form-label">Archivo</label>
+                        <div class="custom-file">
+                            <input class="form-control m-input custom-file-input" name="File" type="file" accept="application/pdf, application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document" placeholder="Seleccionar archivo" required>
+                            <label class="custom-file-label selected">Seleccionar Archivo...</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <div style="text-align:right;">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                            Cancelar
+                        </button>
+                        <button id="btnSaveTechDocument" type="submit" class="btn btn-primary ladda-button" data-style="slide-down">
+                            <span class="ladda-label">Guardar</span>
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!--Add Modal Financiero-->
+<div class="modal fade" id="financialDocumentModal" tabindex="-1000" role="dialog" aria-labelledby="detailLabel" aria-hidden="true">
+    <div class="modal-dialog " role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">
+                    Subir Documento Financiero
+                </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form id="financial-document-form" class="m-form m-form--state" asp-area="Teacher" asp-page-handler="CreateUploadFinancialDocumentFile" method="post" enctype="multipart/form-data">
+                <input name="InvestigationConvocationPostulantId" value="@Model.Input.InvestigationConvocationPostulantId" type="hidden">
+                <div class="modal-body">
+                    <div class="m-form__group">
+                        <label class="required-form-label">Ingrese Nombre de Avance:</label>
+                        <input name="Name" type="text" class="form-control m-input" required />
+                    </div>
+                    <div class="m-form__group">
+                        <label class="required-form-label">Archivo</label>
+                        <div class="custom-file">
+                            <input class="form-control m-input custom-file-input" name="File" type="file" accept="application/pdf, application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document" placeholder="Seleccionar archivo" required>
+                            <label class="custom-file-label selected">Seleccionar Archivo...</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <div style="text-align:right;">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                            Cancelar
+                        </button>
+                        <button id="btnSaveFinancialDocument" type="submit" class="btn btn-primary ladda-button" data-style="slide-down">
+                            <span class="ladda-label">Guardar</span>
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!--Add Modal Lugar de Ejecución-->
+<div class="modal fade" id="executionPlaceModal" tabindex="-1000" role="dialog" aria-labelledby="detailLabel" aria-hidden="true">
+    <div class="modal-dialog " role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">
+                    Agregar Lugar de Ejecución
+                </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form id="execution-place-modal-form" class="m-form m-form--state" asp-area="Teacher" asp-page-handler="CreateExecutionPlace" method="post">
+                <input name="InvestigationConvocationPostulantId" value="@Model.Input.InvestigationConvocationPostulantId" hidden />
+                <div class="modal-body">
+                    <div class="m-form__group">
+                        <label class="required-form-label">Departamento:</label>
+                        <select id="DepartmentId" name="DepartmentId" class="form-control" required>
+                            <option value="0" selected disabled>Seleccione un Departamento</option>
+                        </select>
+                    </div>
+                    <div class="m-form__group">
+                        <label class="form-control-label">Provincia:</label>
+                        <select id="ProvinceId" name="ProvinceId" class="form-control">
+                            <option value="0" selected disabled>Seleccione un Provincia</option>
+                        </select>
+                    </div>
+                    <div class="m-form__group">
+                        <label class="form-control-label">Distrito:</label>
+                        <select id="DistrictId" name="DistrictId" class="form-control">
+                            <option value="0" selected disabled>Seleccione un Distrito</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <div style="text-align:right;">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                            Cancelar
+                        </button>
+                        <button id="btnSaveExecutionPlace" type="submit" class="btn btn-primary ladda-button" data-style="slide-down">
+                            <span class="ladda-label">Guardar</span>
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="externalMemberModal" tabindex="-1000" role="dialog" aria-labelledby="detailLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">
+                    Agregar Colaborador Externo
+                </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form id="external-member-modal-form" class="m-form m-form--state" asp-area="Teacher" asp-page-handler="CreateExternalMember" method="post" enctype="multipart/form-data">
+                <input name="InvestigationConvocationPostulantId" value="@Model.Input.InvestigationConvocationPostulantId" hidden />
+                <div class="modal-body">
+                    <div class="form-group m-form__group row">
+                        <div class="m-form__group-sub col-lg-6">
+                            <label class="required-form-label">Nombres:</label>
+                            <input name="Name" type="text" class="form-control m-input" required />
+                        </div>
+                        <div class="m-form__group-sub col-lg-6">
+                            <label class="required-form-label">Apellido Paterno:</label>
+                            <input name="PaternalSurname" type="text" class="form-control m-input" required />
+                        </div>
+                    </div>
+                    <div class="form-group m-form__group row">
+                        <div class="m-form__group-sub col-lg-6">
+                            <label class="required-form-label">Apellido Materno:</label>
+                            <input name="MaternalSurname" type="text" class="form-control m-input" required />
+                        </div>
+                        <div class="m-form__group-sub col-lg-6">
+                            <label class="required-form-label">Dni:</label>
+                            <input name="Dni" type="text" class="form-control m-input" pattern="^[0-9]*$" minlength="8" maxlength="8" required />
+                        </div>
+                    </div>
+                    <div class="form-group m-form__group row">
+                        <div class="m-form__group-sub col-lg-6">
+                            <label class="form-control-label">Descripción:</label>
+                            <input name="Description" type="text" class="form-control m-input" />
+                        </div>
+                        <div class="m-form__group-sub col-lg-6">
+                            <label class="form-control-label">Institución de procedencia:</label>
+                            <input name="InstitutionOrigin" type="text" class="form-control m-input" />
+                        </div>
+                    </div>
+                    <div class="form-group m-form__group row">
+                        <div class="m-form__group-sub col-lg-6">
+                            <label class="form-control-label">Profesión:</label>
+                            <input name="Profession" type="text" class="form-control m-input" />
+                        </div>
+                        <div class="m-form__group-sub col-lg-6">
+                            <label class="form-control-label">Objetivos:</label>
+                            <input name="Objectives" type="text" class="form-control m-input" />
+                        </div>
+                    </div>
+                    <div class="m-form__group">
+                        <label class="form-control-label">CV Archivo</label>
+                        <div class="custom-file">
+                            <input class="form-control m-input custom-file-input" name="CvFile" type="file" accept="application/pdf, application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document" placeholder="Seleccionar archivo">
+                            <label class="custom-file-label selected">Seleccionar Archivo...</label>
+                        </div>
+                    </div>
+                    <div class="form-group m-form__group row">
+                        <div class="m-form__group-sub col-lg-6">
+                            <label class="form-control-label">Dirección:</label>
+                            <input name="Address" type="text" class="form-control m-input" />
+                        </div>
+                        <div class="m-form__group-sub col-lg-6">
+                            <label class="form-control-label">Celular:</label>
+                            <input name="PhoneNumber" type="text" class="form-control m-input" />
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <div style="text-align:right;">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                            Cancelar
+                        </button>
+                        <button id="btnSaveExternalMember" type="submit" class="btn btn-primary ladda-button" data-style="slide-down">
+                            <span class="ladda-label">Guardar</span>
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+<!--Add Modal-->
+<div class="modal fade" id="addModal" tabindex="-1000" role="dialog" aria-labelledby="detailLabel" aria-hidden="true">
+    <div class="modal-dialog " role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">
+                    Subir Avance
+                </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form id="add-form" class="m-form m-form--state" asp-area="Teacher" asp-page-handler="CreateAdvance" method="post" enctype="multipart/form-data">
+                <div class="modal-body">
+
+                    <div class="m-form__group">
+                        <label class="required-form-label">Ingrese Nombre de Avance:</label>
+                        <input name="Name" type="text" class="form-control m-input" required />
+                    </div>
+                    <div class="m-form__group">
+                        <label class="required-form-label">Archivo</label>
+                        <div class="custom-file">
+                            <input class="form-control m-input custom-file-input" name="File" type="file" accept="application/pdf, application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document" placeholder="Seleccionar archivo" required>
+                            <label class="custom-file-label selected">Seleccionar Archivo...</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <div style="text-align:right;">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                            Cancelar
+                        </button>
+                        <button id="btnSaveCreate" type="submit" class="btn btn-primary ladda-button" data-style="slide-down">
+                            <span class="ladda-label">Enviar</span>
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!--Edit Modal-->
+<div class="modal fade" id="editModal" tabindex="-1000" role="dialog" aria-labelledby="detailLabel" aria-hidden="true">
+    <div class="modal-dialog " role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">
+                    Editar Avance
+                </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form id="edit-form" class="m-form m-form--state" asp-area="Teacher" asp-page-handler="EditAdvance" method="post" enctype="multipart/form-data">
+                <input name="Id" hidden />
+                <div class="modal-body">
+
+                    <div class="m-form__group">
+                        <label class="required-form-label">Ingrese Nombre de Avance:</label>
+                        <input name="Name" type="text" class="form-control m-input" required />
+                    </div>
+                    <div class="m-form__group">
+                        <label class="required-form-label">Archivo</label>
+                        <div class="custom-file">
+                            <input class="form-control m-input custom-file-input" name="File" type="file" accept="application/pdf, application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document" placeholder="Seleccionar archivo" required>
+                            <label class="custom-file-label selected">Seleccionar Archivo...</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <div style="text-align:right;">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                            Cancelar
+                        </button>
+                        <button id="btnEdit" type="submit" class="btn btn-primary ladda-button" data-style="slide-down">
+                            <span class="ladda-label">Enviar</span>
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!--Edit Modal Tecnico-->
+<div class="modal fade" id="editModalTech" tabindex="-1000" role="dialog" aria-labelledby="detailLabel" aria-hidden="true">
+    <div class="modal-dialog " role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">
+                    Editar Documento Técnico
+                </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form id="edit-form-techfile" class="m-form m-form--state" asp-area="Teacher" asp-page-handler="EditUploadTechDocumentFile" method="post" enctype="multipart/form-data">
+                <input name="Id" hidden />
+                <div class="modal-body">
+
+                    <div class="m-form__group">
+                        <label class="required-form-label">Ingrese Nombre de Documento Tecnico:</label>
+                        <input name="Name" type="text" class="form-control m-input" required />
+                    </div>
+                    <div class="m-form__group">
+                        <label class="form-label">Archivo</label>
+                        <div class="custom-file">
+                            <input class="form-control m-input custom-file-input" name="File" type="file" accept="application/pdf, application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document" placeholder="Seleccionar archivo">
+                            <label class="custom-file-label selected">Seleccionar Archivo...</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <div style="text-align:right;">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                            Cancelar
+                        </button>
+                        <button id="btnEditTechFile" type="submit" class="btn btn-primary ladda-button" data-style="slide-down">
+                            <span class="ladda-label">Enviar</span>
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!--Edit Modal Finaciero-->
+<div class="modal fade" id="editModalFinancial" tabindex="-1000" role="dialog" aria-labelledby="detailLabel" aria-hidden="true">
+    <div class="modal-dialog " role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">
+                    Editar Documento Financiero
+                </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form id="edit-form-financialfile" class="m-form m-form--state" asp-area="Teacher" asp-page-handler="EditUploadFinancialDocumentFile" method="post" enctype="multipart/form-data">
+                <input name="Id" hidden />
+                <div class="modal-body">
+
+                    <div class="m-form__group">
+                        <label class="required-form-label">Ingrese Nombre de Documento Tecnico:</label>
+                        <input name="Name" type="text" class="form-control m-input" required />
+                    </div>
+                    <div class="m-form__group">
+                        <label class="form-label">Archivo</label>
+                        <div class="custom-file">
+                            <input class="form-control m-input custom-file-input" name="File" type="file" accept="application/pdf, application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document" placeholder="Seleccionar archivo">
+                            <label class="custom-file-label selected">Seleccionar Archivo...</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <div style="text-align:right;">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                            Cancelar
+                        </button>
+                        <button id="btnEditFinancialFile" type="submit" class="btn btn-primary ladda-button" data-style="slide-down">
+                            <span class="ladda-label">Enviar</span>
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts{
+    <script src="~/js/areas/teacher/investigationconvocation/inscription.js" asp-append-version="true"></script>
+}

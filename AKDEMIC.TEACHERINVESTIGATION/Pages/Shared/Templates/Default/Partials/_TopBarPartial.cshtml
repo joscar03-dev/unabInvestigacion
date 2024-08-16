@@ -1,0 +1,91 @@
+﻿@using Microsoft.AspNetCore.Identity
+@using AKDEMIC.CORE.Extensions
+@using AKDEMIC.CORE.Constants
+
+@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
+
+<ul class="m-topbar__nav m-nav m-nav--inline">
+    @if (SignInManager.IsSignedIn(User) || User?.Identity.IsAuthenticated == true)
+    {
+        <li class="m-nav__item m-topbar__user-profile m-topbar__user-profile--img  m-dropdown m-dropdown--medium m-dropdown--arrow m-dropdown--header-bg-fill m-dropdown--align-right m-dropdown--mobile-full-width m-dropdown--skin-light" m-dropdown-toggle="click">
+            <a href="#" class="m-nav__link m-dropdown__toggle">
+                <span class="m-topbar__username">
+
+                    <span class="m-topbar__name">
+                        @User.GetFullName()
+                    </span>
+                    <span class="m-topbar__role">
+                        <strong>@User.GetRoles()</strong>
+                    </span>
+                </span>
+                &nbsp;
+                <span class="m-topbar__userpic">
+                    <img src="@(string.IsNullOrEmpty(User.GetPictureUrl()) ? "/images/demo/user.png" : User.GetPictureUrl())" class="m--img-rounded m--marginless m--img-centered" alt="" />
+                </span>
+                @*<span class="m-topbar__username m--hide">
+                        @User.GetFullName()
+                    </span>*@
+            </a>
+            <div class="m-dropdown__wrapper">
+                <span class="m-dropdown__arrow m-dropdown__arrow--right m-dropdown__arrow--adjust"></span>
+                <div class="m-dropdown__inner">
+                    <div class="m-dropdown__header m--align-center">
+                        @*style="background: url(/images/demo/user_profile_bg.jpg); background-size: cover;"*@
+                        <div class="m-card-user m-card-user--skin-dark">
+                            <div class="m-card-user__pic">
+                                <img src="@(string.IsNullOrEmpty(User.GetPictureUrl()) ? "/images/demo/user.png" : User.GetPictureUrl())" class="m--img-rounded m--marginless" alt="" />
+                            </div>
+                            <div class="m-card-user__details">
+                                <span class="m-card-user__name m--font-weight-500">
+                                    @User.GetFullName()
+                                </span>
+                                <a href="" class="m-card-user__email m--font-weight-300 m-link">
+                                    @User.GetEmail()
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="m-dropdown__body">
+                        <div class="m-dropdown__content">
+                            <ul class="m-nav m-nav--skin-light">
+                                <li class="m-nav__section m--hide">
+                                    <span class="m-nav__section-text">
+                                        Seccion
+                                    </span>
+                                </li>
+                                <li class="m-nav__item">
+                                    <a asp-page="/ProfilePage/Index" class="m-nav__link">
+                                        <i class="m-nav__link-icon flaticon-profile-1"></i>
+                                        <span class="m-nav__link-text">
+                                            Mi Perfil
+                                        </span>
+                                    </a>
+                                </li>
+                                @if (User.IsInRole(GeneralConstants.ROLES.SUPERADMIN) || User.IsInRole(GeneralConstants.ROLES.TEACHERINVESTIGATION_ADMIN))
+                                {
+                                    <li class="m-nav__separator m-nav__separator--fit"></li>
+                                    <li class="m-nav__item">
+                                        <a asp-area="Admin" asp-page="/ConfigurationPage/Index" class="m-nav__link">
+                                            <i class="m-nav__link-icon flaticon-cogwheel"></i>
+                                            <span class="m-nav__link-text">
+                                                Configuraci&oacute;n
+                                            </span>
+                                        </a>
+                                    </li>
+                                }
+                                <li class="m-nav__separator m-nav__separator--fit"></li>
+                                <li class="m-nav__item">
+                                    <a href="/logout" class="btn m-btn--pill btn-secondary m-btn m-btn--custom m-btn--label-brand m-btn--bolder">
+                                        Cerrar Sesi&oacute;n
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </li>
+    }
+
+</ul>

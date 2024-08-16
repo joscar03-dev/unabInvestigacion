@@ -1,0 +1,28 @@
+﻿@page "/convocatorias-de-investigacion"
+@model AKDEMIC.TEACHERINVESTIGATION.Pages.InvestigationConvocationPage.IndexModel
+@{
+    Layout = "~/Pages/Shared/Templates/Portal/_Layout.cshtml";
+}
+
+<div class="m-content">
+    <div class="m-portlet " id="m_portlet">
+        <div class="m-portlet__head">
+            <div class="m-portlet__head-caption mx-auto">
+                <div class="m-portlet__head-title">
+                    <h3>
+                        Convocatorias y/o Concursos
+                    </h3>
+                </div>
+            </div>
+        </div>
+        <div class="m-portlet__body" style="padding:0">
+            <div id="prueba"></div>
+        </div>
+    </div>
+</div>
+
+
+@section Scripts
+{
+    <script src="~/js/pages/investigationconvocation/index.js" asp-append-version="true"></script>
+}

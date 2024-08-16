@@ -1,0 +1,64 @@
+﻿@model AKDEMIC.TEACHERINVESTIGATION.Areas.IncubatorUnit.ViewModels.IncubatorPostulantViewModels.ScheduleViewModels
+
+@if (Model.SpecificGoals == null || Model.SpecificGoals.Count == 0)
+{
+    <span> Debe agregar Objetivos Especificos (Componentes en la pestaña de información general)</span>
+}
+else
+{
+    @for (int i = 0; i < Model.SpecificGoals.Count; i++)
+    {
+        <div class="m-portlet">
+            <div class="m-portlet__head">
+                <div class="m-portlet__head-caption">
+                    <div class="m-portlet__head-title">
+                        <h3 class="m-portlet__head-text">
+                            @Model.SpecificGoals[i].Description
+                        </h3>
+                    </div>
+                </div>
+            </div>
+            <div class="m-portlet__body">
+                @for (int j = 0; j < Model.SpecificGoals[i].Activities.Count; j++)
+                {
+                    <div class="m-portlet">
+                        <div class="m-portlet__head">
+                            <div class="m-portlet__head-caption">
+                                <div class="m-portlet__head-title">
+                                    <h3 class="m-portlet__head-text">
+                                        @Model.SpecificGoals[i].Activities[j].Description
+                                    </h3>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="m-portlet__body">
+                            <form id="saveActivityMonth-form-@i-@j" class="m-form m-form--state" asp-area="Student" asp-page-handler="ActivityMonthSave" method="post">
+                                <input name="IncubatorPostulationActivityId" value="@Model.SpecificGoals[i].Activities[j].Id" hidden>
+                                <div class="row">
+                                    @for (int k = 0; k < Model.MonthDuration; k++)
+                                    {
+                                        var mes = k + 1;
+                                        <div class="col-xl-2 col-lg-2 col-md-3 col-sm-4 col-6" style="margin-bottom:10px">
+                                            @if (Model.SpecificGoals[i].Activities[j].ActivityMonths.Any(x => x.MonthNumber == mes))
+                                            {
+                                                <button type="button" data-month="@mes" class="btn btn-success m-btn m-btn--icon btn-add-activityMonth disabled" style="width:100%">
+                                                    @mes
+                                                </button>
+                                            }
+                                            else
+                                            {
+                                                <button type="button" data-month="@mes" class="btn btn-warning m-btn m-btn--icon btn-add-activityMonth disabled" style="width:100%">
+                                                    @mes
+                                                </button>
+                                            }
+                                        </div>
+                                    }
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    }
+}

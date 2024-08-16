@@ -1,0 +1,41 @@
+﻿@model List<AKDEMIC.TEACHERINVESTIGATION.Areas.Admin.ViewModels.InvestigationConvocationViewModels.InvestigationQuestionViewModel>
+
+
+<div class="row">
+    @for (int i = 0; i < Model.Count(); i++)
+    {
+        <div class="col-md-12">
+            <div class="form-group m-form__group m--margin-bottom-25">
+                <div style="overflow-wrap: break-word;word-wrap: break-word;">@(i + 1) .-  @Model[i].Description - <span class="@(Model[i].IsRequired? "m--font-success":"m--font-danger")">@(Model[i].IsRequired ? "(REQUERIDA)" : "(OPCIONAL)") </span></div>
+                <div style="float: right">
+                    <a style="color:#1b76d6;cursor: pointer;" class="edit" data-id="@Model[i].Id"><i class="la la-edit"></i></a>
+                    <a style="color:#EC6248;cursor: pointer;" class="delete" data-id="@Model[i].Id"><i class="la la-trash"></i></a>
+                </div>
+                @if (Model[i].QuestionType == AKDEMIC.CORE.Constants.Systems.TeacherInvestigationConstants.InscriptionForm.QuestionType.TEXT_QUESTION)
+                {
+                    <input class="form-control m-input col-md-12"  disabled>
+                }
+                <div class="m-radio-inline">
+                    @foreach (var answer in Model[i].InvestigationAnswers)
+                    {
+                        @if (Model[i].QuestionType == AKDEMIC.CORE.Constants.Systems.TeacherInvestigationConstants.InscriptionForm.QuestionType.MULTIPLE_SELECTION_QUESTION)
+                        {
+                            <label class="m-checkbox">
+                                <input type="checkbox" disabled="disabled"> @answer.Description
+                                <span></span>
+                            </label>
+                        }
+                        @if (Model[i].QuestionType == AKDEMIC.CORE.Constants.Systems.TeacherInvestigationConstants.InscriptionForm.QuestionType.UNIQUE_SELECTION_QUESTION)
+                        {
+                            <label class="m-radio">
+                                <input type="radio" disabled="disabled"> @answer.Description
+                                <span></span>
+                            </label>
+                        }
+                    }
+                </div>
+            </div>
+        </div>
+    }
+</div>
+

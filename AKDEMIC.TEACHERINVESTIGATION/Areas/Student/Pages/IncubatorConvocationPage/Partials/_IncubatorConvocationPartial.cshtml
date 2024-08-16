@@ -1,0 +1,75 @@
+﻿@using Microsoft.AspNetCore.Html
+@model List<AKDEMIC.TEACHERINVESTIGATION.Areas.Student.ViewModels.IncubatorConvocationViewModels.IncubatorConvocationViewModel>
+
+<style>
+
+    .m-portlet {
+        border-radius: 10px;
+        background: #fff;
+        box-shadow: 0 5px 10px rgba(0,0,0,.08), 0 0 5px rgba(0,0,0,.05);
+        transition: .3s transform cubic-bezier(.155,1.105,.295,1.12),.3s box-shadow,.3s -webkit-transform cubic-bezier(.155,1.105,.295,1.12);
+        padding: 30px 36px 30px 36px;
+        cursor: pointer;
+    }
+
+    .m-portlet--rounded:hover {
+        transform: scale(1.03);
+        box-shadow: 0 10px 20px rgba(0,0,0,.12), 0 4px 8px rgba(0,0,0,.06);
+    }
+
+    .card h3 {
+        font-weight: 600;
+    }
+</style>
+@foreach (var item in Model)
+{
+
+    <div class="m-portlet m-portlet--primary m-portlet--head-solid-bg m-portlet--rounded">
+        <div class="m-portlet__head">
+            <div class="m-portlet__head-caption">
+                <div class="m-portlet__head-title">
+                    <span class="m-portlet__head-icon">
+                        <i class="la la-thumb-tack"></i>
+                    </span>
+                    <h3 class="m-portlet__head-text">
+                        @item.Code @item.Name
+                    </h3>
+                </div>
+            </div>
+        </div>
+        <div class="m-portlet__body">
+            <div class="row">
+                <div class="col-xl-6">
+                    <div style="max-width: 450px; width: inherit; margin:auto; text-align:center">
+                        <img style="max-width:100%" src="@($"/imagenes/{item.PicturePath}")" />
+                    </div>
+                </div>
+                <div class="col-xl-4">
+                    <strong>Dirigido A : </strong> @item.AddressedTo<br />
+                </div>
+                <div class="col-xl-2">
+                    <strong>Fec. Inicio : </strong> @item.StartDate<br />
+                    <strong>Fec. Fin : </strong> @item.EndDate
+                </div>
+            </div>
+            <div class="m-portlet__foot m-portlet__no-border">
+                <div class="row">
+                    @if (item.IsPostulant)
+                    {
+                        <div class="col-md-6 offset-md-6 m--align-right">
+                            Ya postuló
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="col-md-6 offset-md-6 m--align-right">
+                            <a asp-area="Student" asp-page="/IncubatorConvocationPage/Detail" asp-route-incubatorConvocationId="@item.Id" class="btn btn-primary">Más Información</a>
+                        </div>
+                    }
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+}

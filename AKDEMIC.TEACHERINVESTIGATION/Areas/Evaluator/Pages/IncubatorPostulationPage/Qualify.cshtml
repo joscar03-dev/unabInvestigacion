@@ -1,0 +1,169 @@
+﻿@page "/evaluador/postulantes-incubadora/{incubatorPostulationId}/calificar"
+@model AKDEMIC.TEACHERINVESTIGATION.Areas.Evaluator.Pages.IncubatorPostulationPage.QualifyModel
+@{
+    ViewData["Title"] = "Calificar Postulante";
+    ViewBag.Breadcrumbs = new[]
+    {
+        new BreadcrumbViewData {Name="Postulantes de Incubadora", Url = "/evaluador/postulantes-incubadora"},
+        new BreadcrumbViewData {Name=ViewData["Title"].ToString(), Url = null},
+    };
+}
+
+<div class="m-content">
+    <form id="main_form">
+        @Html.AntiForgeryToken()
+        <div class="m-portlet">
+            <div class="m-portlet__head">
+                <div class="m-portlet__head-caption">
+                    <div class="m-portlet__head-title">
+                        <h3 class="m-portlet__head-text">
+                            @ViewData["Title"]
+                        </h3>
+                    </div>
+                </div>
+            </div>
+            <div class="m-portlet__body">
+                <input type="hidden" asp-for="Postulant.ConvocationId" />
+                <input type="hidden" asp-for="Postulant.Id" />
+
+                <div class="form-group row">
+                    <div class="form-group m-form__group col-lg-6">
+                        <label asp-for="Postulant.ConvocationCode">Cod. Convocatoria</label>
+                        <input asp-for="Postulant.ConvocationCode" class="form-control" readonly />
+                    </div>
+                    <div class="form-group m-form__group col-lg-6">
+                        <label asp-for="Postulant.ConvocationName">Convocatoria</label>
+                        <input asp-for="Postulant.ConvocationName" class="form-control" readonly />
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="form-group m-form__group col-lg-4">
+                        <label asp-for="Postulant.UserName">Usuario del Postulante</label>
+                        <input asp-for="Postulant.UserName" class="form-control" readonly />
+                    </div>
+                    <div class="form-group m-form__group col-lg-4">
+                        <label asp-for="Postulant.FullName">Nombre Completo del Postulante</label>
+                        <input asp-for="Postulant.FullName" class="form-control" readonly />
+                    </div>
+                    <div class="form-group m-form__group col-lg-4">
+                        <label asp-for="Postulant.CreatedAt">Fec. Postulación</label>
+                        <input asp-for="Postulant.CreatedAt" class="form-control" readonly />
+                    </div>
+                </div>
+                @if (Model.Postulant.Sections.Any(x => x.RubricCriterions.Any(y => y.Qualification.HasValue)))
+                {
+                    <div class="form-group row">
+                        <div class="form-group m-form__group col-lg-12">
+                            <label>Puntaje Obtenido</label>
+                            <input class="form-control font-weight-bold m--font-primary" style="font-size:20px !important;" readonly value="@Model.Postulant.Sections.Where(x => x.RubricCriterions.Any(y => y.Qualification.HasValue)).Sum(x => x.RubricCriterions.Sum(y => y.Qualification))" />
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+
+
+    <div class="m-portlet">
+        <div class="m-portlet__body">
+            <div class="table-responsive-md">
+                <table class="table table-bordered m-table m-table--border-primary m-table--head-bg-primary">
+                    @for (int i = 0; i < Model.Postulant.Sections.Count(); i++)
+                    {
+                        <thead>
+                            <tr>
+                                <th colspan="3">
+                                    @Model.Postulant.Sections[i].Title - <span>Ptj. Máximo : @Model.Postulant.Sections[i].MaxSectionScore</span>
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+
+                            @if (!Model.Postulant.Sections[i].RubricCriterions.Any())
+                            {
+                                <tr>
+                                    <td colspan="3" style="text-align:center;">
+                                        No se encontraron criterios asignados.
+                                    </td>
+                                </tr>
+                            }
+
+                            @for (int j = 0; j < Model.Postulant.Sections[i].RubricCriterions.Count(); j++)
+                            {
+                                @if (!Model.Postulant.Sections[i].RubricCriterions[j].Levels.Any())
+                                {
+                                    <tr>
+                                        <td colspan="1" style="text-align:center;">
+                                            @Model.Postulant.Sections[i].RubricCriterions[j].Name - <strong> Descripción: @Html.Raw(Model.Postulant.Sections[i].RubricCriterions[j].Description)</strong>
+                                            <input type="hidden" asp-for="Postulant.Sections[i].RubricCriterions[j].Id" />
+                                        </td>
+                                        <td colspan="2" style="text-align:center;">No se encontraron niveles asignados.</td>
+                                    </tr>
+                                }
+
+                                @for (int k = 0; k < Model.Postulant.Sections[i].RubricCriterions[j].Levels.Count(); k++)
+                                {
+                                    <tr>
+                                        @if (k == 0)
+                                        {
+                                            <td rowspan="@Model.Postulant.Sections[i].RubricCriterions[j].Levels.Count()">
+                                                @Model.Postulant.Sections[i].RubricCriterions[j].Name - <strong> Descripción: @Html.Raw(Model.Postulant.Sections[i].RubricCriterions[j].Description)</strong>
+                                                <input type="hidden" asp-for="Postulant.Sections[i].RubricCriterions[j].Id" />
+                                            </td>
+                                        }
+
+                                        <td style="min-width:600px !important;" colspan="1">
+                                            @Model.Postulant.Sections[i].RubricCriterions[j].Levels[k].Description
+                                            <br />
+                                            <small class="font-weight-bold">Puntaje : @Model.Postulant.Sections[i].RubricCriterions[j].Levels[k].Score</small>
+                                            <input type="hidden" asp-for="Postulant.Sections[i].RubricCriterions[j].Levels[k].Id" />
+                                        </td>
+                                        @if (k == 0)
+                                        {
+                                            <td rowspan="@Model.Postulant.Sections[i].RubricCriterions[j].Levels.Count()" style="width:130px !important; min-width:130px !important; vertical-align:middle">
+                                                <div class="m-form__group">
+                                                    @if (Model.Postulant.Sections[i].RubricCriterions[j].Qualification.HasValue)
+                                                    {
+                                                        <input type="number" class="form-control font-weight-bold" min="0" max="@Model.Postulant.Sections[i].RubricCriterions[j].MaxScore" asp-for="Postulant.Sections[i].RubricCriterions[j].Qualification" disabled />
+                                                    }
+                                                    else
+                                                    {
+                                                        <input type="number" class="form-control font-weight-bold" min="0" max="@Model.Postulant.Sections[i].RubricCriterions[j].MaxScore" asp-for="Postulant.Sections[i].RubricCriterions[j].Qualification" placeholder="Puntaje" required />
+                                                    }
+                                                </div>
+                                            </td>
+                                        }
+                                    </tr>
+                                }
+
+                            }
+                        </tbody>
+                    }
+                </table>
+            </div>
+        </div>
+
+        @if (!Model.Postulant.Sections.Any(x => x.RubricCriterions.Any(y => y.Qualification.HasValue)))
+        {
+            <div class="m-portlet__foot">
+                <div class="row align-items-center">
+                    <div class="col-lg-6 m--valign-middle">
+                    </div>
+                    <div class="col-lg-6 m--align-right">
+                        <button type="submit" class="btn btn-primary m-btn m-btn--icon">
+                            <span>
+                                <i class="la la-save"></i>
+                                <span>Calificar</span>
+                            </span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+    </form>
+
+</div>
+
+@section Scripts{
+    <script src="~/js/areas/evaluator/incubatorpostulation/qualify.js" asp-append-version="true"></script>
+}

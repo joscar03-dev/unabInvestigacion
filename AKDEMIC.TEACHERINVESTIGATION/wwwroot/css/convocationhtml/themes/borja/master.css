@@ -1,0 +1,201 @@
+@import url("../../components.css");
+@import url("../../plugins.min.css");
+@import url("../../design.min.css");
+
+/*Bootstrap*/
+.btn-primary {
+    background-color: #5a072e;
+    border-color: #5a072e;
+}
+.btn-primary:focus, .btn-primary.focus {
+    background-color: #882851;
+    border-color: #882851;
+}
+.btn-primary:hover {
+    background-color: #882851;
+    border-color: #882851;
+}
+.btn-primary:active,
+.btn-primary.active,
+.open > .btn-primary.dropdown-toggle {
+    background-color: #882851;
+    border-color: #882851;
+}
+.btn-primary:active:hover, .btn-primary:active:focus, .btn-primary:active.focus, .btn-primary.active:hover, .btn-primary.active:focus, .btn-primary.active.focus, .open > .btn-primary.dropdown-toggle:hover, .open > .btn-primary.dropdown-toggle:focus, .open > .btn-primary.dropdown-toggle.focus {
+    background-color: #882851;
+    border-color: #882851;
+}
+
+.btn-info {
+    background-color: #242424;
+    border-color: #242424;
+}
+.btn-info:focus, .btn-info.focus {
+    background-color: #242424;
+    border-color: #242424;
+}
+.btn-info:hover {
+    background-color: #242424;
+    border-color: #242424;
+}
+.btn-info:active,
+.btn-info.active,
+.open > .btn-info.dropdown-toggle {
+    background-color: #242424;
+    border-color: #242424;
+}
+.btn-info:active:hover, .btn-info:active:focus, .btn-info:active.focus, .btn-info.active:hover, .btn-info.active:focus, .btn-info.active.focus, .open > .btn-info.dropdown-toggle:hover, .open > .btn-info.dropdown-toggle:focus, .open > .btn-info.dropdown-toggle.focus {
+    background-color: #242424;
+    border-color: #242424;
+}
+.btn-default {
+    color: #242424;
+    background-color: #fff;
+    border-color: #ccc;
+}
+.btn-default.active, .btn-default:active, .btn-default:hover, .open>.btn-default.dropdown-toggle,
+.btn-default.active.focus, .btn-default.active:focus, .btn-default.active:hover, .btn-default:active.focus,
+.btn-default:active:focus, .btn-default:active:hover,
+.open>.btn-default.dropdown-toggle.focus, .open>.btn-default.dropdown-toggle:focus,
+.open>.btn-default.dropdown-toggle:hover,
+.btn-default.focus, .btn-default:focus {
+    color: #ffffff;
+    background-color: #242424;
+    border-color: #242424;
+}
+.btn.default:not(.btn-outline) {
+    color: #242424;
+    background-color: #fff;
+    border-color: #ccc;
+}
+.btn.default:not(.btn-outline):hover, .btn.default:not(.btn-outline):active,
+.btn.default:not(.btn-outline).active, .open > .btn.default:not(.btn-outline).dropdown-toggle,
+.btn.default:not(.btn-outline):active:hover, .btn.default:not(.btn-outline):active:focus,
+.btn.default:not(.btn-outline):active.focus, .btn.default:not(.btn-outline).active:hover,
+.btn.default:not(.btn-outline).active:focus, .btn.default:not(.btn-outline).active.focus,
+.open > .btn.default:not(.btn-outline).dropdown-toggle:hover, .open > .btn.default:not(.btn-outline).dropdown-toggle:focus,
+.open > .btn.default:not(.btn-outline).dropdown-toggle.focus,
+.btn.default:not(.btn-outline):focus, .btn.default:not(.btn-outline).focus {
+    color: #ffffff;
+    background-color: #242424;
+    border-color: #242424;
+}
+.btn-success {
+    color: #fff;
+    background-color: #242424;
+    border-color: #242424;
+}
+.btn-success.active, .btn-success:active, .btn-success:hover, .open>.btn-success.dropdown-toggle, .btn-success.focus, .btn-success:focus {
+    color: #fff;
+    background-color: #242424;
+    border-color: #242424;
+}
+.btn-success.active.focus, .btn-success.active:focus, .btn-success.active:hover, .btn-success:active.focus, .btn-success:active:focus, .btn-success:active:hover, .open>.btn-success.dropdown-toggle.focus, .open>.btn-success.dropdown-toggle:focus, .open>.btn-success.dropdown-toggle:hover {
+    color: #fff;
+    background-color: #242424;
+    border-color: #242424;
+}
+.btn.blue:not(.btn-outline) {
+    color: #FFFFFF;
+    background-color: #5a072e;
+    border-color: #5a072e;
+}
+.btn.blue:not(.btn-outline):hover {
+    color: #FFFFFF;
+    background-color: #882851 ;
+    border-color: #882851 ;
+}
+.btn.blue:not(.btn-outline):active, .btn.blue:not(.btn-outline).active, .open > .btn.blue:not(.btn-outline).dropdown-toggle {
+    color: #FFFFFF;
+    background-color: #882851;
+    border-color: #882851;
+}
+.btn.blue:not(.btn-outline):active:hover,
+.btn.blue:not(.btn-outline):active:focus,
+.btn.blue:not(.btn-outline):active.focus,
+.btn.blue:not(.btn-outline).active:hover,
+.btn.blue:not(.btn-outline).active:focus,
+.btn.blue:not(.btn-outline).active.focus,
+.open > .btn.blue:not(.btn-outline).dropdown-toggle:hover,
+.open > .btn.blue:not(.btn-outline).dropdown-toggle:focus,
+.open > .btn.blue:not(.btn-outline).dropdown-toggle.focus {
+    color: #FFFFFF;
+    background-color: #882851;
+    border-color: #882851;
+}
+.btn.btn-outline.purple {
+    border-color: #242424;
+    color: #242424;
+    background: 0;
+}
+.btn.btn-outline.purple:hover,
+.btn.btn-outline.purple:active,
+.btn.btn-outline.purple:active:hover,
+.btn.btn-outline.purple:active:focus,
+.btn.btn-outline.purple:focus,
+.btn.btn-outline.purple.active {
+    border-color: #242424;
+    color: #fff;
+    background-color: #242424;
+}
+/*Components*/
+a {
+    color: #882851;
+}
+a:hover {
+    color: #882851;
+}
+.ver-inline-menu li.active a {
+    border-left: solid 2px #242424;
+}
+.ver-inline-menu li.active i {
+    background: #18184B !important;
+}
+.ver-inline-menu li.active a, .ver-inline-menu li.active i {
+    background: #242424;
+}
+.ver-inline-menu li.active:after {
+    border-left: 6px solid #242424;
+}
+.portlet.light > .portlet-title > .caption {
+    color: #242424;
+    padding: 10px 0;
+}
+.portlet.light > .portlet-title > .actions {
+    padding: 6px 0 6px 0;
+}
+.dashboard-stat.blue {
+    background-color: #882851;
+}
+.dashboard-stat.red {
+    background-color: #242424 !important;
+}
+.dashboard-stat.green {
+    background-color: #882851;
+}
+.dashboard-stat.green.dashboard-stat-light:hover {
+    background-color: #882851;
+}
+.dashboard-stat.yellow {
+    background-color: #242424;
+}
+.font-green {
+    color: #242424 !important;
+}
+
+/*Design*/
+.table-bg {
+    border: 1px solid #242424 !important;
+}
+.table-bg > thead {
+    background-color: #242424;
+}
+
+.portlet > .portlet-title > .caption > .caption-helper {
+    color: #242424;
+}
+
+.note.note-success {
+    background-color: rgba(254, 153, 0, 0.4);
+    border-color: rgb(251, 169, 45);
+}

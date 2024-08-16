@@ -1,0 +1,28 @@
+﻿@page "/eventos"
+@model AKDEMIC.TEACHERINVESTIGATION.Pages.EventPage.IndexModel
+@{
+    Layout = "~/Pages/Shared/Templates/Portal/_Layout.cshtml";
+}
+
+<div class="m-content">
+    <div class="m-portlet " id="m_portlet">
+        <div class="m-portlet__head">
+            <div class="m-portlet__head-caption mx-auto">
+                <div class="m-portlet__head-title">
+                    <h3>
+                        Eventos
+                    </h3>
+                </div>
+            </div>
+        </div>
+        <div class="m-portlet__body" style="padding:0">
+            <div id="eventsContainer"></div>
+        </div>
+    </div>
+</div>
+
+
+@section Scripts
+    {
+    <script src="~/js/pages/event/index.js" asp-append-version="true"></script>
+}

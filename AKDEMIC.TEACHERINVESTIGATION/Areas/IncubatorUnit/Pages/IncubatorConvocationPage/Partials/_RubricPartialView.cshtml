@@ -1,0 +1,112 @@
+﻿@model AKDEMIC.TEACHERINVESTIGATION.Areas.IncubatorUnit.ViewModels.IncubatorConvocationViewModels.IncubatorRubricViewModel
+
+<table class="table table-bordered m-table m-table--border-primary m-table--head-bg-primary">
+    @foreach (var rubricSection in Model.RubricSections)
+    {
+        <thead>
+            <tr style="font-size:15px !important;">
+                <th colspan="3">@rubricSection.Title (Puntaje: @rubricSection.MaxSectionScore)</th>
+                <th style="text-align:end !important; vertical-align:inherit !important;" width="20%">
+                    <button type="button" data-id="@rubricSection.Id" class="btn btn-success btn-sm m-btn m-btn--icon add-criterion btn-sm">
+                        <span>
+                            <i class="la la-plus"></i>
+                            <span>Criterio</span>
+                        </span>
+                    </button>
+                    <button type="button" data-id="@rubricSection.Id" data-maxsectionscore="@rubricSection.MaxSectionScore" data-title="@rubricSection.Title" class="m-portlet__nav-link btn btn-primary m-btn m-btn--icon m-btn--icon-only edit-section btn-sm">
+                        <i class="la la-edit"></i>
+                    </button>
+                    <button type="button" data-id="@rubricSection.Id" class="m-portlet__nav-link btn btn-danger m-btn m-btn--icon m-btn--icon-only delete-section btn-sm">
+                        <i class="la la-trash"></i>
+                    </button>
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+
+            @if (!rubricSection.RubricCriterions.Any())
+            {
+                <tr>
+                    <td colspan="4" class="text-center">No se encontraron criterios.</td>
+                </tr>
+            }
+
+
+            @for (int i = 0; i < rubricSection.RubricCriterions.Count(); i++)
+            {
+                @if (!rubricSection.RubricCriterions[i].Levels.Any())
+                {
+                    <tr>
+                        <td colspan="1">@rubricSection.RubricCriterions[i].Name</td>
+                        <td colspan="1">
+                            <button type="button" data-id="@rubricSection.RubricCriterions[i].Id" class="btn btn-success btn-sm m-btn m-btn--icon add-level btn-sm">
+                                <span>
+                                    <i class="la la-plus"></i>
+                                    <span>Nivel</span>
+                                </span>
+                            </button>
+                            <button type="button" data-id="@rubricSection.RubricCriterions[i].Id" data-description="@rubricSection.RubricCriterions[i].Description" data-name="@rubricSection.RubricCriterions[i].Name" class="m-portlet__nav-link btn btn-primary m-btn m-btn--icon m-btn--icon-only edit-criterion btn-sm">
+                                <i class="la la-edit"></i>
+                            </button>
+                            <button type="button" data-id="@rubricSection.RubricCriterions[i].Id" class="m-portlet__nav-link btn btn-danger m-btn m-btn--icon m-btn--icon-only delete-criterion btn-sm">
+                                <i class="la la-trash"></i>
+                            </button>
+                        </td>
+                        <td colspan="2" class="text-center">No se encontraron niveles de desempeño</td>
+                    </tr>
+                }
+                else
+                {
+                    for (int j = 0; j < rubricSection.RubricCriterions[i].Levels.Count(); j++)
+                    {
+                        <tr>
+                            @if(j == 0)
+                            {
+                                <td rowspan="@(rubricSection.RubricCriterions[i].Levels.Count())">@rubricSection.RubricCriterions[i].Name</td>
+                                <td rowspan="@(rubricSection.RubricCriterions[i].Levels.Count())">
+                                    <button type="button" data-id="@rubricSection.RubricCriterions[i].Id" class="btn btn-success btn-sm m-btn m-btn--icon add-level btn-sm">
+                                        <span>
+                                            <i class="la la-plus"></i>
+                                            <span>Nivel</span>
+                                        </span>
+                                    </button>
+                                    <button type="button" data-id="@rubricSection.RubricCriterions[i].Id" data-description="@rubricSection.RubricCriterions[i].Description" data-name="@rubricSection.RubricCriterions[i].Name" class="m-portlet__nav-link btn btn-primary m-btn m-btn--icon m-btn--icon-only edit-criterion btn-sm">
+                                        <i class="la la-edit"></i>
+                                    </button>
+                                    <button type="button" data-id="@rubricSection.RubricCriterions[i].Id" class="m-portlet__nav-link btn btn-danger m-btn m-btn--icon m-btn--icon-only delete-criterion btn-sm">
+                                        <i class="la la-trash"></i>
+                                    </button>
+                                </td>
+                            }
+                            <td>@rubricSection.RubricCriterions[i].Levels[j].Description - <strong>Puntaje : @rubricSection.RubricCriterions[i].Levels[j].Score.</strong></td>
+                            <td>
+                                <button type="button" data-id="@rubricSection.RubricCriterions[i].Levels[j].Id" data-description="@rubricSection.RubricCriterions[i].Levels[j].Description" data-score="@rubricSection.RubricCriterions[i].Levels[j].Score" class="m-portlet__nav-link btn btn-primary m-btn m-btn--icon m-btn--icon-only edit-level btn-sm">
+                                    <i class="la la-edit"></i>
+                                </button>
+                                <button type="button" data-id="@rubricSection.RubricCriterions[i].Levels[j].Id" class="m-portlet__nav-link btn btn-danger m-btn m-btn--icon m-btn--icon-only delete-level btn-sm">
+                                    <i class="la la-trash"></i>
+                                </button>
+                            </td>
+                        </tr>
+                    }
+                }
+            }
+        </tbody>
+    }
+
+</table>
+
+@if (!Model.RubricSections.Any())
+{
+    <div class="m-alert m-alert--outline m-alert--square alert alert-primary alert-dismissible fade show text-center" role="alert">
+        - Sin criterios disponibles -
+    </div>
+}
+
+<script>
+    @if(Model.HasQualifications){
+        <text>
+            $('#rubric_page :button').prop('disabled', true);
+        </text>
+    }
+</script>

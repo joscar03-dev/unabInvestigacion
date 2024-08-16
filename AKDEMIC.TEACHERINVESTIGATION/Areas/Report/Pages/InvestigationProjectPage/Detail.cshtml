@@ -1,0 +1,140 @@
+﻿@page "/reporte/proyecto-investigacion/{InvestigationProjectId:Guid}/detalle"
+@using Microsoft.AspNetCore.Html
+@model AKDEMIC.TEACHERINVESTIGATION.Areas.Report.Pages.InvestigationProjectPage.DetailModel
+@{
+    ViewBag.Breadcrumbs = new[]
+        {
+        new BreadcrumbViewData { Name = "Proyectos", Url = "/reporte/proyecto-investigacion" },
+        new BreadcrumbViewData { Name = "Detalle", Url = null }
+    };
+}
+
+<input type="hidden" asp-for="Input.InvestigationProjectId" />
+<div class="m-content">
+    <div class="m-portlet">
+        <div class="m-portlet__head">
+            <div class="m-portlet__head-caption">
+                <div class="m-portlet__head-title">
+                    <h3 class="m-portlet__head-text">
+                        Proyecto: @Model.Input.ProjectTitle
+                    </h3>
+                </div>
+            </div>
+        </div>
+        <div class="m-portlet__body">
+            <div class=" row">
+                <div class="form-group m-form__group col-lg-12">
+                    <label class="form-control-label">Responsable del Proyecto</label>
+                    <input asp-for="Input.FullName" class="form-control" disabled />
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group m-form__group col-lg-6">
+                    <label class="form-control-label">Estado</label>
+                    @if (string.IsNullOrEmpty(Model.Input.ProjectState))
+                    {
+                        <div>No se encontró información subida por el investigador</div>
+                    }
+                    else
+                    {
+                        <div>@(new HtmlString(Model.Input.ProjectState))</div>
+                    }
+                </div>
+                <div class="form-group m-form__group col-lg-6">
+                    <label class="form-control-label">Escuela Profesional</label>
+                    <input asp-for="Input.CareerText" class="form-control" disabled />
+                </div>
+            </div>
+            <div class="row">
+
+                <div class="form-group m-form__group col-lg-6">
+                    <label class="form-control-label">Diagrama de Gant</label>
+                    <div class="m-input-icon m-input-icon--right" style="text-align:center">
+                        @if (string.IsNullOrEmpty(Model.Input.GanttDiagramUrl))
+                        {
+                            <span>No ha subido el diagrama de Gant</span>
+                        }
+                        else
+                        {
+                            <a href="/documentos/@Model.Input.GanttDiagramUrl" class="btn btn-success m-btn btn-sm">
+                                <span><i class="flaticon-file"></i></span>
+                            </a>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="m-portlet m-portlet--tabs">
+        <div class="m-portlet__head">
+            <div class="m-portlet__head-tools">
+                <ul class="nav nav-fill m-tabs-line m-tabs-line--primary m-tabs-line--2x" role="tablist">
+
+                    <li class="nav-item m-tabs__item">
+                        <a class="nav-link m-tabs__link active" href="#tab_1" data-toggle="tab" role="tab">
+                            <i class="fa fa-file"></i>
+                            Miembros del Equipo
+                        </a>
+                    </li>
+                    <li class="nav-item m-tabs__item">
+                        <a class="nav-link m-tabs__link" href="#tab_2" data-toggle="tab" role="tab">
+                            <i class="fa fa-users"></i>
+                            Gastos
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="m-portlet__body">
+            <div class="tab-content">
+
+
+                <div class="tab-pane active" id="tab_1" role="tabpanel">
+                    <div class="m-portlet__body m-portlet__body--no-padding">
+                        <div class="m-form--label-align-right m--margin-top-20">
+                            <div class="row align-items-center">
+                                <div class="col-xl-8 order-2 order-xl-1">
+                                </div>
+                            </div>
+                        </div>
+                        <table class="table table-striped table-bordered" id="teamMember-datatable"></table>
+                    </div>
+                </div>
+
+                <div class="tab-pane" id="tab_2" role="tabpanel">
+                    <div class="m-portlet__body m-portlet__body--no-padding">
+                        <div class="m-form--label-align-right m--margin-top-20">
+                            <div class="row align-items-center">
+                                <div class="col-xl-8 order-2 order-xl-1">
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="row">
+                            <div class="form-group m-form__group col-lg-6">
+                                <label class="form-control-label">Presupuesto</label>
+                                @if (string.IsNullOrEmpty(Model.Input.Budget.ToString()))
+                                {
+                                    <div>No se encontró información subida por el investigador</div>
+                                }
+                                else
+                                {
+                                    <div>Model.Input.Budget</div>
+                                }
+                            </div>
+                        </div>
+                        <table class="table table-striped table-bordered" id="expense-datatable"></table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section Scripts {
+    <script src="~/js/areas/report/investigationproject/detail.js" asp-append-version="true"></script>
+}
+

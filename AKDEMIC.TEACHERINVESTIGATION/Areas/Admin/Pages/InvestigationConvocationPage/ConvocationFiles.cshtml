@@ -1,0 +1,367 @@
+﻿@page "/admin/convocatoria-de-investigacion/{investigationConvocationId:Guid}/archivos"
+@model AKDEMIC.TEACHERINVESTIGATION.Areas.Admin.Pages.InvestigationConvocationPage.ConvocationFilesModel
+@{
+    ViewData["Title"] = "Gestión de Convocatorias";
+    ViewBag.Breadcrumbs = new[]
+    {
+        new BreadcrumbViewData {Name="Gestión de Convocatorias", Url="/admin/convocatorias"},
+        new BreadcrumbViewData {Name="Detalle de Convocatoria", Url = null},
+    };
+}
+<input type="hidden" id="InvestigationConvocationId" value="@Model.InvestigationConvocationId" />
+<div class="m-content">
+    <div class="m-portlet">
+        <div class="m-portlet__head">
+            <div class="m-portlet__head-caption">
+                <div class="m-portlet__head-title">
+                    <h3 class="m-portlet__head-text">
+                        Detalle de la Convocatoria
+                    </h3>
+                </div>
+            </div>
+
+            <div class="m-portlet__head-tools">
+                <ul class="m-portlet__nav">
+
+                    <li class="m-portlet__nav-item m-dropdown m-dropdown--inline m-dropdown--arrow m-dropdown--align-right m-dropdown--align-push" m-dropdown-toggle="hover" aria-expanded="true">
+                        <a href="#" class="m-portlet__nav-link m-dropdown__toggle dropdown-toggle btn btn-sm  btn-primary m-btn m-btn--pill">
+                            Opciones
+                        </a>
+                        <div class="m-dropdown__wrapper" style="z-index: 101;">
+                            <span class="m-dropdown__arrow m-dropdown__arrow--right m-dropdown__arrow--adjust" style="left: auto; right: 33px;"></span>
+                            <div class="m-dropdown__inner">
+                                <div class="m-dropdown__body">
+                                    <div class="m-dropdown__content">
+                                        <ul class="m-nav">
+                                            <li class="m-nav__section m-nav__section--first">
+                                                <span class="m-nav__section-text">Configuración</span>
+                                            </li>
+                                            <li class="m-nav__item">
+                                                <a asp-area="Admin" asp-page="/InvestigationConvocationPage/SupervisorList" asp-route-InvestigationConvocationId="@Model.InvestigationConvocationId" class="m-nav__link">
+                                                    <i class="m-nav__link-icon flaticon-user"></i>
+                                                    <span class="m-nav__link-text">Comité técnico</span>
+                                                </a>
+                                            </li>
+                                            <li class="m-nav__item">
+                                                <a asp-area="Admin" asp-page="/InvestigationConvocationPage/EvaluatorCommittee" asp-route-InvestigationConvocationId="@Model.InvestigationConvocationId" class="m-nav__link">
+                                                    <i class="m-nav__link-icon flaticon-user"></i>
+                                                    <span class="m-nav__link-text">Comité evaluador</span>
+                                                </a>
+                                            </li>
+                                            <li class="m-nav__item">
+                                                <a asp-area="Admin" asp-page="/InvestigationConvocationPage/ConvocationMonitor" asp-route-InvestigationConvocationId="@Model.InvestigationConvocationId" class="m-nav__link">
+                                                    <i class="m-nav__link-icon flaticon-network"></i>
+                                                    <span class="m-nav__link-text">Coordinadores Monitores</span>
+                                                </a>
+                                            </li>
+                                            <li class="m-nav__item">
+                                                <a asp-area="Admin" asp-page="/InvestigationConvocationPage/ConvocationRubric" asp-route-InvestigationConvocationId="@Model.InvestigationConvocationId" class="m-nav__link">
+                                                    <i class="m-nav__link-icon flaticon-clipboard"></i>
+                                                    <span class="m-nav__link-text">Rúbrica de Evaluación</span>
+                                                </a>
+                                            </li>
+                                            <li class="m-nav__item">
+                                                <a asp-area="Admin" asp-page="/InvestigationConvocationPage/InscriptionForm" asp-route-InvestigationConvocationId="@Model.InvestigationConvocationId" class="m-nav__link">
+                                                    <i class="m-nav__link-icon flaticon-list"></i>
+                                                    <span class="m-nav__link-text">Inscripción</span>
+                                                </a>
+                                            </li>
+                                            <li class="m-nav__item">
+                                                <a href="#" data-toggle="modal" data-target="#exernal_evaluator_modal" class="m-nav__link">
+                                                    <i class="m-nav__link-icon flaticon-user-add"></i>
+                                                    <span class="m-nav__link-text">Evaluadores Externos</span>
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="m-portlet__body">
+            <div class="row">
+                <div class="form-group m-form__group col-lg-6">
+                    <label class="form-control-label">Código</label>
+                    <input asp-for="InvestigationConvocationCode" class="form-control m-input" disabled />
+                </div>
+                <div class="form-group m-form__group col-lg-6">
+                    <label class="form-control-label">Nombre</label>
+                    <input asp-for="InvestigationConvocationName" class="form-control m-input" disabled />
+
+                </div>
+            </div>
+
+            <div class=" row">
+                <div class="form-group m-form__group col-lg-6">
+                    <label class="form-control-label">Fecha de Inicio</label>
+                    <div class="input-group">
+                        <input asp-for="InvestigationConvocationStartDate" class="form-control datepicker-input" disabled />
+                        <div class="input-group-append">
+                            <span class="input-group-text"><i class="la la-calendar"></i></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group m-form__group col-lg-6">
+                    <label class="form-control-label">Fecha de Fin</label>
+                    <div class="input-group">
+                        <input asp-for="InvestigationConvocationEndDate" class="form-control datepicker-input" disabled />
+                        <div class="input-group-append">
+                            <span class="input-group-text"><i class="la la-calendar"></i></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class=" row">
+                <div class="form-group m-form__group col-lg-4">
+                    <label class="form-control-label">Estado</label>
+                    <input asp-for="InvestigationConvocationState" class="form-control m-input" disabled />
+                </div>
+                <div class="form-group m-form__group col-lg-4">
+                    <label class="form-control-label">Puntaje Mínimo</label>
+                    <input asp-for="InvestigationConvocationMinScore" class="form-control m-input" disabled />
+                </div>
+                <div class="form-group m-form__group col-lg-4">
+                    <label class="form-control-label">¿Permite Consultas?</label>
+                    <div class="m-input-icon m-input-icon--right m--padding-left-25">
+                        <input asp-for="InvestigationConvocationAllowInquiries" type="checkbox" disabled />
+                    </div>
+                </div>
+            </div>
+            @if (Model.InvestigationConvocationAllowInquiries)
+            {
+                <div class=" row">
+                    <div class="form-group m-form__group col-lg-6">
+                        <label class="form-control-label">Fecha de Inicio de Consultas</label>
+                        <div class="input-group">
+                            <input asp-for="InvestigationConvocationInquiryStartDate" class="form-control datepicker-input" disabled />
+                            <div class="input-group-append">
+                                <span class="input-group-text"><i class="la la-calendar"></i></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group m-form__group col-lg-6">
+                        <label class="form-control-label">Fecha de Fin de Consultas</label>
+                        <div class="input-group">
+                            <input asp-for="InvestigationConvocationInquiryEndDate" class="form-control datepicker-input" disabled />
+                            <div class="input-group-append">
+                                <span class="input-group-text"><i class="la la-calendar"></i></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+
+    <div class="m-portlet">
+        <div class="m-portlet__head">
+            <div class="m-portlet__head-caption" style="width:100%">
+                <div class="m-portlet__head-title" style="width:100%;display: block;">
+                    <h3 class="m-portlet__head-text" style="display:initial;">
+                        Archivos del proceso de convocatoria
+                    </h3>
+                </div>
+            </div>
+        </div>
+        <div class="m-portlet__body">
+            <div class="m-form--label-align-right m--margin-bottom-20">
+                <div class="row align-items-center">
+                    <div class="col-xl-8 order-2 order-xl-1">
+                        <div class="row">
+                            <div class="form-group m-form__group col-xl-4">
+                                <div class="m-input m-input-icon m-input-icon--left">
+                                    <input type="text" class="form-control m-input m-input--pill m-input--solid" placeholder="Buscar..." id="search">
+                                    <span class="m-input-icon__icon m-input-icon__icon--left">
+                                        <span><i class="la la-search"></i></span>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-4 order-1 order-xl-2 m--align-right">
+                        <button id="AddBtn" class="btn btn-primary m-btn m-btn--icon">
+                            <span>
+                                <i class="la la-plus"></i>
+                                <span>Nuevo Archivo</span>
+                            </span>
+                        </button>
+                        <div class="m-separator m-separator--dashed d-xl-none"></div>
+                    </div>
+                </div>
+            </div>
+            <table class="table table-striped table-bordered" id="data-table"></table>
+        </div>
+    </div>
+
+
+    @if (Model.InvestigationConvocationAllowInquiries)
+    {
+        <div class="m-portlet">
+            <div class="m-portlet__head">
+                <div class="m-portlet__head-caption" style="width:100%">
+                    <div class="m-portlet__head-title" style="width:100%;display: block;">
+                        <h3 class="m-portlet__head-text" style="display:initial;">
+                            Consultas del proceso de convocatoria
+                        </h3>
+                    </div>
+                </div>
+            </div>
+            <div class="m-portlet__body">
+                <div class="m-form--label-align-right m--margin-bottom-20">
+                    <div class="row align-items-center">
+                        <div class="col-xl-12 order-2 order-xl-1">
+                            <div class="row">
+                                <div class="form-group m-form__group col-xl-4">
+                                    <div class="m-input m-input-icon m-input-icon--left">
+                                        <input type="text" class="form-control m-input m-input--pill m-input--solid" placeholder="Buscar..." id="search">
+                                        <span class="m-input-icon__icon m-input-icon__icon--left">
+                                            <span><i class="la la-search"></i></span>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <table class="table table-striped table-bordered" id="data-table-inquiries"></table>
+            </div>
+        </div>
+    }
+</div>
+
+
+<!--Add Modal-->
+<div class="modal fade" id="addModal" tabindex="-1000" role="dialog" aria-labelledby="detailLabel" aria-hidden="true">
+    <div class="modal-dialog " role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">
+                    Agregar Archivo
+                </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form id="add-form" class="m-form m-form--state" asp-area="Admin" asp-page-handler="CreateFile" method="post" enctype="multipart/form-data">
+                <div class="modal-body">
+                    <div class="m-form__group">
+                        <label class="required-form-label">Número del Archivo :</label>
+                        <input name="Number" type="text" class="form-control m-input" placeholder="Número del Archivo" required />
+                    </div>
+                    <div class="m-form__group">
+                        <label class="required-form-label">Nombre del Archivo:</label>
+                        <input name="Name" type="text" class="form-control m-input" placeholder="Nombre del Archivo" required />
+                    </div>
+                    <div class="m-form__group">
+                        <label class="required-form-label">Archivo</label>
+                        <div class="custom-file">
+                            <input class="form-control m-input custom-file-input" name="File" type="file" accept="application/pdf, application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document" placeholder="Seleccionar archivo" required>
+                            <label class="custom-file-label selected">Seleccionar Archivo...</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <div style="text-align:right;">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                            Cancelar
+                        </button>
+                        <button id="btnSave" type="submit" class="btn btn-primary ladda-button" data-style="slide-down">
+                            <span class="ladda-label">Guardar</span>
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!--Edit Modal-->
+<div class="modal fade" id="editModal" tabindex="-1000" role="dialog" aria-labelledby="detailLabel" aria-hidden="true">
+    <div class="modal-dialog " role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">
+                    Editar Archivo
+                </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form id="edit-form" class="m-form m-form--state" asp-area="Admin" asp-page-handler="EditFile" method="post" enctype="multipart/form-data">
+                <input name="InvestigationConvocationFileId" hidden />
+                <div class="modal-body">
+                    <div class="m-form__group">
+                        <label class="required-form-label">Número del Archivo :</label>
+                        <input name="Number" type="text" class="form-control m-input" placeholder="Número del Archivo" required />
+                    </div>
+                    <div class="m-form__group">
+                        <label class="required-form-label">Nombre del Archivo:</label>
+                        <input name="Name" type="text" class="form-control m-input" placeholder="Nombre del Archivo" required />
+                    </div>
+                    <div class="m-form__group">
+                        <label class="form-label">Archivo</label>
+                        <div class="custom-file">
+                            <input class="form-control m-input custom-file-input" name="File" type="file" accept="application/pdf, application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document" placeholder="Seleccionar archivo">
+                            <label class="custom-file-label selected">Seleccionar Archivo...</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <div style="text-align:right;">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                            Cancelar
+                        </button>
+                        <button id="btnEdit" type="submit" class="btn btn-primary ladda-button" data-style="slide-down">
+                            <span class="ladda-label">Guardar</span>
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!--External Evaluator-->
+<div class="modal fade" id="exernal_evaluator_modal" tabindex="-1000" role="dialog" data-backdrop="static" data-keyboard="false" aria-labelledby="detailLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">
+                    Evaluador Externos
+                </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form id="external_evaluator_form" class="m-form m-form--state">
+                @Html.AntiForgeryToken()
+                <div class="modal-body">
+                    <div class="form-group m-form__group">
+                        <label>Usuario</label>
+                        <div class="d-flex">
+                            <div style="width:90%">
+                                <select class="m-select2" required name="UserId" style="width:80% !important;"></select>
+                            </div>
+                            <div style="width:10%">
+                                <button title="Agregar" type="submit" class="btn btn-primary m-btn m-btn--icon m-btn--icon-only" style="height:100% !important; width:50px !important;">
+                                    <i class="la la-plus"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <table id="external_evaluator_datatable" class="table table-striped"></table>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+@section Scripts {
+    <script src="~/js/areas/admin/investigationconvocation/convocationfiles.js" asp-append-version="true"></script>
+}
+

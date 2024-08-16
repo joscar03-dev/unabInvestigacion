@@ -1,0 +1,201 @@
+﻿@page "/admin/usuarios/{userId}/editar"
+@model AKDEMIC.TEACHERINVESTIGATION.Areas.Admin.Pages.UserPage.EditModel
+@{
+        ViewBag.Breadcrumbs = new[] {
+new BreadcrumbViewData {Name="Gestión de Usuarios", Url = "/admin/usuarios"}
+};
+}
+
+<div class="m-content">
+    <div class="m-portlet">
+        <div class="m-portlet__head">
+            <div class="m-portlet__head-caption">
+                <div class="m-portlet__head-title">
+                    <h3 class="m-portlet__head-text">
+                        Datos de Usuario
+                    </h3>
+                </div>
+            </div>
+        </div>
+        <form id="edit-form" class="m-form m-form--state m-form--fit" asp-area="Admin" method="post" enctype="multipart/form-data">
+            <input asp-for="Input.UserId" hidden/>
+            <div class="m-portlet__body">
+                <div class="m-form__content">
+                    <div class="m-alert m-alert--icon alert alert-danger m--hide" role="alert" id="m-form_alert">
+                        <div class="m-alert__icon">
+                            <i class="la la-warning"></i>
+                        </div>
+                        <div id="alert-text" class="m-alert__text">
+                            @ViewBag.ErrorMessage
+                        </div>
+                        <div class="m-alert__close">
+                            <button type="button" class="close" data-close="alert" aria-label="Close"></button>
+                        </div>
+                    </div>
+                </div>
+                <div class="m-card-profile">
+                    <div class="m-card-profile__title">
+                        Foto
+                    </div>
+                    <div class="m-card-profile__pic">
+                        <div class="m-card-profile__pic-wrapper">
+                            @if (Model != null)
+                            {
+                                <img id="current-picture" src="@(string.IsNullOrEmpty(Model.Input.Picture) ? "/images/demo/user.png" : $"/imagenes/{Model.Input.Picture}")" />
+                            }
+                            else
+                            {
+                                <img id="current-picture" src="/images/demo/user.png" alt="" />
+                            }
+                        </div>
+                    </div>
+                </div>
+                <div class="m-card-profile__details">
+                    <div class="form-group m-form__group row">
+                        <div class="m-form__group-sub col-lg-6 mx-auto">
+                            <div class="custom-file">
+                                <input asp-for="Input.PictureFile" class="form-control m-input custom-file-input" placeholder="Usuario" accept="image/*" type="file" />
+                                <label class="custom-file-label selected" for="PhotoUrl">
+                                    Selecciona una Imagen
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group m-form__group row">
+                    <div class="m-form__group-sub col-lg-6">
+                        <label asp-for="Input.UserName" class="required-form-label">Usuario</label>
+                        <div class="m-input-icon m-input-icon--right">
+                            <input asp-for="Input.UserName" class="form-control m-input" placeholder="Usuario" type="text" disabled autocomplete="off" />
+                            <span class="m-input-icon__icon m-input-icon__icon--right">
+                                <span>
+                                    <i class="la la-info-circle"></i>
+                                </span>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="m-form__group-sub col-lg-6">
+                        <label asp-for="Input.Name" class="required-form-label"></label>
+                        <div class="m-input-icon m-input-icon--right">
+                            <input asp-for="Input.Name" class="form-control m-input" placeholder="Nombres" required pattern="^[\w]+[a-zA-ZñÑáéíóúÁÉÍÓÚ\s]+$" autocomplete="off" />
+                            <span class="m-input-icon__icon m-input-icon__icon--right">
+                                <span>
+                                    <i class="la la-info-circle"></i>
+                                </span>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group m-form__group row">
+                    <div class="m-form__group-sub col-lg-6">
+                        <label asp-for="Input.PaternalSurname" class="required-form-label"></label>
+                        <div class="m-input-icon m-input-icon--right">
+                            <input asp-for="Input.PaternalSurname" class="form-control m-input" placeholder="Apellido Paterno" required pattern="^([a-zA-ZÀ-ÿ\u00f1\u00d1]+(\s*[a-zA-ZÀ-ÿ\u00f1\u00d1]*)*[a-zA-ZÀ-ÿ\u00f1\u00d1]+)?$" autocomplete="off" />
+                            <span class="m-input-icon__icon m-input-icon__icon--right">
+                                <span>
+                                    <i class="la la-info-circle"></i>
+                                </span>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="m-form__group-sub col-lg-6">
+                        <label asp-for="Input.MaternalSurname" class="required-form-label"></label>
+                        <div class="m-input-icon m-input-icon--right">
+                            <input asp-for="Input.MaternalSurname" class="form-control m-input" placeholder="Apellido Materno" required pattern="^([a-zA-ZÀ-ÿ\u00f1\u00d1]+(\s*[a-zA-ZÀ-ÿ\u00f1\u00d1]*)*[a-zA-ZÀ-ÿ\u00f1\u00d1]+)?$" autocomplete="off" />
+                            <span class="m-input-icon__icon m-input-icon__icon--right">
+                                <span>
+                                    <i class="la la-info-circle"></i>
+                                </span>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group m-form__group row">
+                    <div class="m-form__group-sub col-lg-6">
+                        <label asp-for="Input.Dni" class="required-form-label">Dni</label>
+                        <div class="m-input-icon m-input-icon--right">
+                            <input asp-for="Input.Dni" class="form-control m-input" placeholder="DNI" type="text" pattern="^[0-9]*$" required minlength="8" maxlength="8" autocomplete="off" />
+                            <span class="m-input-icon__icon m-input-icon__icon--right">
+                                <span>
+                                    <i class="la la-info-circle"></i>
+                                </span>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="m-form__group-sub col-lg-6">
+                        <label asp-for="Input.Email" class="required-form-label"></label>
+                        <div class="m-input-icon m-input-icon--right">
+                            <input asp-for="Input.Email" class="form-control m-input" placeholder="Correo electrónico" type="email" autocomplete="off" required />
+                            <span class="m-input-icon__icon m-input-icon__icon--right">
+                                <span>
+                                    <i class="so socicon-mail"></i>
+                                </span>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group m-form__group row">
+                    <div class="m-form__group-sub col-lg-6">
+                        <label asp-for="Input.PhoneNumber" class="form-control-label"></label>
+                        <div class="m-input-icon m-input-icon--right">
+                            <input asp-for="Input.PhoneNumber" class="form-control m-input" placeholder="Teléfono" pattern="^[1-9][0-9]{6,9}$" minlength="7" maxlength="9" autocomplete="off" />
+                            <span class="m-input-icon__icon m-input-icon__icon--right">
+                                <span>
+                                    <i class="la la-phone"></i>
+                                </span>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="m-form__group-sub col-lg-6">
+                        <label asp-for="Input.BirthDate" class="required-form-label"></label>
+                        <div class="m-input-icon m-input-icon--right">
+                            <input asp-for="Input.BirthDate" class="form-control m-input" required placeholder="Fecha de Nacimiento" readonly />
+                            <span class="m-input-icon__icon m-input-icon__icon--right">
+                                <span>
+                                    <i class="la la-calendar"></i>
+                                </span>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group m-form__group row">
+                    <div class="m-form__group-sub col-lg-12">
+                        <label asp-for="Input.Address" class="required-form-label"></label>
+                        <div class="m-input-icon m-input-icon--right">
+                            <input asp-for="Input.Address" class="form-control m-input" placeholder="Dirección" required autocomplete="off" />
+                            <span class="m-input-icon__icon m-input-icon__icon--right">
+                                <span>
+                                    <i class="la la-home"></i>
+                                </span>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group m-form__group">
+                        <label class="form-control-label">Roles del Usuario</label>
+                        <div class="input-group" style="flex-wrap:initial">
+                            <select  asp-for="Input.RolesId" class="form-control" multiple="">
+                                <option  value="0" disabled>Seleccione un Rol de Usuario</option>
+                            </select>
+                        </div>
+                </div>
+            </div>
+            <div class="m-portlet__foot m-portlet__foot--fit m--align-right m--margin-top-10">
+                <div class="m-form__actions">
+                    <button id="btnSave" class="btn btn-primary m-btn m-btn--custom m-btn--icon" type="submit">
+                        <span>
+                            <i class="la la-save"></i>
+                            &nbsp;&nbsp;
+                            <span>
+                                Guardar
+                            </span>
+                        </span>
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+@section Scripts{
+    <script src="~/js/areas/admin/user/edit.js" asp-append-version="true"></script>
+}

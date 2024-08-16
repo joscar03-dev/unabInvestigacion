@@ -1,0 +1,129 @@
+﻿@page "/convocatorias-de-investigacion/{investigationConvocationId:Guid}/detalle"
+@model AKDEMIC.TEACHERINVESTIGATION.Pages.InvestigationConvocationPage.DetailModel
+@using Microsoft.AspNetCore.Html
+@{
+    Layout = "~/Pages/Shared/Templates/Portal/_Layout.cshtml";
+}
+
+<input id="InvestigationConvocationId" type="hidden" value="@Model.Input.Id">
+<div class="m-content">
+    <div class="m-portlet">
+        <div class="m-portlet__head">
+            <div class="m-portlet__head-caption" style="width:100%">
+                <div class="m-portlet__head-title" style="width:100%;display: block;">
+                    <h3 class="m-portlet__head-text" style="display:initial;">
+                        Convocatorias
+                    </h3>
+                </div>
+                <div class="m-portlet__head-tools">
+                    <a title="Regresar" class="ml-1 btn btn-primary m-btn--icon" href="/">
+                        <span>
+                            <i class="la la-backward"></i>
+                            <span>Regresar</span>
+                        </span>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="m-portlet__body">
+            <div class="m-form--label-align-right m--margin-bottom-20">
+                <div class="row align-items-center m--margin-bottom-10">
+                    <div class="col-md-12">
+                        <h2 style="font-size:1.3rem">@Model.Input.Name</h2>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6 m--margin-bottom-30">
+                        <div class="m--margin-bottom-5">
+                            <span class="m-widget19__number m--font-brand m--margin-right-5 m--margin-left-5"><i class="flaticon-calendar-2"></i></span>
+                            <span class="m-widget19__comment m--margin-right-5 m--margin-left-5">Fecha de Inscripción del @Model.Input.InscriptionStartDate al @Model.Input.InscriptionEndDate</span>
+                        </div>
+                        <div class="m--margin-bottom-5 m--margin-left-5">
+                            @(new HtmlString(Model.Input.Description))
+                        </div>
+                        <div>
+                            @if (!Model.Input.SignedUp)
+                            {
+                                <button id="btnInscription" title="Postularse" class="ml-1 btn btn-primary m-btn--icon">
+                                    <span>
+                                        <i class="la la-download"></i>
+                                        <span>Postular</span>
+                                    </span>
+                                </button>
+                            }
+                            else
+                            {
+                                <div style="color:green">
+                                    <h5>@Model.Input.UserSigned ya ha postulado a esta convocatoria</h5>
+                                </div>
+                            }
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <img style=" display: flex; margin: auto; max-width: 100%; max-height: 100%;" src="@($"/imagenes/{Model.Input.PicturePath}")">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="inscription_modal" role="dialog" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Postularse a la Convocatoria</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-12">
+                        @if (User?.Identity.IsAuthenticated == true)
+                        {
+                            <h5>Postularse</h5>
+                            <form id="user_inscription" asp-page="/InvestigationConvocationPage/Detail" asp-page-handler="RegisterToConvocation" method="post">
+                                <input name="InvestigationConvocationId" type="hidden" value="@Model.Input.Id">
+                                <div class=" row">
+                                    <div class="form-group m-form__group col-lg-12">
+                                        <label>Usuario</label>
+                                        <input class="form-control m-input" value="@(User.GetFullName())" disabled />
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="form-group m-form__group col-lg-12">
+                                        <button id="btnRegisterAsUser" type="submit" class="btn btn-primary btn-block ladda-button" data-style="slide-down">
+                                            <span class="ladda-label">Inscribirse</span>
+                                            <span class="ladda-spinner"></span>
+                                        </button>
+                                    </div>
+                                </div>
+                            </form>
+                        }
+                        else
+                        {
+                            <h5>Postularse</h5>
+                            <div>
+                                <strong>Para inscribirse debe logearse</strong>
+                            </div>
+                            <div class="row">
+                                <div class="form-group m-form__group col-lg-12">
+                                    <button id="btnLogin" type="button" class="btn btn-primary btn-block ladda-button" data-style="slide-down">
+                                        <span class="ladda-label">Inscribirse</span>
+                                        <span class="ladda-spinner"></span>
+                                    </button>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section Scripts{
+    <script src="~/js/pages/investigationconvocation/detail.js" type="text/javascript" asp-append-version="true"></script>
+}

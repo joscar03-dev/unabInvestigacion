@@ -1,0 +1,617 @@
+﻿@page "/investigacionformativa/plantrabajodocente"
+@model AKDEMIC.TEACHERINVESTIGATION.Areas.Admin.Pages.InvestigacionFormativa.InvestigacionformativaPlantrabajodocentePage.IndexModel
+@{
+    ViewData["Title"] = "Plan de Trabajo" + " " + ViewData["nombretipoplan"];
+    ViewData["tipoplan"] = ViewData["tipoplan"];
+    ViewBag.Breadcrumbs = new[]
+    {
+        new BreadcrumbViewData {Name="Plan de Trabajo", Url = null},
+    };
+        Layout = "~/Pages/Shared/Templates/Default/_Layoutinvestigacionformativa.cshtml";
+
+}
+
+
+<div class="m-content">
+    <div class="m-portlet">
+        <div class="m-portlet__head">
+            <div class="m-portlet__head-caption" style="width:100%">
+                <div class="m-portlet__head-title" style="width:100%;display: block;">
+                    <h3 class="m-portlet__head-text" style="display:initial;">
+                        @ViewData["Title"]
+                        <input type="hidden" id="tipoplan" name="tipoplan" value="@ViewData["tipoplan"]" />
+                        @ViewData["tieneplan"]
+                    </h3>
+                </div>
+            </div>
+        </div>
+        <div class="m-portlet__body">
+            <div class="m-form--label-align-right m--margin-bottom-20">
+                <div class="row align-items-center">
+                    <div class="col-xl-8 order-2 order-xl-1">
+                        <div class="row">
+                            <div class="form-group m-form__group col-xl-3">
+                                <label>A&ntilde;o</label>
+
+                                <div class="m-input m-input-icon m-input-icon--left">
+                                    <select multiple="" name="lst_searchanio" class="form-control input_lst_searchanio">
+                                        <option value="0" disabled>Seleccionar</option>
+                                    </select>
+                                    <input type="hidden" class="form-control m-input m-input--pill m-input--solid input_searchanio" placeholder="Buscar..." id="searchanio" autocomplete="off">
+                                </div>
+                            </div>
+                            <div class="form-group m-form__group col-xl-4">
+                                <label>&emsp;</label>
+                                <div class="m-input m-input-icon m-input-icon--left">
+                                    <input type="text" class="form-control m-input m-input--pill m-input--solid" placeholder="Buscar..." id="search">
+                                    <span class="m-input-icon__icon m-input-icon__icon--left">
+                                        <span><i class="la la-search"></i></span>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-4 order-1 order-xl-2 m--align-right">
+                        @if (ViewData["tipoplan"] == "D" && @ViewData["anio"] != "" && @ViewData["tieneplan"]=="0")
+                        {
+                            <button id="btnnuevo" data-toggle="modal" data-target="#addModal" class="btn btn-primary m-btn m-btn--icon">
+                                <span>
+                                    <i class="la la-plus"></i>
+                                    <span>Nuevo Plan de Trabajo @ViewData["anio"]</span>
+                                </span>
+                            </button>
+                        }
+                        <div class="m-separator m-separator--dashed d-xl-none"></div>
+                    </div>
+                </div>
+            </div>
+            @Html.AntiForgeryToken()
+            <table class="table table-striped table-bordered" id="data-table"></table>
+        </div>
+    </div>
+</div>
+
+
+<!--Add Modal-->
+<div class="modal fade" id="addModal" tabindex="-1000" role="dialog" aria-labelledby="detailLabel" aria-hidden="true">
+    <div style="max-width:90%" class="modal-dialog " role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">
+                    Agregar Plan de Trábajo
+                </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form id="add-form" class="m-form m-form--state" asp-area="Admin" asp-page-handler="Create" method="post" enctype="multipart/form-data">
+                <input value="@ViewData["idanio"]" name="IdAnio" hidden />
+                <div class="modal-body ">
+                    <div class="form-group m-form__group row">
+
+                      
+                        <div class="m-form__group-sub col-lg-4">
+                            <div class="">
+                                <label class="required-form-label">Departamento:</label>
+                                <select multiple="" name="IdDepartamento" class="form-control input_IdDepartamento" required>
+                                    <option value="0" disabled>Seleccionar</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="m-form__group-sub col-lg-4">
+                            <div class="">
+                                <label class="required-form-label">Carrera:</label>
+                                <select multiple="" name="IdCarrera" class="form-control input_IdCarrera" required>
+                                    <option value="0" disabled>Seleccionar</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="m-form__group-sub col-lg-4">
+                            <div class="">
+                                <label class="required-form-label">Area:</label>
+                                <select multiple="" name="IdAreaacademica" class="form-control input_IdAreaacademica" required>
+                                    <option value="0" disabled>Seleccionar</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group m-form__group row">
+                        <div class="m-form__group-sub col-lg-4">
+                            <div class="">
+                                <label class="required-form-label">Linea de Investigación:</label>
+                                <select multiple="" name="IdLinea" class="form-control input_IdLinea" required>
+                                    <option value="0" disabled>Seleccionar</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="m-form__group-sub col-lg-4">
+                            <div class="">
+                                <label class="required-form-label">Docente:</label>
+                                <select multiple="" name="IdDocente" class="form-control input_IdDocente" required>
+                                    <option value="0" disabled>Seleccionar</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="m-form__group-sub col-lg-4">
+                            <div class="m-form__group">
+                                <label class="required-form-label">Título:</label>
+                                <input name="titulo" type="text" class="form-control m-input" placeholder="Título" required />
+                            </div>
+                        </div>
+
+                    </div>
+                   
+                    <div class="form-group m-form__group row">
+                       
+                        <div class="m-form__group-sub col-lg-8">
+                            <div class="">
+                                <label>Objetivo:</label>
+                                <textarea style="height: 45px;"  name="objetivo" class="form-control m-input" placeholder="Objetivo"></textarea>
+                            </div>
+                        </div>
+                        <div class="m-form__group-sub col-lg-4">
+                            <div class="">
+                                <label class="required-form-label">Tipo de Evento UNAB:</label>
+                                <select multiple="" name="IdTipoevento" class="form-control input_IdTipoevento" required>
+                                    <option value="0" disabled>Seleccionar</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                    </div>
+
+
+                    <div class="form-group m-form__group row">
+
+                        <div class="m-form__group-sub col-lg-4">
+                            <div class="">
+                                <label class="required-form-label">Tipo de resultado:</label>
+                                <select multiple="" name="IdTiporesultado" class="form-control input_IdTiporesultado" required>
+                                    <option value="0" disabled>Seleccionar</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="m-form__group-sub col-lg-8">
+                            <div class="">
+                                <label>Descripción:</label>
+                                <textarea style="height: 45px;" name="descripcion" class="form-control l-input" placeholder="Descripcion"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group m-form__group row" style="display:none">
+
+                        <div class="m-form__group-sub col-lg-4">
+                            <div class="">
+                                <label class="">Activo:</label>
+                                <input checked="checked" value="1" name="activo" type="checkbox" placeholder="Activo" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <div style="text-align:right;">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                            Cancelar
+                        </button>
+                        <button id="btnSave" type="submit" class="btn btn-primary ladda-button" data-style="slide-down">
+                            <span class="ladda-label">Guardar</span>
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!--Edit Modal-->
+<div class="modal fade" id="editModal" tabindex="-1000" role="dialog" aria-labelledby="detailLabel" aria-hidden="true">
+    <div style="max-width:90%" class="modal-dialog " role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">
+                    Editar Plan de Trábajo
+                </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form id="edit-form" class="m-form m-form--state" asp-area="Admin" asp-page-handler="Edit" method="post" enctype="multipart/form-data">
+                <input name="Id" hidden />
+                <div class="modal-body ">
+                    <div class="form-group m-form__group row">
+
+                       
+                        <div class="m-form__group-sub col-lg-4">
+                            <div class="">
+                                <label class="required-form-label">Departamento:</label>
+                                <select multiple="" name="IdDepartamento" class="form-control input_IdDepartamento" required>
+                                    <option value="0" disabled>Seleccionar</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="m-form__group-sub col-lg-4">
+                            <div class="">
+                                <label class="required-form-label">Carrera:</label>
+                                <select multiple="" name="IdCarrera" class="form-control input_IdCarrera" required>
+                                    <option value="0" disabled>Seleccionar</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="m-form__group-sub col-lg-4">
+                            <div class="">
+                                <label class="required-form-label">Area:</label>
+                                <select multiple="" name="IdAreaacademica" class="form-control input_IdAreaacademica" required>
+                                    <option value="0" disabled>Seleccionar</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group m-form__group row">
+                        <div class="m-form__group-sub col-lg-4">
+                            <div class="">
+                                <label class="required-form-label">Linea de Investigación:</label>
+                                <select multiple="" name="IdLinea" class="form-control input_IdLinea" required>
+                                    <option value="0" disabled>Seleccionar</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="m-form__group-sub col-lg-4">
+                            <div class="">
+                                <label class="required-form-label">Docente:</label>
+                                <select multiple="" name="IdDocente" class="form-control input_IdDocente" required>
+                                    <option value="0" disabled>Seleccionar</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="m-form__group-sub col-lg-4">
+                            <div class="m-form__group">
+                                <label class="required-form-label">Título:</label>
+                                <input name="titulo" type="text" class="form-control m-input" placeholder="Título" required />
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="form-group m-form__group row">
+
+                        <div class="m-form__group-sub col-lg-8">
+                            <div class="">
+                                <label>Objetivo:</label>
+                                <textarea style="height: 45px;" name="objetivo" class="form-control m-input" placeholder="Objetivo"></textarea>
+                            </div>
+                        </div>
+                        <div class="m-form__group-sub col-lg-4">
+                            <div class="">
+                                <label class="required-form-label">Tipo de Evento UNAB:</label>
+                                <select multiple="" name="IdTipoevento" class="form-control input_IdTipoevento" required>
+                                    <option value="0" disabled>Seleccionar</option>
+                                </select>
+                            </div>
+                        </div>
+
+                    </div>
+
+
+                    <div class="form-group m-form__group row">
+
+                        <div class="m-form__group-sub col-lg-4">
+                            <div class="">
+                                <label class="required-form-label">Tipo de resultado:</label>
+                                <select multiple="" name="IdTiporesultado" class="form-control input_IdTiporesultado" required>
+                                    <option value="0" disabled>Seleccionar</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="m-form__group-sub col-lg-8">
+                            <div class="">
+                                <label>Descripción:</label>
+                                <textarea style="height: 45px;" name="descripcion" class="form-control l-input" placeholder="Descripcion"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group m-form__group row" style="display:none">
+
+                        <div class="m-form__group-sub col-lg-4">
+                            <div class="">
+                                <label class="">Activo:</label>
+                                <input checked="checked" value="1" name="activo" type="checkbox" placeholder="Activo" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <div style="text-align:right;">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                            Cancelar
+                        </button>
+                        <button id="btnEditobservacionactividad" type="submit" class="btn btn-primary ladda-button" data-style="slide-down">
+                            <span class="ladda-label">Guardar</span>
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+<!--Edit Anexo Modal-->
+<div class="modal fade" id="editModalAnexo" tabindex="-1000" role="dialog" aria-labelledby="detailLabel" aria-hidden="true">
+    <div class="modal-dialog " role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">
+                    Subir Archivo Anexo
+                </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form id="editanexo-form" class="m-form m-form--state" asp-area="Admin" asp-page-handler="EditFile" method="post" enctype="multipart/form-data">
+                <input name="Id" hidden />
+                <div class="modal-body">
+                    <div class="m-form__group">
+                        <label class="form-label">Archivo</label>
+                        <div class="custom-file">
+                            <input class="form-control m-input custom-file-input" name="File" type="file" accept="application/pdf, application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document" placeholder="Seleccionar archivo">
+                            <label class="custom-file-label selected">Seleccionar Archivo...</label>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <div style="text-align:right;">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                            Cancelar
+                        </button>
+                        <button id="btnEditanexo" type="submit" class="btn btn-primary ladda-button" data-style="slide-down">
+                            <span class="ladda-label">Guardar</span>
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+<!--Edit Autores-->
+<div class="modal fade" id="editModalAutores" tabindex="-1000" role="dialog" aria-labelledby="detailLabel" aria-hidden="true">
+    <div class="modal-dialog " role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">
+                    Registrar Autores 
+                </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form id="editautores-form" class="m-form m-form--state" asp-area="Admin" asp-page-handler="EditAutores" method="post" enctype="multipart/form-data">
+                <input name="Id" hidden />
+                <div class="modal-body">
+                    <div class="m-form__group">
+                        <label class="required-form-label">Alumno 1:</label>
+                        <input name="coautor1" type="text" class="form-control m-input" placeholder="Autor" required />
+
+                    </div>
+                    <div class="m-form__group">
+                        <label >Alumno 2:</label>
+                        <input name="coautor2" type="text" class="form-control m-input" placeholder="Autor"  />
+
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <div style="text-align:right;">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                            Cancelar
+                        </button>
+                        <button id="btnEditautores" type="submit" class="btn btn-primary ladda-button" data-style="slide-down">
+                            <span class="ladda-label">Guardar</span>
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+<!--add Modal actividades-->
+<div class="modal fade" id="addModalActividades" tabindex="-1000" role="dialog" aria-labelledby="detailLabel" aria-hidden="true">
+    <div style="max-width:90%" class="modal-dialog " role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">
+                    Plan de Trabajo Actividades
+                </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form id="addactividades-form" class="m-form m-form--state" asp-area="Admin" asp-page-handler="addActividades" onload="return false">
+                <input name="Id" hidden />
+                <div class="modal-body">
+                    <table class="table table-striped table-bordered" id="data-tableactividades"></table>
+                </div>
+                <div class="modal-footer">
+                    <div style="text-align:right;">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                            Cancelar
+                        </button>                      
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<!--Edit Modal actividades-->
+<div class="modal fade" id="editModalActividades" tabindex="-1000" role="dialog" aria-labelledby="detailLabel" aria-hidden="true">
+    <div style="max-width:50%" class="modal-dialog " role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">
+                    Editar Plan de Trabajo Desarrollo de la Investigación
+                </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form id="editactividades-form" class="m-form m-form--state" asp-area="Admin" asp-page-handler="EditFileActividades" method="post" enctype="multipart/form-data">
+                <input name="Id" hidden />
+                <div class="modal-body">
+                    <div class="m-form__group">
+                        <label class="required-form-label">Título de de la investigación:</label>
+                        <input name="titulo" type="text" class="form-control m-input" placeholder="Título" required />
+                    </div>
+                    <div class="">
+                        <label>Desarrollo de la Investigación:</label>
+                        <textarea name="descripcion" class="form-control l-input" placeholder="Descripción"></textarea>
+                    </div>
+                    <div class="m-form__group">
+                        <label class="form-label">Archivo</label>
+                        <div class="custom-file">
+                            <input class="form-control m-input custom-file-input" name="File" type="file" accept="application/pdf, application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document" placeholder="Seleccionar archivo">
+                            <label class="custom-file-label selected">Seleccionar Archivo...</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <div style="text-align:right;">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                            Cancelar
+                        </button>
+                        <button id="btnEditactividades" type="submit" class="btn btn-primary ladda-button" data-style="slide-down">
+                            <span class="ladda-label">Guardar</span>
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<!--Edit Modal actividad final-->
+<div class="modal fade" id="editModalActividadesfinal" tabindex="-1000" role="dialog" aria-labelledby="detailLabel" aria-hidden="true">
+    <div style="max-width:50%" class="modal-dialog " role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">
+                    Subir informe final
+                </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form id="editactividadesfinal-form" class="m-form m-form--state" asp-area="Admin" asp-page-handler="EditFileActividadesfinal" method="post" enctype="multipart/form-data">
+                <input name="Id" hidden />
+                <div class="modal-body">
+                    <div class="m-form__group">
+                        <label class="required-form-label">Título de de la investigación:</label>
+                        <input readonly value="INFORME FINAL" name="titulo" type="text" class="form-control m-input" placeholder="Título" required />
+                    </div>                   
+                    <div class="m-form__group">
+                        <label class="form-label">Informe Final</label>
+                        <div class="custom-file">
+                            <input class="form-control m-input custom-file-input" name="File" type="file" accept="application/pdf, application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document" placeholder="Seleccionar archivo">
+                            <label class="custom-file-label selected">Seleccionar Archivo...</label>
+                        </div>
+                    </div>
+                    <div class="m-form__group">
+                        <label class="form-label">Anexo (Artículo, Enseyo, Monografia, Otros)</label>
+                        <div class="custom-file">
+                            <input class="form-control m-input custom-file-input" name="Fileanexo" type="file" accept="application/pdf, application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document" placeholder="Seleccionar archivo">
+                            <label class="custom-file-label selected">Seleccionar Archivo...</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <div style="text-align:right;">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                            Cancelar
+                        </button>
+                        <button id="btnEditactividadesfinal" type="submit" class="btn btn-primary ladda-button" data-style="slide-down">
+                            <span class="ladda-label">Guardar</span>
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!--Enviar observacones Modal-->
+<div class="modal fade" id="editModalObservacionactividad" tabindex="-1000" role="dialog" aria-labelledby="detailLabel" aria-hidden="true">
+    <div style="max-width:50%" class="modal-dialog " role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">
+                    Aprobar la actividad del  Plan de Trabajo
+                </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form id="editobservacionactividad-form" class="m-form m-form--state" asp-area="Admin" asp-page-handler="Editobservacionactividad" method="post" enctype="multipart/form-data">
+                <input name="Id" hidden />
+                <div class="modal-body">
+                    <div class="form-group m-form__group row">
+                        <div class="m-form__group-sub col-lg-12">
+                            <div class="m-form__group">
+                                <label class="form-label">Observación en Archivo</label>
+                                <div class="custom-file">
+                                    <input class="form-control m-input custom-file-input" name="File" type="file" accept="application/pdf, application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document" placeholder="Seleccionar archivo">
+                                    <label class="custom-file-label selected">Seleccionar Archivo...</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group m-form__group row">
+
+                        <div class="m-form__group-sub col-lg-12">
+                            <div class="">
+                                <label>Observación:</label>
+                                <textarea name="observacion" class="form-control m-input" placeholder="Observación"></textarea>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="form-group m-form__group row">
+
+                        <div class="m-form__group-sub col-lg-4">
+                            <div class="">
+                                <label class="opcion">
+                                    <input checked="checked" value="1" name="estado" type="radio" />
+                                    Aprobado
+                                </label>
+                                <label class="opcion">
+                                    <input value="0" name="estado" type="radio" />
+                                    Observado
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <div style="text-align:right;">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                            Cancelar
+                        </button>
+                        <button id="btnEditobservacionactividad" type="submit" class="btn btn-primary ladda-button" data-style="slide-down">
+                            <span class="ladda-label">Guardar</span>
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+@section Scripts{
+    <script src="~/js/lib/jquery.fileDownload/jquery.fileDownload.min.js"></script>
+
+    <script src="~/js/areas/admin/investigacionformativa/investigacionformativaplantrabajodocente/index.js" asp-append-version="true"></script>
+}

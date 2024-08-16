@@ -1,0 +1,95 @@
+﻿@page "/reporte/investigacioninnovacion/proyectoactividaddocente"
+@model AKDEMIC.TEACHERINVESTIGATION.Areas.Report.Pages.InvestigacionInnovacion.InvestigacioninnovacionProyectoactividaddocentePage.IndexModel
+@{
+
+    ViewData["Title"] = "Reporte de Actividades de Proyectos x Docente de Innovación";
+    ViewData["Breadcrumbs"] = new[] {
+new BreadcrumbViewData { Name = "Reporte de Actividades de Proyectos x Docente de Innovación" , Url = null }
+};
+    Layout = "~/Pages/Shared/Templates/Default/_Layoutinvestigacioninnovacion.cshtml";
+   
+
+}
+<style>
+    text-right{
+        text-align:right;
+    }
+</style>
+<div class="m-content">
+    <div class="m-portlet">
+        <div class="m-portlet__head">
+            <div class="m-portlet__head-caption">
+                <div class="m-portlet__head-title">
+                    <h3 class="m-portlet__head-text">
+                        @ViewData["Title"]
+                     
+                    </h3>
+                </div>
+            </div>
+        </div>
+        <div class="m-portlet__body">
+
+
+
+
+            <div class="form-group m-form__group row" style="display:">
+
+
+                <div class="m-form__group-sub col-lg-4">
+                    
+                    <div class="m-form__group">
+                        <label id="algo" class="required-form-label">Convocatorias</label>
+                        <select multiple="" id="lst_convocatoria"  name="lst_convocatoria" class="form-control input_lst_convocatoria" required>
+                            <option value="0" disabled>Seleccionar</option>
+                        </select>
+                        <input type="hidden" class="form-control m-input m-input--pill m-input--solid input_search" placeholder="Buscar..." id="searchconvocatoria" autocomplete="off">
+
+                    </div>
+                </div>
+
+                 <div class="m-form__group-sub col-lg-4">                    
+                    <div class="m-form__group">
+                        <label id="algo" class="required-form-label">Docentes</label>
+                        <select multiple="" id="lst_docente"  name="lst_docente" class="form-control input_lst_docente" required>
+                            <option value="0" disabled>Seleccionar</option>
+                        </select>
+                        <input type="hidden" class="form-control m-input m-input--pill m-input--solid input_search" placeholder="Buscar..." id="searchdocente" autocomplete="off">
+
+                    </div>
+                </div>
+                <div class="m-form__group-sub col-lg-4">
+                    <div class="m-form__group">
+                        <label id="algo" class="required-form-label">Proyecto</label>
+                        <select multiple="" id="lst_proyecto"  name="lst_proyecto" class="form-control input_lst_proyecto" required>
+                            <option value="0" disabled>Seleccionar</option>
+                        </select>
+                        <input type="hidden" class="form-control m-input m-input--pill m-input--solid input_search" placeholder="Buscar..." id="searchproyecto" autocomplete="off">
+
+                    </div>
+                </div>
+            </div>
+
+
+
+
+            <br />
+            <table class="table table-striped table-bordered" id="data-table"></table>
+        </div>
+    </div>
+</div>
+
+@*BKLID-018
+InvestigationConvocation
+StartDate
+EndDate
+Lista de Convocatorias en base a un rango de fechas
+Campos a mostrar : Codigo , Nombre , Total de Postulaciones (InvestigationConvocationPostulant) , Total de Proyectos Aprobados (InvestigationProject)
+
+*@
+
+
+
+@section Scripts {
+    <script src="~/js/lib/jquery.fileDownload/jquery.fileDownload.min.js"></script>
+    <script src="~/js/areas/report/investigacioninnovacion/investigacioninnovacionproyectoactividaddocente/index.js" asp-append-version="true"></script>
+}

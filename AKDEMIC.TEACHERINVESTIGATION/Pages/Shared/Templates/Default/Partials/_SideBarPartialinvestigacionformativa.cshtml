@@ -1,0 +1,283 @@
+﻿@inject AKDEMIC.CORE.Services.General.Interfaces.IConfigurationService _configurationService
+@{
+    bool allowRegistration = false;
+    _ = bool.TryParse(await _configurationService.GetValueByKey(AKDEMIC.CORE.Constants.ConfigurationConstants.TEACHERINVESTIGATION.ALLOW_REGISTRATION_REQUEST), out allowRegistration);
+}
+
+<style>
+    html, body {
+        font-family: "Droid Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+        font-size: 12px;
+    }
+
+    .form-control {
+        font-family: "Droid Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+        border-radius: 0;
+        border-radius: .25rem;
+    }
+
+    .m-form .m-form__group {
+        margin-bottom: 0;
+        padding-top: 5px;
+        padding-bottom: 5px;
+    }
+
+    .modal .modal-content .modal-header {
+        padding: 15px;
+    }
+
+    label {
+        display: inline-block;
+        margin-bottom: 0rem;
+    }
+
+    .table th {
+        font-weight: 600;
+    }
+
+    .m-aside-menu .m-menu__nav > .m-menu__item > .m-menu__heading .m-menu__link-text, .m-aside-menu .m-menu__nav > .m-menu__item > .m-menu__link .m-menu__link-text {
+        font-size: 1.02rem;
+        text-transform: initial;
+        font-weight: 600;
+    }
+
+    .table th, .table td {
+        padding: .5rem;
+    }
+</style>
+
+<ul class="m-menu__nav  m-menu__nav--dropdown-submenu-arrow ">
+    <li class="m-menu__item " aria-haspopup="true" is-active-route asp-page="/Index">
+        <a asp-page="/Index" class="m-menu__link ">
+            <i class="m-menu__link-icon la la-home"></i>
+            <span class="m-menu__link-text">
+                Inicio
+            </span>
+        </a>
+    </li>
+
+    @*Modulo de Investigación*@
+    @if (User.IsInRole(AKDEMIC.CORE.Constants.GeneralConstants.ROLES.ACOMPANIANTE) || 
+    User.IsInRole(AKDEMIC.CORE.Constants.GeneralConstants.ROLES.EVALUATOR_COMMITTEE) ||
+    User.IsInRole(AKDEMIC.CORE.Constants.GeneralConstants.ROLES.TEACHERS) ||
+    User.IsInRole(AKDEMIC.CORE.Constants.GeneralConstants.ROLES.SUPERADMIN) ||
+    User.IsInRole(AKDEMIC.CORE.Constants.GeneralConstants.ROLES.TEACHERINVESTIGATION_ADMIN) ||
+    User.IsInRole(AKDEMIC.CORE.Constants.GeneralConstants.ROLES.INNOVATION_TECHNOLOGY_TRANSFER_UNIT) ||
+    User.IsInRole(AKDEMIC.CORE.Constants.GeneralConstants.ROLES.RESEARCH_PROMOTION_UNIT))
+    {
+        @if (        User.IsInRole(AKDEMIC.CORE.Constants.GeneralConstants.ROLES.SUPERADMIN) ||
+                     User.IsInRole(AKDEMIC.CORE.Constants.GeneralConstants.ROLES.TEACHERINVESTIGATION_ADMIN) ||
+                     User.IsInRole(AKDEMIC.CORE.Constants.GeneralConstants.ROLES.INNOVATION_TECHNOLOGY_TRANSFER_UNIT) ||
+                     User.IsInRole(AKDEMIC.CORE.Constants.GeneralConstants.ROLES.RESEARCH_PROMOTION_UNIT))
+        {
+            <li class="m-menu__item  m-menu__item--submenu" aria-haspopup="true" m-menu-submenu-toggle="hover">
+                <a href="javascript:;" class="m-menu__link m-menu__toggle">
+                <i class="m-menu__link-icon flaticon-map"></i>
+                <span class="m-menu__link-text">
+                    Administración
+                </span>
+                <i class="m-menu__ver-arrow la la-angle-right"></i>
+            </a>
+            <div class="m-menu__submenu ">
+                <span class="m-menu__arrow"></span>
+                <ul class="m-menu__subnav">
+                        <li class="m-menu__item " aria-haspopup="true" is-active-route asp-area="Admin" asp-page="/InvestigacionFormativa/InvestigacionformativaConfiguraranioPage/Index">
+                            <a asp-area="Admin" asp-page="/InvestigacionFormativa/InvestigacionformativaConfiguraranioPage/Index" asp-route-area="Admin" class="m-menu__link ">
+                            <i class="m-menu__link-bullet m-menu__link-bullet--dot"><span></span></i>
+                            <span class="m-menu__link-text">
+                                Configurar Año
+                            </span>
+                        </a>
+                    </li>
+                       
+                    <li class="m-menu__item " aria-haspopup="true" is-active-route asp-area="Admin" asp-page="/InvestigacionFormativa/MaestroDepartamentoPage/Index">
+                        <a asp-area="Admin" asp-page="/InvestigacionFormativa/MaestroDepartamentoPage/Index" asp-route-area="Admin" class="m-menu__link ">
+                            <i class="m-menu__link-bullet m-menu__link-bullet--dot"><span></span></i>
+                            <span class="m-menu__link-text">
+                                Departamento
+                            </span>
+                        </a>
+                    </li>
+                    <li class="m-menu__item " aria-haspopup="true" is-active-route asp-area="Admin" asp-page="/InvestigacionFormativa/MaestroCarreraPage/Index">
+                        <a asp-area="Admin" asp-page="/InvestigacionFormativa/MaestroCarreraPage/Index" asp-route-area="Admin" class="m-menu__link ">
+                            <i class="m-menu__link-bullet m-menu__link-bullet--dot"><span></span></i>
+                            <span class="m-menu__link-text">
+                                Carrera
+                            </span>
+                        </a>
+                    </li>
+
+                    <li class="m-menu__item " aria-haspopup="true" is-active-route asp-area="Admin" asp-page="/InvestigacionFormativa/MaestroAreaacademicaPage/Index">
+                        <a asp-area="Admin" asp-page="/InvestigacionFormativa/MaestroAreaacademicaPage/Index" asp-route-area="Admin" class="m-menu__link ">
+                            <i class="m-menu__link-bullet m-menu__link-bullet--dot"><span></span></i>
+                            <span class="m-menu__link-text">
+                                Área académica
+                            </span>
+                        </a>
+                    </li>
+                    <li class="m-menu__item " aria-haspopup="true" is-active-route asp-area="Admin" asp-page="/InvestigacionFormativa/MaestroDocentePage/Index">
+                        <a asp-area="Admin" asp-page="/InvestigacionFormativa/MaestroDocentePage/Index" asp-route-area="Admin" class="m-menu__link ">
+                            <i class="m-menu__link-bullet m-menu__link-bullet--dot"><span></span></i>
+                            <span class="m-menu__link-text">
+                                Docentes
+                            </span>
+                        </a>
+                    </li>
+                    <li class="m-menu__item " aria-haspopup="true" is-active-route asp-area="Admin" asp-page="/InvestigacionFormativa/MaestroLineaPage/Index">
+                        <a asp-area="Admin" asp-page="/InvestigacionFormativa/MaestrolineaPage/Index" asp-route-area="Admin" class="m-menu__link ">
+                            <i class="m-menu__link-bullet m-menu__link-bullet--dot"><span></span></i>
+                            <span class="m-menu__link-text">
+                                Lineas de Investigación
+                            </span>
+                        </a>
+                    </li>
+                    <li class="m-menu__item " aria-haspopup="true" is-active-route asp-area="Admin" asp-page="/InvestigacionFormativa/MaestroFacultadPage/Index">
+                        <a asp-area="Admin" asp-page="/InvestigacionFormativa/MaestroFacultadPage/Index" asp-route-area="Admin" class="m-menu__link ">
+                            <i class="m-menu__link-bullet m-menu__link-bullet--dot"><span></span></i>
+                            <span class="m-menu__link-text">
+                                Facultades
+                            </span>
+                        </a>
+                    </li>
+                        <li class="m-menu__item " aria-haspopup="true" is-active-route asp-area="Admin" asp-page="/InvestigacionFormativa/InvestigacionformativaComitePage/Index">
+                            <a asp-area="Admin" asp-page="/InvestigacionFormativa/InvestigacionformativaComitePage/Index" asp-route-area="Admin" class="m-menu__link ">
+                                <i class="m-menu__link-bullet m-menu__link-bullet--dot"><span></span></i>
+                                <span class="m-menu__link-text">
+                                    Comites
+                                </span>
+                            </a>
+                        </li>
+                  </ul>
+            </div>
+
+        </li>
+        }
+        <li class="m-menu__item  m-menu__item--submenu" aria-haspopup="true" m-menu-submenu-toggle="hover">
+            <a href="javascript:;" class="m-menu__link m-menu__toggle">
+                <i class="m-menu__link-icon flaticon-map"></i>
+                <span class="m-menu__link-text">
+                    Gestión Investigación  Formativa
+                </span>
+                <i class="m-menu__ver-arrow la la-angle-right"></i>
+            </a>
+            <div class="m-menu__submenu ">
+                <span class="m-menu__arrow"></span>
+                <ul class="m-menu__subnav">
+                    @if (User.IsInRole(AKDEMIC.CORE.Constants.GeneralConstants.ROLES.SUPERADMIN) ||
+              User.IsInRole(AKDEMIC.CORE.Constants.GeneralConstants.ROLES.TEACHERINVESTIGATION_ADMIN) ||
+              User.IsInRole(AKDEMIC.CORE.Constants.GeneralConstants.ROLES.INNOVATION_TECHNOLOGY_TRANSFER_UNIT) ||
+              User.IsInRole(AKDEMIC.CORE.Constants.GeneralConstants.ROLES.RESEARCH_PROMOTION_UNIT))
+                    {
+                        <li class="m-menu__item " aria-haspopup="true" is-active-route asp-area="Admin" asp-page="/InvestigacionFormativa/InvestigacionformativaPlantrabajoPage/Index?tipoplan=A">
+                            <a asp-area="Admin" asp-page-handler="TipoPlanAdmininstrador" asp-page="/InvestigacionFormativa/InvestigacionformativaPlantrabajoPage/Index" asp-route-area="Admin" class="m-menu__link ">
+                                <i class="m-menu__link-bullet m-menu__link-bullet--dot"><span></span></i>
+                                <span class="m-menu__link-text">
+                                     Administrar Plan de Trabajo
+                                </span>
+                            </a>
+                        </li>
+                    }
+                    @if (User.IsInRole(AKDEMIC.CORE.Constants.GeneralConstants.ROLES.EVALUATOR_COMMITTEE) ||
+                    User.IsInRole(AKDEMIC.CORE.Constants.GeneralConstants.ROLES.SUPERADMIN) ||
+                   User.IsInRole(AKDEMIC.CORE.Constants.GeneralConstants.ROLES.TEACHERINVESTIGATION_ADMIN) ||
+                   User.IsInRole(AKDEMIC.CORE.Constants.GeneralConstants.ROLES.INNOVATION_TECHNOLOGY_TRANSFER_UNIT) ||
+                   User.IsInRole(AKDEMIC.CORE.Constants.GeneralConstants.ROLES.RESEARCH_PROMOTION_UNIT))
+                    {
+                        <li class="m-menu__item " aria-haspopup="true" is-active-route asp-area="Admin" asp-page="/InvestigacionFormativa/InvestigacionformativaPlantrabajoPage/Index">
+                            <a asp-area="Admin" asp-page-handler="TipoPlanComite" asp-page="/InvestigacionFormativa/InvestigacionformativaPlantrabajoPage/Index" asp-route-area="Admin" class="m-menu__link ">
+                                <i class="m-menu__link-bullet m-menu__link-bullet--dot"><span></span></i>
+                                <span class="m-menu__link-text">
+                                    Plan de Trabajo Comite
+                                </span>
+                            </a>
+                        </li>
+                         <li class="m-menu__item " aria-haspopup="true" is-active-route asp-area="Admin" asp-page="/InvestigacionFormativa/InvestigacionformativaPlantrabajodocentePage/Index">
+                            <a asp-area="Admin" asp-page-handler="TipoPlanComiteFinal"  asp-page="/InvestigacionFormativa/InvestigacionformativaPlantrabajodocentePage/Index" asp-route-area="Admin" class="m-menu__link ">
+                                <i class="m-menu__link-bullet m-menu__link-bullet--dot"><span></span></i>
+                                <span class="m-menu__link-text">
+                                    Revisar Informe Final Comite
+                                </span>
+                            </a>
+                        </li>
+                    }
+                    @if (User.IsInRole(AKDEMIC.CORE.Constants.GeneralConstants.ROLES.EVALUATOR_COMMITTEE) || 
+                    User.IsInRole(AKDEMIC.CORE.Constants.GeneralConstants.ROLES.TEACHERS) ||
+                   User.IsInRole(AKDEMIC.CORE.Constants.GeneralConstants.ROLES.SUPERADMIN) ||
+              User.IsInRole(AKDEMIC.CORE.Constants.GeneralConstants.ROLES.TEACHERINVESTIGATION_ADMIN) ||
+              User.IsInRole(AKDEMIC.CORE.Constants.GeneralConstants.ROLES.INNOVATION_TECHNOLOGY_TRANSFER_UNIT) ||
+              User.IsInRole(AKDEMIC.CORE.Constants.GeneralConstants.ROLES.RESEARCH_PROMOTION_UNIT))
+                    {
+                        <li class="m-menu__item " aria-haspopup="true" is-active-route asp-area="Admin" asp-page="/InvestigacionFormativa/InvestigacionformativaPlantrabajodocentePage/Index">
+                            <a asp-area="Admin" asp-page-handler="TipoPlanDocente" asp-page="/InvestigacionFormativa/InvestigacionformativaPlantrabajodocentePage/Index" asp-route-area="Admin" class="m-menu__link ">
+                                <i class="m-menu__link-bullet m-menu__link-bullet--dot"><span></span></i>
+                                <span class="m-menu__link-text">
+                                    Plan de Trabajo Docente
+                                </span>
+                            </a>
+                        </li>
+                    }
+
+                    @if (User.IsInRole(AKDEMIC.CORE.Constants.GeneralConstants.ROLES.ACOMPANIANTE) || 
+                    User.IsInRole(AKDEMIC.CORE.Constants.GeneralConstants.ROLES.SUPERADMIN) ||
+              User.IsInRole(AKDEMIC.CORE.Constants.GeneralConstants.ROLES.TEACHERINVESTIGATION_ADMIN) ||
+              User.IsInRole(AKDEMIC.CORE.Constants.GeneralConstants.ROLES.INNOVATION_TECHNOLOGY_TRANSFER_UNIT) ||
+              User.IsInRole(AKDEMIC.CORE.Constants.GeneralConstants.ROLES.RESEARCH_PROMOTION_UNIT))
+                    {
+                        <li class="m-menu__item " aria-haspopup="true" is-active-route asp-area="Admin" asp-page="/InvestigacionFormativa/InvestigacionformativaPlantrabajodocentePage/Index">
+                            <a asp-area="Admin" asp-page-handler="TipoPlanComite"  asp-page="/InvestigacionFormativa/InvestigacionformativaPlantrabajodocentePage/Index" asp-route-area="Admin" class="m-menu__link ">
+                                <i class="m-menu__link-bullet m-menu__link-bullet--dot"><span></span></i>
+                                <span class="m-menu__link-text">
+                                    Plan de Trabajo Acompañante
+                                </span>
+                            </a>
+                        </li>
+                    }
+                </ul>
+            </div>
+
+        </li>
+        @if (User.IsInRole(AKDEMIC.CORE.Constants.GeneralConstants.ROLES.SUPERADMIN) ||
+                     User.IsInRole(AKDEMIC.CORE.Constants.GeneralConstants.ROLES.TEACHERINVESTIGATION_ADMIN) ||
+                     User.IsInRole(AKDEMIC.CORE.Constants.GeneralConstants.ROLES.INNOVATION_TECHNOLOGY_TRANSFER_UNIT) ||
+                     User.IsInRole(AKDEMIC.CORE.Constants.GeneralConstants.ROLES.RESEARCH_PROMOTION_UNIT))
+        {
+            <li class="m-menu__item  m-menu__item--submenu" aria-haspopup="true" m-menu-submenu-toggle="hover">
+                <a href="javascript:;" class="m-menu__link m-menu__toggle">
+                    <i class="m-menu__link-icon flaticon-map"></i>
+                    <span class="m-menu__link-text">
+                        Reportes
+                    </span>
+                    <i class="m-menu__ver-arrow la la-angle-right"></i>
+                </a>
+                <div class="m-menu__submenu ">
+                    <span class="m-menu__arrow"></span>
+                    <ul class="m-menu__subnav">
+                        <li class="m-menu__item " aria-haspopup="true" is-active-route asp-area="Report" asp-page="/InvestigacionFormativa/InvestigacionformativaPlantrabajoPage/Index">
+                            <a asp-area="Report" asp-page="/InvestigacionFormativa/InvestigacionformativaPlantrabajoPage/Index" asp-route-area="Report" class="m-menu__link ">
+                                <i class="m-menu__link-bullet m-menu__link-bullet--dot"><span></span></i>
+                                <span class="m-menu__link-text">
+                                    Plan de Trabajo
+                                </span>
+                            </a>
+                        </li>
+                        <li class="m-menu__item " aria-haspopup="true" is-active-route asp-area="Report" asp-page="/InvestigacionFormativa/InvestigacionformativaInformefinalPage/Index">
+                            <a asp-area="Report" asp-page="/InvestigacionFormativa/InvestigacionformativaInformefinalPage/Index" asp-route-area="Report" class="m-menu__link ">
+                                <i class="m-menu__link-bullet m-menu__link-bullet--dot"><span></span></i>
+                                <span class="m-menu__link-text">
+                                    Informe Final
+                                </span>
+                            </a>
+                        </li>
+
+                    </ul>
+                </div>
+
+            </li>
+
+        }
+    }
+
+   
+
+</ul>
+

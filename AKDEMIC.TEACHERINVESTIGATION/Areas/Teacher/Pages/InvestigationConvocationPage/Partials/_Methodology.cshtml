@@ -1,0 +1,199 @@
+﻿@model AKDEMIC.TEACHERINVESTIGATION.Areas.Teacher.ViewModels.InvestigationConvocationViewModels.MethodologyViewModel
+
+<input name="InvestigationConvocationPostulantId" value="@Model.InvestigationConvocationPostulantId" hidden />
+
+<div class="m-form__heading">
+    <h3 class="m-form__heading-title">4. Metodología:</h3>
+</div>
+<div class="m-form__section m-form__section--first">
+    @if (!Model.MethodologyTypeHidden)
+    {
+        <div class="form-group m-form__group row">
+            <div class="col-lg-12 m-form__group-sub">
+                <label class="form-control-label">Seleciona el Tipo de Metodología</label>
+                <div class="input-group" style="flex-wrap:initial">
+                    <select id="MethodologyType" asp-for="MethodologyTypeId" class="form-control">
+                        <option value="0">Seleccione Metodología</option>
+                    </select>
+                    <div class="input-group-append">
+                        <span class="input-group-text requirement_weight" data-weight="@Model.MethodologyTypeWeight">@Model.MethodologyTypeWeight %</span>
+                    </div>
+                    <input id="MethodologyTypeDefault" value="@Model.MethodologyTypeId" hidden />
+                </div>
+            </div>
+        </div>
+    }
+    @if (!Model.MethodologyDescriptionHidden)
+    {
+        <div class="form-group m-form__group row">
+            <div class="col-lg-12 m-form__group-sub">
+                <label class="form-control-label">Metodología</label>
+                <div class="input-group" style="flex-wrap:initial">
+                    <textarea rows="5" asp-for="MethodologyDescription" class="form-control m-input"></textarea>
+                    <div class="input-group-append">
+                        <span class="input-group-text requirement_weight" data-weight="@Model.MethodologyDescriptionWeight">@Model.MethodologyDescriptionWeight %</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+    @if (!Model.PopulationHidden)
+    {
+        <div class="form-group m-form__group row">
+            <div class="col-lg-12 m-form__group-sub">
+                <label class="form-control-label">Población y Muestra</label>
+                <div class="input-group" style="flex-wrap:initial">
+                    <textarea rows="5" asp-for="Population" class="form-control m-input"></textarea>
+                    <div class="input-group-append">
+                        <span class="input-group-text requirement_weight" data-weight="@Model.PopulationWeight">@Model.PopulationWeight %</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+    @if (!Model.InformationCollectionTechniqueHidden)
+    {
+        <div class="form-group m-form__group row">
+            <div class="col-lg-12 m-form__group-sub">
+                <label class="form-control-label">Diseño de técnicas de Recolección de Información</label>
+                <div class="input-group" style="flex-wrap:initial">
+                    <textarea rows="5" asp-for="InformationCollectionTechnique" class="form-control m-input"></textarea>
+                    <div class="input-group-append">
+                        <span class="input-group-text requirement_weight" data-weight="@Model.InformationCollectionTechniqueWeight">@Model.InformationCollectionTechniqueWeight %</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+    @if (!Model.AnalysisTechniqueHidden)
+    {
+        <div class="form-group m-form__group row">
+            <div class="col-lg-12 m-form__group-sub">
+                <label class="form-control-label">Técnicas de Análisis</label>
+                <div class="input-group" style="flex-wrap:initial">
+                    <textarea rows="5" asp-for="AnalysisTechnique" class="form-control m-input"></textarea>
+                    <div class="input-group-append">
+                        <span class="input-group-text requirement_weight" data-weight="@Model.AnalysisTechniqueWeight">@Model.AnalysisTechniqueWeight %</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+
+    @if (!Model.EthicalConsiderationsHidden)
+    {
+        <div class="form-group m-form__group row">
+            <div class="col-lg-12 m-form__group-sub">
+                <label class="form-control-label">Consideraciones Éticas</label>
+                <div class="input-group" style="flex-wrap:initial">
+                    <textarea rows="5" asp-for="EthicalConsiderations" class="form-control m-input"></textarea>
+                    <div class="input-group-append">
+                        <span class="input-group-text requirement_weight" data-weight="@Model.EthicalConsiderationsWeight">@Model.EthicalConsiderationsWeight %</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+
+    @if (!Model.FieldWorkHidden)
+    {
+        if (string.IsNullOrEmpty(Model.FieldWorkUrl))
+        {
+            <div class="form-group m-form__group row">
+                <div class="col-lg-12 m-form__group-sub">
+                    <label class="form-control-label">Guía de trabajo de Campo</label>
+                    <div class="input-group" style="flex-wrap:initial">
+                        <div class="custom-file">
+                            <input id="FieldWork" name="FieldWork" class="form-control m-input custom-file-input" type="file" accept="application/pdf, application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document" placeholder="Seleccionar archivo">
+                            <label class="custom-file-label selected">Seleccionar Archivo...</label>
+                        </div>
+                        <div class="input-group-append">
+                            <span class="input-group-text requirement_weight" data-weight="@Model.FieldWorkWeight">@Model.FieldWorkWeight %</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+        else
+        {
+            <div class="form-group m-form__group row">
+                <div class="col-lg-12 m-form__group-sub">
+                    <label class="form-control-label">Guía de trabajo de Campo</label>
+                    <div class="input-group" style="flex-wrap:initial">
+                        <div class="custom-file">
+                            <input id="FieldWork" name="FieldWork" class="form-control m-input custom-file-input" type="file" accept="application/pdf, application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document" placeholder="Seleccionar archivo">
+                            <label class="custom-file-label selected">Seleccionar Archivo...</label>
+                        </div>
+                        <div class="input-group-append">
+                            <span class="input-group-text requirement_weight" data-weight="@Model.FieldWorkWeight">@Model.FieldWorkWeight %</span>
+                        </div>
+                    </div>
+                    <div class="form-control-feedback">
+                        *Seleccionar en caso sea necesario reemplazar el documento vigente.
+                        <a href="/documentos/@Model.FieldWorkUrl" title="Descargar" class="m-widget4__icon custom--document-link" download>
+                            <i class="la la-download custom--document-download"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        }
+    }
+
+</div>
+<script type="text/javascript" asp-append-version="true">
+    var MethodologyInit = function () {
+        var requirementWeight = {
+            calculate: function () {
+                var totalWeight = 0;
+                $("#methodology-container .requirement_weight").each(function () {
+                    var currentWeight = parseInt($(this).data("weight"));
+                    totalWeight = totalWeight + currentWeight;
+                });
+
+                $("#methodology-percentage").text(`${totalWeight} %`);;
+            },
+            init: function () {
+                this.calculate();
+            }
+        };
+        var select = {
+            methodologyType: {
+                init: function () {
+                    this.load();
+                },
+                load: function () {
+                    $.ajax({
+                        url: (`/api/tiposdemetodologia/select/get`).proto().parseURL(),
+                        type: "GET"
+                    }).done(function (result) {
+                        $("#MethodologyType").select2({
+                            data: result,
+                        });
+                        let defaultValue = $("#MethodologyTypeDefault").val();
+                        if (defaultValue != null && defaultValue != '') {
+                            $("#MethodologyType").val(defaultValue).trigger("change");
+                        }
+                    });
+                }
+            },
+            init: function () {
+                this.methodologyType.init();
+            }
+        };
+
+        return {
+            init: function () {
+                select.init();
+                requirementWeight.init();
+            }
+        };
+    }();
+
+    $(function () {
+        MethodologyInit.init();
+        if ($("#Input_ProjectState").val() == 3 || $("#Input_ProjectState").val() == 2) {
+            $(":input").prop("disabled", true);
+            $(":button").prop("disabled", true);
+        }
+    })
+</script>

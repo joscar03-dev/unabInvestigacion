@@ -1,0 +1,634 @@
+﻿@page "/InvestigacionIncubadoranew/convocatoriaproyecto/detalle"
+@model AKDEMIC.TEACHERINVESTIGATION.Areas.Admin.Pages.InvestigacionIncubadoranew.InvestigacionIncubadoranewConvocatoriaproyectoPage.DetailModel
+@using AKDEMIC.DOMAIN.Entities.InvestigacionFomento;
+@{
+    ViewData["Title"] = "Subir Anexoa";
+    ViewBag.Breadcrumbs = new[]
+    {
+        new BreadcrumbViewData {Name="Proyecto", Url = "/InvestigacionIncubadoranew/convocatoriaproyecto"},
+        new BreadcrumbViewData {Name="Subir Anexos", Url = null},
+    };
+    Layout = "~/Pages/Shared/Templates/Default/_Layoutinvestigacionincubadoranew.cshtml";
+    var lista = new List<InvestigacionfomentoConvocatoriaproyecto>();
+    lista = ViewBag.ListaProyecto;
+    foreach (var item in lista)
+    {
+        ViewData["descripcionemprendimiento"] = item.descripcionemprendimiento ?? "";
+        ViewData["descripcionemprendimientonropag"] = (item.descripcionemprendimiento ?? "").Length;
+        ViewData["ventajascompetitivascomparativas"] = item.ventajascompetitivascomparativas;
+        ViewData["ventajascompetitivascomparativasnropag"] = (item.ventajascompetitivascomparativas ?? "").Length;
+        ViewData["estudiomercado"] = item.estudiomercado;
+        ViewData["estudiomercadonropag"] = (item.estudiomercado ?? "").Length;
+        ViewData["estrategiamarketing"] = item.estrategiamarketing;
+        ViewData["estrategiamarketingnropag"] = (item.potencialessociosestrategicos ?? "").Length;
+        ViewData["potencialessociosestrategicos"] = item.hipotesis;
+        ViewData["potencialessociosestrategicosnropag"] = (item.potencialessociosestrategicos ?? "").Length;
+
+        ViewData["preguntas"] = item.preguntas;
+        ViewData["preguntasnropag"] = (item.preguntas ?? "").Length;
+        ViewData["objetivogeneral"] = item.objetivogeneral;
+        ViewData["objetivogeneralnropag"] = (item.objetivogeneral??"").Length;
+        ViewData["objetivoespecifico"] = item.objetivoespecifico;
+        ViewData["objetivoespecificonropag"] = (item.objetivoespecifico ?? "").Length;
+        ViewData["ventajascompetitivascomparativas"] = item.ventajascompetitivascomparativas;
+        ViewData["ventajascompetitivascomparativasnropag"] = (item.ventajascompetitivascomparativas ?? "").Length;
+        ViewData["estudiomercado"] = item.estudiomercado;
+        ViewData["estudiomercadonropag"] = (item.estudiomercado ?? "").Length;
+        ViewData["estrategiamarketing"] = item.estrategiamarketing;
+        ViewData["estrategiamarketingnropag"] = (item.estrategiamarketing ?? "").Length;
+        ViewData["potencialessociosestrategicos"] = item.potencialessociosestrategicos;
+        ViewData["potencialessociosestrategicosnropag"] = (item.potencialessociosestrategicos ?? "").Length;
+        ViewData["resultados"] = item.resultados;
+        ViewData["resultadosnropag"] = (item.resultados ?? "").Length;
+        ViewData["sostenibilidad"] = item.sostenibilidad;
+        ViewData["sostenibilidadnropag"] =  (item.sostenibilidad??"").Length;
+        ViewData["impacto"] = item.impacto;
+        ViewData["impactonropag"] = (item.impacto ?? "").Length;
+    }
+}
+
+<div class="m-content">
+    <div class="m-portlet">
+        <div class="m-portlet__head">
+            <div class="m-portlet__head-caption">
+                <div class="m-portlet__head-title">
+                    <h3 class="m-portlet__head-text">
+                        Subir Anexos
+                    </h3>
+                </div>
+            </div>
+        </div>
+
+        <!--AQUI EMPIEZA EL TAB PANEL-->
+        <div class="m-portlet m-portlet--tabs">
+            <div class="m-portlet__head" style="height:auto">
+                <div class="m-portlet__head-tools">
+                    <ul class="nav nav-fill m-tabs-line m-tabs-line--primary m-tabs-line--2x" role="tablist">
+                        <li class="nav-item m-tabs__item">
+                            <a class="nav-link m-tabs__link active" href="#tab_1" data-toggle="tab" role="tab">
+                                <i class="fa fa-file"></i>
+                                Descripción del Emprendimiento
+                            </a>
+                        </li>
+                     
+                        <li class="nav-item m-tabs__item">
+                            <a class="nav-link m-tabs__link" href="#tab_2" data-toggle="tab" role="tab">
+                                <i class="fa fa-file"></i>
+                                Objetivo general
+                            </a>
+                        </li>
+                        <li class="nav-item m-tabs__item">
+                            <a class="nav-link m-tabs__link" href="#tab_3" data-toggle="tab" role="tab">
+                                <i class="fa fa-file"></i>
+                                Objetivo específicos
+                            </a>
+                        </li>
+                        <li class="nav-item m-tabs__item">
+                            <a class="nav-link m-tabs__link" href="#tab_4" data-toggle="tab" role="tab">
+                                <i class="fa fa-file"></i>
+                                Ventajas
+                            </a>
+                        </li>
+                        <li class="nav-item m-tabs__item">
+                            <a class="nav-link m-tabs__link" href="#tab_5" data-toggle="tab" role="tab">
+                                <i class="fa fa-file"></i>
+                                Estudio del Mercado
+                            </a>
+                        </li>
+                        <li class="nav-item m-tabs__item">
+                            <a class="nav-link m-tabs__link" href="#tab_6" data-toggle="tab" role="tab">
+                                <i class="fa fa-file"></i>
+                                Estrategia
+                            </a>
+                        </li>
+                        <li class="nav-item m-tabs__item">
+                            <a class="nav-link m-tabs__link" href="#tab_7" data-toggle="tab" role="tab">
+                                <i class="fa fa-file"></i>
+                                Socios Estratégicos
+                            </a>
+                        </li>
+                        
+                        <li class="nav-item m-tabs__item">
+                            <a class="nav-link m-tabs__link" href="#tab_8" data-toggle="tab" role="tab">
+                                <i class="fa fa-file"></i>
+                                Cronograma de Actividades
+                            </a>
+                        </li>
+                        <li class="nav-item m-tabs__item">
+                            <a class="nav-link m-tabs__link" href="#tab_9" data-toggle="tab" role="tab">
+                                <i class="fa fa-file"></i>
+                                Presupuesto
+                            </a>
+                        </li>
+                        <li class="nav-item m-tabs__item">
+                            <a class="nav-link m-tabs__link" href="#tab_10" data-toggle="tab" role="tab">
+                                <i class="fa fa-file"></i>
+                                Requisitos
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+          
+
+            <div class="m-portlet__body">
+                <div class="tab-content">
+                    <div class="tab-pane active" id="tab_1" role="tabpanel">
+                        <form id="edit-form-descripcionemprendimiento" class="m-form m-form--state" asp-area="Admin" asp-page-handler="EditProyecto" method="post">
+                            <input value="@ViewData["id"]" name="Id" hidden />
+                           <input name="tipo" hidden value="1" />
+                            <div class="m-portlet__head">
+                                <div class="m-portlet__head-caption">
+                                    <div class="m-portlet__head-title">
+                                        <h3 class="m-portlet__head-text">
+                                            Descripción del Emprendimiento                                            
+                                        </h3>
+                                    </div>
+                                </div>
+                                <div style="text-align:right;">
+                                    <span id="spdescripcionemprendimiento" class='btn m-btn btn-sm m-btn--label-danger'>@ViewData["descripcionemprendimientonropag"] caracteres</span>
+                                    <button id="btnEditDescripcionemprendimiento" type="submit" class="btn btn-primary btn-grabar ladda-button" data-style="slide-down">
+                                        <span class="ladda-label">Guardar</span>
+                                    </button>
+                                    <button type="button" class="btn btn-secondary btn-cancelar" data-dismiss="modal">
+                                        Cancelar
+                                    </button>
+                                </div>
+
+                            </div>
+                            <div class="m-portlet__body m-portlet__body--no-padding">
+                                <textarea id="descripcionemprendimiento" name="descripcionemprendimiento" style="width:100%;height:200px" class="form-control m-input m-input-textarea">@ViewData["descripcionemprendimiento"]</textarea>
+                            </div>
+                        </form>
+
+                       
+                    </div>
+                                    
+                    <div class="tab-pane" id="tab_2" role="tabpanel">
+                        <form id="edit-form-objetivogeneral" class="m-form m-form--state" asp-area="Admin" asp-page-handler="EditProyecto" method="post">
+                            <input value="@ViewData["id"]" name="Id" hidden />
+                            <input name="tipo" hidden value="2" />
+                            <div class="m-portlet__head">
+                                <div class="m-portlet__head-caption">
+                                    <div class="m-portlet__head-title">
+                                        <h3 class="m-portlet__head-text">
+                                            Objetivo general de la propuesta (Max 2000)
+                                        </h3>
+                                    </div>
+                                </div>
+                                <div style="text-align:right;">
+                                    <span id="spobjetivogeneral" class='btn m-btn btn-sm m-btn--label-danger'>@ViewData["objetivogeneralnropag"]  caracteres</span>
+                                    <button id="btnEditObjetivogeneral" type="submit" class="btn btn-primary btn-grabar ladda-button" data-style="slide-down">
+                                        <span class="ladda-label">Guardar</span>
+                                    </button>
+                                    <button type="button" class="btn btn-secondary btn-cancelar" data-dismiss="modal">
+                                        Cancelar
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="m-portlet__body m-portlet__body--no-padding">
+                                <textarea id="objetivogeneral" name="objetivogeneral" style="width:100%;height:300px" class="form-control m-input m-input-textarea">@ViewData["objetivogeneral"]</textarea>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="tab-pane" id="tab_3" role="tabpanel">
+                        <form id="edit-form-objetivoespecifico" class="m-form m-form--state" asp-area="Admin" asp-page-handler="EditProyecto" method="post">
+                            <input value="@ViewData["id"]" name="Id" hidden />
+                            <input name="tipo" hidden value="3" />
+                            <div class="m-portlet__head">
+                                <div class="m-portlet__head-caption">
+                                    <div class="m-portlet__head-title">
+                                        <h3 class="m-portlet__head-text">
+                                            Objetivos específicos (Max 2000)
+                                        </h3>
+                                    </div>
+                                </div>
+                                <div style="text-align:right;">
+                                    <span id="spobjetivoespecifico" class='btn m-btn btn-sm m-btn--label-danger'>@ViewData["objetivoespecificonropag"] caracteres</span>
+                                    <button id="btnEditObjetivoespecifico" type="submit" class="btn btn-primary btn-grabar ladda-button" data-style="slide-down">
+                                        <span class="ladda-label">Guardar</span>
+                                    </button>
+                                    <button type="button" class="btn btn-secondary btn-cancelar" data-dismiss="modal">
+                                        Cancelar
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="m-portlet__body m-portlet__body--no-padding">
+                                <textarea id="objetivoespecifico" name="objetivoespecifico" style="width:100%;height:300px" class="form-control m-input m-input-textarea">@ViewData["objetivoespecifico"]</textarea>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="tab-pane" id="tab_4" role="tabpanel">                       
+                        <form id="edit-form-ventajascompetitivascomparativas" class="m-form m-form--state" asp-area="Admin" asp-page-handler="EditProyecto" method="post">
+                            <input value="@ViewData["id"]" name="Id" hidden />
+                            <input name="tipo" hidden value="4" />
+                            <div class="m-portlet__head">
+                                <div class="m-portlet__head-caption">
+                                    <div class="m-portlet__head-title">
+                                        <h3 class="m-portlet__head-text">
+                                            Ventajas Competitivas y Comparativas
+                                        </h3>
+                                    </div>
+                                </div>
+                                <div style="text-align:right;">
+                                    <span id="spventajascompetitivascomparativas" class='btn m-btn btn-sm m-btn--label-danger'>@ViewData["ventajascompetitivascomparativasnropag"] caracteres</span>
+                                    <button id="btnEditVentajascompetitivascomparativas" type="submit" class="btn btn-primary btn-grabar ladda-button" data-style="slide-down">
+                                        <span class="ladda-label">Guardar</span>
+                                    </button>
+                                    <button type="button" class="btn btn-secondary btn-cancelar" data-dismiss="modal">
+                                        Cancelar
+                                    </button>
+                                </div>
+                                
+                            </div>
+                            <div class="m-portlet__body m-portlet__body--no-padding">
+                                <textarea id="ventajascompetitivascomparativas" name="ventajascompetitivascomparativas" style="width:100%;height:300px" class="form-control m-input m-input-textarea">@ViewData["ventajascompetitivascomparativas"]</textarea>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="tab-pane" id="tab_5" role="tabpanel">
+                        <form id="edit-form-estudiomercado" class="m-form m-form--state" asp-area="Admin" asp-page-handler="EditProyecto" method="post">
+                            <input value="@ViewData["id"]" name="Id" hidden />
+                            <input name="tipo" hidden value="5" />
+                            <div class="m-portlet__head">
+                                <div class="m-portlet__head-caption">
+                                    <div class="m-portlet__head-title">
+                                        <h3 class="m-portlet__head-text">
+                                            Estudio del Mercado
+                                        </h3>
+                                    </div>
+                                </div>
+                                <div style="text-align:right;">
+                                <span id="spestudiomercado" class='btn m-btn btn-sm m-btn--label-danger'>@ViewData["estudiomercadonropag"] caracteres</span>
+
+                                    <button id="btnEditEstudiomercado" type="submit" class="btn btn-primary btn-grabar ladda-button" data-style="slide-down">
+                                        <span class="ladda-label">Guardar</span>
+                                    </button>
+                                    <button type="button" class="btn btn-secondary btn-cancelar" data-dismiss="modal">
+                                        Cancelar
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="m-portlet__body m-portlet__body--no-padding">
+                                <textarea id="estudiomercado" name="estudiomercado" style="width:100%;height:300px" class="form-control m-input m-input-textarea">@ViewData["estudiomercado"]</textarea>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="tab-pane" id="tab_6" role="tabpanel">
+                        <form id="edit-form-estrategiamarketing" class="m-form m-form--state" asp-area="Admin" asp-page-handler="EditProyecto" method="post">
+                            <input value="@ViewData["id"]" name="Id" hidden />
+                            <input name="tipo" hidden value="6" />
+                            <div class="m-portlet__head">
+                                <div class="m-portlet__head-caption">
+                                    <div class="m-portlet__head-title">
+                                        <h3 class="m-portlet__head-text">
+                                            Estrategia de Marketing
+                                        </h3>
+                                    </div>
+                                </div>
+                                <div style="text-align:right;">
+                                <span id="spestrategiamarketing" class='btn m-btn btn-sm m-btn--label-danger'>@ViewData["estudiomercadonropag"] caracteres</span>
+                                    <button id="btnEditEstrategiamarketing" type="submit" class="btn btn-primary btn-grabar ladda-button" data-style="slide-down">
+                                        <span class="ladda-label">Guardar</span>
+                                    </button>
+                                    <button type="button" class="btn btn-secondary btn-cancelar" data-dismiss="modal">
+                                        Cancelar
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="m-portlet__body m-portlet__body--no-padding">
+                                <textarea id="estrategiamarketing" name="estrategiamarketing" style="width:100%;height:300px" class="form-control m-input m-input-textarea">@ViewData["estrategiamarketing"]</textarea>
+                            </div>
+                        </form>
+
+                    </div>
+                    <div class="tab-pane" id="tab_7" role="tabpanel">
+                        <form id="edit-form-potencialessociosestrategicos" class="m-form m-form--state" asp-area="Admin" asp-page-handler="EditProyecto" method="post">
+                            <input value="@ViewData["id"]" name="Id" hidden />
+                            <input name="tipo" hidden value="7" />
+                            <div class="m-portlet__head">
+                                <div class="m-portlet__head-caption">
+                                    <div class="m-portlet__head-title">
+                                        <h3 class="m-portlet__head-text">
+                                            Potenciales Socios Estrategicos
+                                        </h3>
+                                    </div>
+                                </div>
+                                <div style="text-align:right;">
+                                <span id="sppotencialessociosestrategicos" class='btn m-btn btn-sm m-btn--label-danger'>@ViewData["potencialessociosestrategicosnropag"] caracteres</span>
+
+                                    <button id="btnEditPotencialessociosestrategicos" type="submit" class="btn btn-primary btn-grabar ladda-button" data-style="slide-down">
+                                        <span class="ladda-label">Guardar</span>
+                                    </button>
+                                    <button type="button" class="btn btn-secondary btn-cancelar" data-dismiss="modal">
+                                        Cancelar
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="m-portlet__body m-portlet__body--no-padding">
+                                <textarea id="potencialessociosestrategicos" name="potencialessociosestrategicos" style="width:100%;height:300px" class="form-control m-input m-input-textarea">@ViewData["potencialessociosestrategicos"]</textarea>
+                            </div>
+                        </form>
+
+                    </div>                  
+                    <div class="tab-pane" id="tab_8" role="tabpanel">
+
+                        <div class="m-portlet__head">
+                            <div class="m-portlet__head-caption">
+                                <div class="m-portlet__head-title">
+                                    <h3 class="m-portlet__head-text">
+                                        Cronograma de Actividades
+                                    </h3>
+                                </div>
+                            </div>
+                            <div style="text-align:right;">
+                                <button type="button" data-toggle="modal" data-target="#newModalCronograma" class="btn btn-primary m-btn m-btn--icon">
+                                    <span>
+                                        <i class="la la-plus"></i>
+                                        <span>Nueva Actividad</span>
+                                    </span>
+                                </button>
+                                
+                            </div>
+                        </div>
+                        <div class="m-portlet__body m-portlet__body--no-padding">
+                            <form id="editactividad-form" class="m-form m-form--state" asp-area="Admin" asp-page-handler="" method="post" enctype="multipart/form-data">
+                                <input  value="@ViewData["id"]" name="Id" hidden />
+
+                                <div class="modal-body" style="overflow-y:auto;height:400px">
+                                    <table class="table table-striped table-bordered" id="data-tableactividades"></table>
+
+
+                                </div>
+                                <div class="modal-footer">
+                                    <div style="text-align:right;">
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                                            Cancelar
+                                        </button>
+
+                                    </div>
+                                </div>
+                            </form>
+
+                        </div>
+                    </div>
+                    <div class="tab-pane" id="tab_9" role="tabpanel">
+
+                        <div class="m-portlet__head">
+                            <div class="m-portlet__head-caption">
+                                <div class="m-portlet__head-title">
+                                    <h3 class="m-portlet__head-text">
+                                        Lista de Presupuesto
+                                    </h3>
+                                </div>
+                            </div>
+                            <div style="text-align:right;">
+                                <button type="button" data-toggle="modal" data-target="#newModalCronogramapresupuesto" class="btn btn-primary m-btn m-btn--icon">
+                                    <span>
+                                        <i class="la la-plus"></i>
+                                        <span>Nuevo Concepto</span>
+                                    </span>
+                                </button>
+
+                            </div>
+                        </div>
+                        <div class="m-portlet__body m-portlet__body--no-padding">
+                            <form id="editactividadpresupuesto-form" class="m-form m-form--state" asp-area="Admin" asp-page-handler="" method="post" enctype="multipart/form-data">
+                                <input value="@ViewData["id"]" name="Id" hidden />
+
+                                <div class="modal-body" style="overflow-y:auto;height:400px">
+                                    <table class="table table-striped table-bordered" id="data-tableactividadespresupuesto"></table>
+
+
+                                </div>
+                                <div class="modal-footer">
+                                    <div style="text-align:right;">
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                                            Cancelar
+                                        </button>
+
+                                    </div>
+                                </div>
+                            </form>
+
+                        </div>
+                    </div>
+                    <div class="tab-pane" id="tab_10" role="tabpanel">
+
+                        <div class="m-portlet__head">
+                            <div class="m-portlet__head-caption">
+                                <div class="m-portlet__head-title">
+                                    <h3 class="m-portlet__head-text">
+                                        Subir Anexos Faltantes
+                                    </h3>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="m-portlet__body m-portlet__body--no-padding">
+                            <form id="editanexofaltante-form" class="m-form m-form--state" asp-area="Admin" asp-page-handler="" method="post" enctype="multipart/form-data">
+                                <input  value="@ViewData["id"]"  name="Id" hidden />
+                                <div class="modal-body">
+                                    <table class="table table-striped table-bordered" id="data-tableanexofaltantes"></table>
+                                </div>
+                                <div class="modal-footer">
+                                    <div style="text-align:right;">
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                                            Cancelar
+                                        </button>
+
+                                    </div>
+                                </div>
+                            </form>
+                           
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--AQUI TERMINA EL TAB PANEL-->
+        <div class="modal fade" id="newModalCronograma" tabindex="-1000" role="dialog" aria-labelledby="detailLabel" aria-hidden="true">
+            <div style="max-width:50%" class="modal-dialog " role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">
+                            Agregar Actividades
+                        </h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+
+                    <form id="newcronograma-form" class="m-form m-form--state" asp-area="Admin" asp-page-handler="NewActividad" method="post" enctype="multipart/form-data">
+
+                        <input value="@ViewData["id"]" name="IdConvocatoriaproyecto" hidden />
+
+                        <div class="modal-body">
+                            <div class="m-form__group">
+                                <div class="m-form__group">
+                                    <label class="required-form-label">Título:</label>
+                                    <input name="titulo" type="text" class="form-control m-input" placeholder="Título" required />
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="modal-footer">
+                            <div style="text-align:right;">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                                    Cancelar
+                                </button>
+                                <button id="btnNewcronograma" type="submit" class="btn btn-primary ladda-button" data-style="slide-down">
+                                    <span class="ladda-label">Guardar</span>
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="modal fade" id="editModalCronograma" tabindex="-1000" role="dialog" aria-labelledby="detailLabel" aria-hidden="true">
+            <div style="max-width:50%" class="modal-dialog " role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">
+                            Cronograma de Actividades
+                        </h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+
+                    <form onsubmit="rerurn false" id="editcronograma-form" class="m-form editcronogramam-form--state" asp-area="Admin" asp-page-handler="NewCronograma" method="post" enctype="multipart/form-data">
+                        <input name="Id" hidden />
+                        <div class="modal-body">
+
+                            <div class="">
+                                <label class="required-form-label">Mes del Cronograma:</label>
+                                <select multiple="" name="IdConvocatoriaproyectocronograma" class="form-control input_IdConvocatoriaproyectocronograma" required>
+                                    <option value="0" disabled>Seleccionar</option>
+                                </select>
+                            </div>
+                            <table class="table table-striped table-bordered" id="data-tablecronogramas"></table>
+
+
+                        </div>
+                        <div class="modal-footer">
+                            <div style="text-align:right;">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                                    Cancelar
+                                </button>
+                                <button  id="btnEditcronograma" type="submit" class="btn btn-primary ladda-button" data-style="slide-down">
+                                    <span class="ladda-label">Guardar</span>
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="modal fade" id="addModalAnexo" tabindex="-1000" role="dialog" aria-labelledby="detailLabel" aria-hidden="true">
+            <div class="modal-dialog " role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">
+                            Subir Anexos
+                        </h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <form id="addanexo-form" class="m-form m-form--state" asp-area="Admin" asp-page-handler="EnviarAnexofaltante" method="post" enctype="multipart/form-data">
+                        <input name="Id" hidden />
+                        <div class="modal-body">
+                            <div class="m-form__group">
+                                <label class="form-label">Archivo</label>
+                                <div class="custom-file">
+                                    <input class="form-control m-input custom-file-input" name="File" type="file" accept="application/pdf, application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document" placeholder="Seleccionar archivo">
+                                    <label class="custom-file-label selected">Seleccionar Archivo...</label>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="modal-footer">
+                            <div style="text-align:right;">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                                    Cancelar
+                                </button>
+                                <button id="btnAddanexo" type="submit" class="btn btn-primary ladda-button" data-style="slide-down">
+                                    <span class="ladda-label">Guardar</span>
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="modal fade" id="newModalCronogramapresupuesto" tabindex="-1000" role="dialog" aria-labelledby="detailLabel" aria-hidden="true">
+            <div style="max-width:50%" class="modal-dialog " role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">
+                            Agregar Concepto
+                        </h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+
+                    <form id="newcronogramapresupuesto-form" class="m-form m-form--state" asp-area="Admin" asp-page-handler="NewActividadpresupuesto" method="post" enctype="multipart/form-data">
+
+                        <input value="@ViewData["id"]" name="IdConvocatoriaproyecto" hidden />
+
+                        <div class="modal-body">
+                            <div class="m-form__group">
+                                <div class="">
+                                    <label class="required-form-label">Tipo de Gasto:</label>
+                                    <select multiple="" name="IdGastotipo" class="form-control input_IdGastotipo" required>
+                                        <option value="0" disabled>Seleccionar</option>
+                                    </select>
+                                </div>
+                                <div class="">
+                                    <label class="required-form-label">Unidad de Medida:</label>
+                                    <select multiple="" name="IdUnidadmedida" class="form-control input_IdUnidadmedida" required>
+                                        <option value="0" disabled>Seleccionar</option>
+                                    </select>
+                                </div>
+                                <div class="m-form__group">
+                                    <label class="required-form-label">Concepto de Gasto:</label>
+                                    <input name="descripcion" type="text" class="form-control m-input" placeholder="Descripción" required />
+                                </div>
+                                <div class="m-form__group">
+                                    <label class="required-form-label">Cantidad:</label>
+                                    <input name="cantidad" type="text" class="form-control m-input" placeholder="0" required />
+                                </div>
+                                <div class="m-form__group">
+                                    <label class="required-form-label">Costo Unitario:</label>
+                                    <input name="costounitario" type="text" class="form-control m-input" placeholder="0" required />
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="modal-footer">
+                            <div style="text-align:right;">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                                    Cancelar
+                                </button>
+                                <button id="btnNewcronogramapresupuesto" type="submit" class="btn btn-primary ladda-button" data-style="slide-down">
+                                    <span class="ladda-label">Guardar</span>
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+    </div>
+  
+</div>
+
+
+
+
+@section Scripts{
+    <script src="~/js/areas/admin/investigacionincubadoranew/investigacionincubadoranewconvocatoriaproyecto/detalle.js" asp-append-version="true"></script>
+}

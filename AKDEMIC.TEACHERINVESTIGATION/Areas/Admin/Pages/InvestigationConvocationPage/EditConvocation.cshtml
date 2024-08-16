@@ -1,0 +1,224 @@
+﻿@page "/admin/convocatorias/editar/{InvestigationConvocationId:Guid}"
+@model AKDEMIC.TEACHERINVESTIGATION.Areas.Admin.Pages.InvestigationConvocationPage.EditConvocationModel
+@{
+    ViewData["Title"] = "Editar Convocatoria";
+    ViewBag.Breadcrumbs = new[]
+    {
+ new BreadcrumbViewData {Name="Gestión de Convocatorias", Url="/admin/convocatorias"},
+    };
+}
+
+<div class="m-content">
+    <div class="m-portlet">
+        <div class="m-portlet__head">
+            <div class="m-portlet__head-caption">
+                <div class="m-portlet__head-title">
+                    <h3 class="m-portlet__head-text">
+                        Editar de Convocatoria
+                    </h3>
+                </div>
+            </div>
+            <div class="m-portlet__head-tools">
+                <ul class="m-portlet__nav">
+                    <li class="m-portlet__nav-item">
+                        <button data-toggle="modal" data-target="#extensionModal" type="submit" class="btn btn-primary btn-sm m-btn m-btn--icon" title="Ampliación de Fecha">
+                            <span>
+                                <i class="la la-th"></i>
+                                <span>Ampliación de Fecha</span>
+                            </span>
+                        </button>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <form id="edit-form" class="m-form m-form--state m-form--fit" asp-area="Admin" method="post" enctype="multipart/form-data">
+            <input asp-for="Input.InvestigationConvocationId" hidden />
+            <div class="m-portlet__body">
+                <div class="m-card-profile" style="width:100%">
+                    <div class="m-card-profile__title">
+                        Foto
+                    </div>
+                    <div class="m-card-user" style="margin:auto">
+                        <div class="m-card-profile" style="text-align:center">
+                            <img id="current-picture" style="width:50%;height:100%;" src="@(string.IsNullOrEmpty(Model.Input.InvestigationConvocationPicturePath)?"/images/default-banner.jpg": $"/imagenes/{Model.Input.InvestigationConvocationPicturePath}")" />
+                        </div>
+                    </div>
+                    <div class="m-card-profile__details">
+                        <div class="form-group m-form__group row">
+                            <div class="m-form__group-sub col-lg-6 mx-auto">
+                                <div class="custom-file">
+                                    <input asp-for="Input.InvestigationConvocationPictureFile" type="file" class="custom-file-input" placeholder="Documento" accept="image/jpg, image/jpeg, image/png">
+                                    <label class="custom-file-label">Seleccione archivo</label>
+                                </div>
+                                <label><b>Sólo se permite archivos de tipo .jpg, .png, .jpeg</b></label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group m-form__group row">
+                    <div class="m-form__group-sub col-lg-4">
+                        <label class="required-form-label">Código</label>
+                        <input asp-for="Input.InvestigationConvocationCode" class="form-control m-input" required />
+                    </div>
+                    <div class="m-form__group-sub col-lg-8">
+                        <label class="required-form-label">Nombre</label>
+                        <input asp-for="Input.InvestigationConvocationName" class="form-control m-input" required />
+                    </div>
+                </div>
+                <div class="form-group m-form__group row">
+                    <div class="m-form__group-sub col-lg-6">
+                        <label class="required-form-label">Fecha de Inicio</label>
+                        <div class="input-group">
+                            <input asp-for="Input.InvestigationConvocationStartDate" class="form-control datepicker-input" required />
+                            <div class="input-group-append">
+                                <span class="input-group-text"><i class="la la-calendar"></i></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="m-form__group-sub col-lg-6">
+                        <label class="required-form-label">Fecha de Fin</label>
+                        <div class="input-group">
+                            <input asp-for="Input.InvestigationConvocationEndDate" class="form-control datepicker-input" disabled />
+                            <div class="input-group-append">
+                                <span class="input-group-text"><i class="la la-calendar"></i></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group m-form__group row">
+                    <div class="m-form__group-sub col-lg-6">
+                        <label class="required-form-label">Fecha de Inicio de Postulación</label>
+                        <div class="input-group">
+                            <input asp-for="Input.InvestigationConvocationInscriptionStartDate" class="form-control datepicker-input" required />
+                            <div class="input-group-append">
+                                <span class="input-group-text"><i class="la la-calendar"></i></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="m-form__group-sub col-lg-6">
+                        <label class="required-form-label">Fecha de Fin de Postulación </label>
+                        <div class="input-group">
+                            <input asp-for="Input.InvestigationConvocationInscriptionEndDate" class="form-control datepicker-input" required />
+                            <div class="input-group-append">
+                                <span class="input-group-text"><i class="la la-calendar"></i></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group m-form__group row">
+                    <div class="m-form__group-sub col-lg-12">
+                        <label class="required-form-label">Descripción</label>
+                        <textarea asp-for="Input.InvestigationConvocationDescription" class="summernote mv_summernote"></textarea>
+                    </div>
+                </div>
+                <div class="form-group m-form__group row">
+                    <div class="m-form__group-sub col-lg-4">
+                        <label class="required-form-label">Puntaje Mínimo</label>
+                        <input asp-for="Input.InvestigationConvocationMinScore" class="form-control m-input" required />
+                    </div>
+                    <div class="m-form__group-sub col-lg-4">
+                        <label class="form-control-label">¿Permite Consultas?</label>
+                        <div class="m-input-icon m-input-icon--right m--padding-left-25">
+                            <input asp-for="Input.InvestigationConvocationAllowInquiries" type="checkbox" />
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group m-form__group row" id="InquiryContainer" style="display:none">
+                    <div class="m-form__group-sub col-lg-6">
+                        <label class="form-control-label">Fecha de Inicio de Consultas</label>
+                        <div class="input-group">
+                            <input asp-for="Input.InvestigationConvocationInquiryStartDate" class="form-control datepicker-input" />
+                            <div class="input-group-append">
+                                <span class="input-group-text"><i class="la la-calendar"></i></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="m-form__group-sub col-lg-6">
+                        <label class="form-control-label">Fecha de Fin de Consultas</label>
+                        <div class="input-group">
+                            <input asp-for="Input.InvestigationConvocationInquiryEndDate" class="form-control datepicker-input" />
+                            <div class="input-group-append">
+                                <span class="input-group-text"><i class="la la-calendar"></i></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="m-portlet__foot m-portlet__foot--fit m--align-right m--margin-top-10">
+                <div class="m-form__actions">
+                    <button id="btnSave" class="btn btn-primary m-btn m-btn--custom m-btn--icon" type="submit">
+                        <span>
+                            <i class="la la-save"></i>
+                            &nbsp;&nbsp;
+                            <span>
+                                Guardar
+                            </span>
+                        </span>
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!--Edit Modal-->
+<div class="modal fade" id="extensionModal" tabindex="-1000" role="dialog" aria-labelledby="detailLabel" aria-hidden="true">
+    <div class="modal-dialog " role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">
+                    Fecha de Ampliación
+                </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form id="extension-form" class="m-form m-form--state" asp-area="Admin" asp-page-handler="Extension" method="post" enctype="multipart/form-data">
+                <input name="Id" hidden />
+                <div class="modal-body">
+                    <div class="m-form__group">
+                        <label class="m-form__group">Fecha de Fin Actual:</label>
+                        <input asp-for="Input.InvestigationConvocationEndDate" class="form-control datepicker-input" disabled />
+                        @*<div class="input-group-append">
+                        <span class="input-group-text"><i class="la la-calendar"></i></span>
+                        </div>*@
+                    </div>
+                    <div class="m-form__group">
+                        <label class="required-form-label">Fecha de Ampliación</label>
+                        <div class="input-group">
+                            <input name="NewEndDate" class="form-control datepicker-input" required />
+                            <div class="input-group-append">
+                                <span class="input-group-text"><i class="la la-calendar"></i></span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="m-form__group">
+                        <label class="m-form__group required-form-label">Agregar Documento</label>
+                        <div class=" m-form__group-sub">
+                            <div class="custom-file">
+                                <input class="form-control m-input custom-file-input" name="File" type="file" accept="application/pdf, application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document" placeholder="Seleccionar archivo" required>
+                                <label class="custom-file-label selected">Seleccionar Archivo...</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <div style="text-align:right;">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                            Cancelar
+                        </button>
+                        <button id="btnSave" type="submit" class="btn btn-primary ladda-button" data-style="slide-down">
+                            <span class="ladda-label">Guardar</span>
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+@section Scripts{
+    <script src="~/js/areas/admin/investigationconvocation/edit.js" asp-append-version="true"></script>
+}

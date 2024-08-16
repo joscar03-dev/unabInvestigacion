@@ -1,0 +1,132 @@
+﻿@model AKDEMIC.TEACHERINVESTIGATION.Areas.Teacher.ViewModels.InvestigationConvocationViewModels.ProblemDescriptionViewModel
+
+<input name="InvestigationConvocationPostulantId" value="@Model.InvestigationConvocationPostulantId" hidden />
+
+<div class="m-form__heading">
+    <h3 class="m-form__heading-title">2. Descripción del problema o Resumen del Proyecto:</h3>
+</div>
+<div class="m-form__section m-form__section--first">
+    @if (!Model.ProjectTitleHidden)
+    {
+        <div class="form-group m-form__group row">
+            <div class="col-lg-12 m-form__group-sub">
+                <label class="form-control-label">Título del Proyecto</label>
+                <div class="input-group" style="flex-wrap:initial">
+                    <input asp-for="ProjectTitle" class="form-control m-input" />
+                    <div class="input-group-append">
+                        <span class="input-group-text requirement_weight" data-weight="@Model.ProjectTitleWeight">@Model.ProjectTitleWeight %</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+
+    @if (!Model.ProblemDescriptionHidden)
+    {
+        <div class="form-group m-form__group row">
+            <div class="col-lg-12 m-form__group-sub">
+                <label class="form-control-label">Descripción del problema o Resumen del Proyecto</label>
+                <div class="input-group m-input-group">
+                    <textarea rows="5" asp-for="ProblemDescription" class="form-control m-input"></textarea>
+                    <div class="input-group-append">
+                        <span class="input-group-text requirement_weight" data-weight="@Model.ProblemDescriptionWeight">@Model.ProblemDescriptionWeight %</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+
+    @if (!Model.GeneralGoalHidden)
+    {
+        <div class="form-group m-form__group row">
+            <div class="col-lg-12 m-form__group-sub">
+                <label class="form-control-label">Objetivo General</label>
+                <div class="input-group-append" style="flex-wrap:initial">
+                    <textarea asp-for="GeneralGoal" class="summernote mv_summernote form-control m-input"></textarea>
+                    <div class="input-group-append">
+                        <span class="input-group-text requirement_weight" data-weight="@Model.GeneralGoalWeight">@Model.GeneralGoalWeight %</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+
+    @if (!Model.ProblemFormulationHidden)
+    {
+        <div class="form-group m-form__group row">
+            <div class="col-lg-12 m-form__group-sub">
+                <label class="form-control-label">Formulación del Problema</label>
+                <div class="input-group" style="flex-wrap:initial">
+                    <textarea rows="5" asp-for="ProblemFormulation" class="form-control m-input"></textarea>
+                    <div class="input-group-append">
+                        <span class="input-group-text requirement_weight" data-weight="@Model.ProblemFormulationWeight">@Model.ProblemFormulationWeight %</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+
+    @if (!Model.SpecificGoalHidden)
+    {
+
+        <div class="form-group m-form__group row">
+            <div class="col-lg-12 m-form__group-sub">
+                <label class="form-control-label">Objetivos Especificos</label>
+                <div class="input-group" style="flex-wrap:initial">
+                    <textarea asp-for="SpecificGoal" class="summernote mv_summernote form-control m-input"></textarea>
+                    <div class="input-group-append">
+                        <span class="input-group-text requirement_weight" data-weight="@Model.SpecificGoalWeight">@Model.SpecificGoalWeight %</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+
+    @if (!Model.JustificationHidden)
+    {
+
+        <div class="form-group m-form__group row">
+            <div class="col-lg-12 m-form__group-sub">
+                <label class="form-control-label">Justificación</label>
+                <div class="input-group" style="flex-wrap:initial">
+                    <textarea rows="5" asp-for="Justification" class="form-control m-input"></textarea>
+                    <div class="input-group-append">
+                        <span class="input-group-text requirement_weight" data-weight="@Model.JustificationWeight">@Model.JustificationWeight %</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+
+</div>
+
+<script type="text/javascript" asp-append-version="true">
+    var summernote = {
+        init: function() {
+            $(".mv_summernote").summernote({
+                lang: "es-ES",
+                height: 85,
+                toolbar: [
+                    ['style', ['style']],
+                    ['font', ['bold', 'italic', 'underline', 'strikethrough', 'superscript', 'subscript', 'clear']],
+                    ['fontname', ['fontname']],
+                    ['fontsize', ['fontsize']],
+                    ['color', ['color']],
+                    ['para', ['ol', 'ul', 'paragraph', 'height']],
+                    ['table', ['table']],
+                    ['insert', ['link', 'video', 'hr']],
+                    ['view', ['undo', 'redo', 'fullscreen', 'codeview']]
+                ]
+            });
+        }
+    };
+
+    $(function() {
+        summernote.init();
+        if ($("#Input_ProjectState").val() == 3 || $("#Input_ProjectState").val() == 2) {
+            $(":input").prop("disabled", true);
+            $(".note-editable").attr("contenteditable", "false");
+            $(":button").prop("disabled", true);
+        }
+    })
+</script>

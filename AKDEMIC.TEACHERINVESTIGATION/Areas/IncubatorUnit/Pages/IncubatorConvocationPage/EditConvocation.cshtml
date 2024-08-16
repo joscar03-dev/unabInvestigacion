@@ -1,0 +1,175 @@
+﻿@page "/unidad-emprendimiento/convocatorias-emprendimiento/editar/{IncubatorConvocationId:Guid}"
+@model AKDEMIC.TEACHERINVESTIGATION.Areas.IncubatorUnit.Pages.IncubatorConvocationPage.EditConvocationModel
+@{
+    ViewData["Title"] = "Editar Convocatoria de emprendimiento";
+    ViewBag.Breadcrumbs = new[]
+    {
+ new BreadcrumbViewData {Name="Convocatorias de emprendimiento", Url="/unidad-emprendimiento/convocatorias-emprendimiento"},
+  new BreadcrumbViewData {Name="Editar", Url=null},
+    };
+}
+
+<div class="m-content">
+    <div class="m-portlet">
+        <div class="m-portlet__head">
+            <div class="m-portlet__head-caption">
+                <div class="m-portlet__head-title">
+                    <h3 class="m-portlet__head-text">
+                        Editar de Convocatoria
+                    </h3>
+                </div>
+            </div>
+        </div>
+        <form id="edit-form" class="m-form m-form--state m-form--fit" asp-area="IncubatorUnit" method="post" enctype="multipart/form-data">
+            <input asp-for="Input.IncubatorConvocationId" hidden />
+            <div class="m-portlet__body">
+                <div class="m-card-profile" style="width:100%">
+                    <div class="m-card-profile__title">
+                        Foto
+                    </div>
+                    <div class="m-card-user" style="margin:auto">
+                        <div class="m-card-profile" style="text-align:center">
+                            <img id="current-picture" style="width:50%;height:100%;" src="@(string.IsNullOrEmpty(Model.Input.PicturePath)?"/images/default-banner.jpg": $"/imagenes/{Model.Input.PicturePath}")" />
+                        </div>
+                    </div>
+                    <div class="m-card-profile__details">
+                        <div class="form-group m-form__group row">
+                            <div class="m-form__group-sub col-lg-6 mx-auto">
+                                <div class="custom-file">
+                                    <input asp-for="Input.PictureFile" type="file" class="custom-file-input" placeholder="Documento" accept="image/jpg, image/jpeg, image/png">
+                                    <label class="custom-file-label">Seleccione archivo</label>
+                                </div>
+                                <label><b>Sólo se permite archivos de tipo .jpg, .png, .jpeg</b></label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group m-form__group row">
+                    <div class="m-form__group-sub col-lg-4">
+                        <label class="required-form-label">Código</label>
+                        <input asp-for="Input.Code" class="form-control m-input" required />
+                    </div>
+                    <div class="m-form__group-sub col-lg-8">
+                        <label class="required-form-label">Nombre</label>
+                        <input asp-for="Input.Name" class="form-control m-input" required />
+                    </div>
+                </div>
+
+                <div class="form-group m-form__group row">
+                    <div class="m-form__group-sub col-lg-6">
+                        <label class="required-form-label">Dirigido a</label>
+                        <input asp-for="Input.AddresedTo" class="form-control m-input" required />
+                    </div>
+                    <div class="m-form__group-sub col-lg-6">
+                        <label class="form-control-label">Facultades</label>
+                        <select id="faculties" class="form-control" multiple></select>
+                    </div>
+                </div>
+
+                <div class="form-group m-form__group row">
+                    <div class="m-form__group-sub col-lg-12">
+                        <label class="required-form-label">Requisitos</label>
+                        <textarea asp-for="Input.Requirements" class="summernote mv_summernote"></textarea>
+                    </div>
+                </div>
+
+                <div class="form-group m-form__group row">
+                    <div class="m-form__group-sub col-lg-6">
+                        <label class="required-form-label">Fecha de Inicio</label>
+                        <div class="input-group">
+                            <input asp-for="Input.StartDate" class="form-control datepicker-input" required />
+                            <div class="input-group-append">
+                                <span class="input-group-text"><i class="la la-calendar"></i></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="m-form__group-sub col-lg-6">
+                        <label class="required-form-label">Fecha de Fin</label>
+                        <div class="input-group">
+                            <input asp-for="Input.EndDate" class="form-control datepicker-input" required />
+                            <div class="input-group-append">
+                                <span class="input-group-text"><i class="la la-calendar"></i></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group m-form__group row">
+                    <div class="m-form__group-sub col-lg-6">
+                        <label class="required-form-label">Fecha de Inicio de Postulación</label>
+                        <div class="input-group">
+                            <input asp-for="Input.InscriptionStartDate" class="form-control datepicker-input" required />
+                            <div class="input-group-append">
+                                <span class="input-group-text"><i class="la la-calendar"></i></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="m-form__group-sub col-lg-6">
+                        <label class="required-form-label">Fecha de Fin de Postulación </label>
+                        <div class="input-group">
+                            <input asp-for="Input.InscriptionEndDate" class="form-control datepicker-input" required />
+                            <div class="input-group-append">
+                                <span class="input-group-text"><i class="la la-calendar"></i></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="form-group m-form__group row">
+                    <div class="m-form__group-sub col-lg-6">
+                        <label class="required-form-label">Cantidad de Ganadores</label>
+                        <input asp-for="Input.TotalWinners" type="number" class="form-control m-input" required />
+                    </div>
+                </div>
+
+                <div class="form-group m-form__group row">
+                    <div class="m-form__group-sub col-lg-12">
+                        @if (string.IsNullOrEmpty(Model.Input.DocumentPath))
+                        {
+                            <label class="required-form-label">Documento</label>
+                            <div class="custom-file">
+                                <input class="form-control m-input custom-file-input" asp-for="Input.DocumentFile" type="file" accept="application/pdf, application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document" placeholder="Seleccionar archivo">
+                                <label class="custom-file-label selected">Seleccionar archivo</label>
+                            </div>
+                        }
+                        else
+                        {
+                            <label id="gantt_label" class="required-form-label">Documento <a href="/documentos/@Model.Input.DocumentPath" title="Descargar" class="m-widget4__icon custom--document-link" download><i class="la la-download custom--document-download"></i></a></label>
+                            <div class="custom-file">
+                                <input class="form-control m-input custom-file-input" asp-for="Input.DocumentFile" type="file" accept="application/pdf, application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document" placeholder="Seleccionar archivo">
+                                <label class="custom-file-label selected">Seleccionar archivo</label>
+                            </div>
+                            <div class="form-control-feedback">*Seleccionar en caso sea necesario reemplazar el documento vigente.</div>
+                        }
+                    </div>
+                </div>
+            </div>
+            <div class="m-portlet__foot m-portlet__foot--fit m--align-right m--margin-top-10">
+                <div class="m-form__actions">
+                    <button id="btnSave" class="btn btn-primary m-btn m-btn--custom m-btn--icon" type="submit">
+                        <span>
+                            <i class="la la-save"></i>
+                            &nbsp;&nbsp;
+                            <span>
+                                Guardar
+                            </span>
+                        </span>
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts{
+    <script type="text/javascript">
+        var incubatorFaculties = [];
+        @for (int i = 0; i < Model.Input.Faculties.Count; i++)
+        {
+            <text>
+                incubatorFaculties.push('@Model.Input.Faculties[i].id');
+            </text>
+        }
+    </script>
+    <script src="~/js/areas/incubatorunit/incubatorconvocation/edit.js" asp-append-version="true"></script>
+}

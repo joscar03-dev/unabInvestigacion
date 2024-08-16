@@ -1,0 +1,180 @@
+﻿@page "/perfil"
+@model AKDEMIC.TEACHERINVESTIGATION.Pages.ProfilePage.IndexModel
+@{
+
+}
+
+
+<div class="m-content">
+    <div class="row">
+        <div class="col-xl-3 col-lg-4">
+            <div class="m-portlet m-portlet--full-height  ">
+                <div class="m-portlet__body">
+                    <div class="m-card-profile">
+                        <div class="m-card-profile__title m--hide">
+                            Tu Perfil
+                        </div>
+                        <div class="m-card-profile__pic">
+                            <div class="m-card-profile__pic-wrapper">
+                                <img src="@(string.IsNullOrEmpty(Model.Input.Picture) ? "/images/demo/user.png" : $"/documentos/{Model.Input.Picture}")" alt="" />
+                            </div>
+                        </div>
+                        <div class="m-card-profile__details">
+                            <span class="m-card-profile__name">
+                                @Model.Input.FullName
+                            </span>
+                            <span href="" class="m-card-profile__email ">
+                                @Model.Input.Dni
+                            </span>
+                        </div>
+                    </div>
+                    <ul class="nav nav-tabs m-nav m-nav--hover-bg m-portlet-fit--sides" role="tablist">
+                        <li class="m-nav__item">
+                            <a href="#tab_1" class="nav-link m-nav__link active" data-toggle="tab" role="tab">
+                                <i class="m-nav__link-icon flaticon-avatar"></i>
+                                <span class="m-nav__link-text">
+                                    Datos Personales
+                                </span>
+                            </a>
+                        </li>
+                        <li class="m-nav__item">
+                            <a href="#tab_2" class="nav-link m-nav__link" data-toggle="tab" role="tab">
+                                <i class="m-nav__link-icon flaticon-mark"></i>
+                                <span class="m-nav__link-text">
+                                    Cambio de contraseña
+                                </span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-9 col-lg-8">
+            <!---->
+            <div class="tab-content">
+                <div class="tab-pane active" id="tab_1" role="tabpanel">
+                    <div class="m-portlet m-portlet--full-height m-portlet--tab">
+                        <form class="m-form m-form--fit m-form--label-align-right" id="update-form" asp-page-handler="UpdateUserInformation" method="post">
+                            <div class="m-portlet__body">
+                                <div class="form-group m-form__group row">
+                                    <div class="col-10 ml-auto">
+                                        <h3 class="m-form__section">
+                                            Datos Personales
+                                        </h3>
+                                    </div>
+                                </div>
+                                <div class="form-group m-form__group row">
+                                    <label for="example-text-input" class="col-2 col-form-label">
+                                        Nombre Completo
+                                    </label>
+                                    <div class="col-7">
+                                        <input class="form-control m-input" type="text" value="@Model.Input.FullName" disabled="disabled">
+                                    </div>
+                                </div>
+
+                                <div class="form-group m-form__group row">
+                                    <label for="example-text-input" class="col-2 col-form-label">
+                                        Correo Electr&oacute;nico
+                                    </label>
+                                    <div class="col-7">
+                                        <input class="form-control m-input" name="Email" value="@Model.Input.Email">
+                                    </div>
+                                </div>
+                                <div class="form-group m-form__group row">
+                                    <label for="example-text-input" class="col-2 col-form-label">
+                                        Tel&eacute;fono
+                                    </label>
+                                    <div class="col-7">
+                                        <input class="form-control m-input" name="PhoneNumber" value="@Model.Input.PhoneNumber" pattern="^[1-9][0-9]{4,9}$" minlength="5" maxlength="9">
+                                    </div>
+                                </div>
+                                <div class="form-group m-form__group row">
+                                    <label for="example-text-input" class="col-2 col-form-label">
+                                        CTE- Vitae de Concytec
+                                    </label>
+                                    <div class="col-7">
+                                        <input class="form-control m-input" name="CTEVitaeUrl" value="@Model.Input.CTEVitaeUrl">
+                                    </div>
+                                </div>
+
+
+                                <div class="m-portlet__foot m-portlet__foot--fit">
+                                    <div class="m-form__actions">
+                                        <div class="row">
+                                            <div class="col-2"></div>
+                                            <div class="col-10">
+                                                <button id="btnUpdate" type="submit" class="btn btn-primary">
+                                                    Guardar Cambios
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+                <div class="tab-pane" id="tab_2" role="tabpanel">
+                    <div class="m-portlet m-portlet--full-height m-portlet--tab">
+                        <form class="m-form m-form--fit m-form--label-align-right" id="change-password-form" asp-page-handler="ChangeUserPassword" method="post">
+                            <div class="m-portlet__body">
+                                <div class="form-group m-form__group row">
+                                    <div class="col-10 ml-auto">
+                                        <h3 class="m-form__section">
+                                            Cambio de contraseña
+                                        </h3>
+                                    </div>
+                                </div>
+                                <div class="form-group m-form__group row">
+                                    <label for="example-text-input" class="col-2 col-form-label">
+                                        Contraseña Actual
+                                    </label>
+                                    <div class="col-7">
+                                        <input class="form-control m-input" name="CurrentPassword" type="password" autocomplete="off" required minlength="6" maxlength="50">
+                                    </div>
+                                </div>
+
+                                <div class="form-group m-form__group row">
+                                    <label for="example-text-input" class="col-2 col-form-label">
+                                        Nueva Contraseña
+                                    </label>
+                                    <div class="col-7">
+                                        <input class="form-control m-input" id="NewPassword" name="NewPassword" type="password" autocomplete="off" required minlength="6" maxlength="50">
+                                    </div>
+                                </div>
+                                <div class="form-group m-form__group row">
+                                    <label for="example-text-input" class="col-2 col-form-label">
+                                        Repetir Contraseña
+                                    </label>
+                                    <div class="col-7">
+                                        <input class="form-control m-input" id="RepeatPassword" name="RepeatPassword" type="password" autocomplete="off" required minlength="6" maxlength="50">
+                                    </div>
+                                </div>
+                                <div class="m-portlet__foot m-portlet__foot--fit">
+                                    <div class="m-form__actions">
+                                        <div class="row">
+                                            <div class="col-2"></div>
+                                            <div class="col-10">
+                                                <button id="btnChangePassword" type="submit" class="btn btn-primary">
+                                                    Guardar Cambios
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+
+                        <div class="tab-pane" id="m_user_profile_tab_2"></div>
+                        <div class="tab-pane" id="m_user_profile_tab_3"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts{
+    <script src="~/js/pages/profile/index.js" asp-append-version="true"></script>
+}

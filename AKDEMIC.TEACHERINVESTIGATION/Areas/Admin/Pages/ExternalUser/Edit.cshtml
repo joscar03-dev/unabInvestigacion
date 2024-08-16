@@ -1,0 +1,94 @@
+﻿@page "/admin/usuarios-externos/editar/{id}"
+@model AKDEMIC.TEACHERINVESTIGATION.Areas.Admin.Pages.ExternalUser.EditModel
+@{
+    ViewData["Title"] = "Editar Usuario Externo";
+    ViewBag.Breadcrumbs = new[]
+    {
+    new BreadcrumbViewData {Name="Gestión de Usuarios Externos", Url = "/admin/usuarios-externos"},
+    new BreadcrumbViewData {Name=ViewData["Title"].ToString(), Url = null},
+    };
+}
+
+<div class="m-content">
+    <form id="main_form" method="post">
+        <div class="m-portlet">
+            <div class="m-portlet__head">
+                <div class="m-portlet__head-caption">
+                    <div class="m-portlet__head-title">
+                        <h3 class="m-portlet__head-text">@ViewData["Title"]</h3>
+                    </div>
+                </div>
+            </div>
+            <input type="hidden" asp-for="ExternalUser.Id"/>
+            <div class="m-portlet__body">
+                <div class="form-group row">
+                    <div class="form-group m-form__group col-lg-4">
+                        <label asp-for="ExternalUser.Name">Nombre</label>
+                        <input asp-for="ExternalUser.Name" class="form-control" required maxlength="200" />
+                    </div>
+                    <div class="form-group m-form__group col-lg-4">
+                        <label asp-for="ExternalUser.PaternalSurname">Apellido Paterno</label>
+                        <input asp-for="ExternalUser.PaternalSurname" class="form-control" required maxlength="200" />
+                    </div>
+                    <div class="form-group m-form__group col-lg-4">
+                        <label asp-for="ExternalUser.MaternalSurname">Apellido Materno</label>
+                        <input asp-for="ExternalUser.MaternalSurname" class="form-control" required maxlength="200" />
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="form-group m-form__group col-lg-6">
+                        <label asp-for="ExternalUser.UserName">Usuario</label>
+                        <input asp-for="ExternalUser.UserName" class="form-control" disabled />
+                    </div>
+                    <div class="form-group m-form__group col-lg-6">
+                        <label asp-for="ExternalUser.Email">Correo Electrónico</label>
+                        <input asp-for="ExternalUser.Email" class="form-control" required />
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="form-group m-form__group col-lg-4">
+                        <label asp-for="ExternalUser.Dni">DNI</label>
+                        <input asp-for="ExternalUser.Dni" class="form-control" required />
+                    </div>
+                    <div class="form-group m-form__group col-lg-4">
+                        <label asp-for="ExternalUser.PhoneNumber">Teléfono</label>
+                        <input asp-for="ExternalUser.PhoneNumber" class="form-control" />
+                    </div>
+                    <div class="form-group m-form__group col-lg-4">
+                        <label asp-for="ExternalUser.CurriculumVitaeFile">CV</label>
+                        <div class="custom-file">
+                            <input class="form-control m-input custom-file-input" asp-for="ExternalUser.CurriculumVitaeFile" type="file" accept="application/pdf" placeholder="Seleccionar archivo">
+                            <label class="custom-file-label selected">Seleccionar Archivo...</label>
+                        </div>
+                        <a href="/documentos/@Model.ExternalUser.CurriculumVitaeUrl" class="m-link m--font-boldest m--font-primary" target="_blank">Descargar Archivo Adjunto</a>
+                    </div>
+                </div>
+            </div>
+            <div class="m-portlet__foot">
+                <div class="row col-12">
+                    <div class="col-6">
+                        <a href="/admin/usuarios-externos" class="btn btn-secondary m-btn m-btn--icon">
+                            <span>
+                                <i class="la la-angle-left"></i>
+                                <span>Atrás</span>
+                            </span>
+                        </a>
+                    </div>
+                    <div class="col-6">
+                        <button type="submit" class="pull-right btn btn-primary m-btn m-btn--icon">
+                            <span>
+                                <i class="la la-save"></i>
+                                <span>Guardar</span>
+                            </span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+
+@section Scripts {
+    <script src="~/js/areas/admin/external_user/edit.js" asp-append-version="true"></script>
+}

@@ -1,0 +1,122 @@
+﻿@page "/jefe-unidad/eventos/crear"
+@model AKDEMIC.TEACHERINVESTIGATION.Areas.UnitBoss.Pages.EventPage.CreateModel
+@{
+        ViewData["Title"] = "Crear Evento";
+    ViewBag.Breadcrumbs = new[]
+    {
+new BreadcrumbViewData {Name="Evento", Url= "/jefe-unidad/eventos/"},
+new BreadcrumbViewData {Name="Crear", Url = null},
+    };
+}
+
+@section Styles{
+    <style>
+        .dropdown-menu show {
+            min-width: inherit;
+        }
+    </style>
+}
+
+    <div class="m-content">
+        <div class="m-portlet">
+            <div class="m-portlet__head">
+                <div class="m-portlet__head-caption">
+                    <div class="m-portlet__head-title">
+                        <h3 class="m-portlet__head-text">
+                            Creación de Evento
+                        </h3>
+                    </div>
+                </div>
+            </div>
+            <form id="create-form" class="m-form m-form--state m-form--fit" asp-area="UnitBoss" method="post" enctype="multipart/form-data">
+                <div class="m-portlet__body">
+                    <div class="m-card-profile" style="width:100%">
+                        <div class="m-card-profile__title">
+                            Foto
+                        </div>
+                        <div class="m-card-user" style="margin:auto">
+                            <div class="m-card-profile" style="text-align:center">
+                                <img id="current-picture" style="width:50%;height:100%;" src="/images/default-banner.jpg" alt="" />
+                            </div>
+                        </div>
+                        <div class="m-card-profile__details">
+                            <div class="form-group m-form__group row">
+                                <div class="m-form__group-sub col-lg-6 mx-auto">
+                                    <div class="custom-file">
+                                        <input asp-for="Input.PictureFile" type="file" class="custom-file-input" placeholder="Imagen" accept="image/jpg, image/jpeg, image/png">
+                                        <label class="custom-file-label">Seleccione archivo</label>
+                                    </div>
+                                    <label><b>Sólo se permite archivos de tipo .jpg, .png, .jpeg</b></label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group m-form__group row">
+                        <div class="m-form__group-sub col-lg-12">
+                            <label class="form-control-label">Descripción</label>
+                            <textarea asp-for="Input.Description" class="summernote mv_summernote"></textarea>
+                        </div>
+                    </div>
+
+                    <div class="form-group m-form__group row">
+                        <div class="m-form__group-sub col-lg-6">
+                            <label class="required-form-label">Título</label>
+                            <input asp-for="Input.Title" class="form-control m-input" required />
+                        </div>
+                        <div class="m-form__group-sub col-lg-6">
+                            <label class="required-form-label">Fecha de Evento</label>
+                            <div class="input-group">
+                                <input asp-for="Input.EventDate" class="form-control datepicker-input" required />
+                                <div class="input-group-append">
+                                    <span class="input-group-text"><i class="la la-calendar"></i></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group m-form__group row">
+                        <div class="m-form__group-sub col-lg-6">
+                            <label class="form-control-label">URL de Video</label>
+                            <input asp-for="Input.VideoUrl" class="form-control m-input" />
+                        </div>
+                        <div class="m-form__group-sub col-lg-6">
+                            <label class="required-form-label">Costo</label>
+                            <input type="number" asp-for="Input.Cost" class="form-control m-input" required />
+                        </div>
+                    </div>
+
+                    <div class="form-group m-form__group row">
+                        <div class="m-form__group-sub col-lg-6">
+                            <label class="form-control-label">Organizador</label>
+                            <input asp-for="Input.Organizer" class="form-control m-input" />
+                        </div>
+@*                        <div class="m-form__group-sub col-lg-6">
+                            <label class="form-control-label">Unidad</label>
+                            <select asp-for="Input.UnitId" name="Input.UnitId" class="form-control">
+                                <option value="0" selected disabled>Seleccione una Unidad</option>
+                            </select>
+                        </div>*@
+                    </div>
+                </div>
+                <div class="m-portlet__foot m-portlet__foot--fit m--align-right m--margin-top-10">
+                    <div class="m-form__actions">
+                        <button id="btnSave" class="btn btn-primary m-btn m-btn--custom m-btn--icon" type="submit">
+                            <span>
+                                <i class="la la-save"></i>
+                                &nbsp;&nbsp;
+                                <span>
+                                    Guardar
+                                </span>
+                            </span>
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+
+
+    @section Scripts{
+    <script src="~/js/areas/unitboss/event/create.js" asp-append-version="true"></script>
+}

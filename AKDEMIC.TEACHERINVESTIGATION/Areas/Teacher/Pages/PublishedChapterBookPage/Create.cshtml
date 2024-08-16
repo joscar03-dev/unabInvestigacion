@@ -1,0 +1,323 @@
+﻿@page "/investigador/capitulos-libros-publicados/crear"
+@model AKDEMIC.TEACHERINVESTIGATION.Areas.Teacher.Pages.PublishedChapterBookPage.CreateModel
+
+@{
+    ViewData["Title"] = "Mis Capítulos de Libros publicados";
+    ViewBag.Breadcrumbs = new[]
+    {
+        new BreadcrumbViewData {Name="Mis Capítulos de Libros publicados", Url = "/investigador/capitulos-libros-publicados"},
+        new BreadcrumbViewData {Name="Crear", Url = null},
+    };
+    var termsAndCondition = ViewBag.TermsAndCondition;
+}
+
+
+
+
+<div class="m-content">
+    <div class="m-portlet">
+        <div class="m-portlet__head">
+            <div class="m-portlet__head-caption">
+                <div class="m-portlet__head-title">
+                    <h3 class="m-portlet__head-text">
+                        Datos del Capítulo de Libro publicado
+                    </h3>
+                </div>
+            </div>
+        </div>
+        <form id="create-form" class="m-form m-form--state" asp-area="Teacher" method="post" enctype="multipart/form-data">
+            <div class="m-portlet__body">
+                <div class="m-form__content">
+                    <div class="m-alert m-alert--icon alert alert-danger m--hide" role="alert" id="m-form_alert">
+                        <div class="m-alert__icon">
+                            <i class="la la-warning"></i>
+                        </div>
+                        <div id="alert-text" class="m-alert__text">
+                            @ViewBag.ErrorMessage
+                        </div>
+                        <div class="m-alert__close">
+                            <button type="button" class="close" data-close="alert" aria-label="Close"></button>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group m-form__group row">
+                    <div class="m-form__group-sub col-lg-6">
+                        <label class="required-form-label">Título del libro</label>
+                        <div class="m-input-icon m-input-icon--right">
+                            <input asp-for="Input.BookTitle" class="form-control m-input" placeholder="Título del libro" autocomplete="off" required />
+                            <span class="m-input-icon__icon m-input-icon__icon--right">
+                                <span>
+                                    <i class="la la-info-circle"></i>
+                                </span>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="m-form__group-sub col-lg-6">
+                        <label class="required-form-label">Título del capítulo</label>
+                        <div class="m-input-icon m-input-icon--right">
+                            <input asp-for="Input.ChapterTitle" class="form-control m-input" placeholder="Título del capítulo" autocomplete="off" required />
+                            <span class="m-input-icon__icon m-input-icon__icon--right">
+                                <span>
+                                    <i class="la la-info-circle"></i>
+                                </span>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group m-form__group row">
+                    <div class="m-form__group-sub col-lg-6">
+                        <label class="required-form-label">Editorial</label>
+                        <div class="m-input-icon m-input-icon--right">
+                            <input asp-for="Input.PublishingHouse" class="form-control m-input" placeholder="Editorial" autocomplete="off" required />
+                            <span class="m-input-icon__icon m-input-icon__icon--right">
+                                <span>
+                                    <i class="la la-info-circle"></i>
+                                </span>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="m-form__group-sub col-lg-6">
+                        <label class="required-form-label">Ciudad de edición</label>
+                        <div class="m-input-icon m-input-icon--right">
+                            <input asp-for="Input.PublishingCity" class="form-control m-input" placeholder="Ciudad de edición" autocomplete="off" required />
+                            <span class="m-input-icon__icon m-input-icon__icon--right">
+                                <span>
+                                    <i class="la la-info-circle"></i>
+                                </span>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group m-form__group row">
+                    <div class="m-form__group-sub col-lg-6">
+                        <label class="required-form-label">Año de edición</label>
+                        <div class="m-input-icon m-input-icon--right">
+                            <input asp-for="Input.PublishingYear" class="form-control m-input" placeholder="Año de edición" autocomplete="off" required />
+                            <span class="m-input-icon__icon m-input-icon__icon--right">
+                                <span>
+                                    <i class="la la-info-circle"></i>
+                                </span>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="m-form__group-sub col-lg-6">
+                        <label class="form-control-label">ISBN</label>
+                        <div class="m-input-icon m-input-icon--right">
+                            <input asp-for="Input.ISBN" class="form-control m-input" placeholder="ISBN" autocomplete="off" />
+                            <span class="m-input-icon__icon m-input-icon__icon--right">
+                                <span>
+                                    <i class="la la-info-circle"></i>
+                                </span>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group m-form__group row">
+                    <div class="m-form__group-sub col-lg-6">
+                        <label class="required-form-label">Página de Inicio</label>
+                        <div class="m-input-icon m-input-icon--right">
+                            <input asp-for="Input.StartPage" class="form-control m-input" placeholder="Página de Inicio" autocomplete="off" required />
+                            <span class="m-input-icon__icon m-input-icon__icon--right">
+                                <span>
+                                    <i class="la la-info-circle"></i>
+                                </span>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="m-form__group-sub col-lg-6">
+                        <label class="required-form-label">Página de Fin</label>
+                        <div class="m-input-icon m-input-icon--right">
+                            <input asp-for="Input.EndPage" class="form-control m-input" placeholder="Página de Fin" autocomplete="off" required />
+                            <span class="m-input-icon__icon m-input-icon__icon--right">
+                                <span>
+                                    <i class="la la-info-circle"></i>
+                                </span>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="form-group m-form__group row">
+                    <div class="m-form__group-sub col-lg-6">
+                        <label class="required-form-label">Autor principal</label>
+                        <div class="m-input-icon m-input-icon--right">
+                            <input asp-for="Input.MainAuthor" class="form-control m-input" placeholder="Autor Principal" autocomplete="off" required />
+                            <span class="m-input-icon__icon m-input-icon__icon--right">
+                                <span>
+                                    <i class="la la-info-circle"></i>
+                                </span>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="m-form__group-sub col-lg-6">
+                        <label class="form-control-label">DOI</label>
+                        <div class="m-input-icon m-input-icon--right">
+                            <input asp-for="Input.DOI" class="form-control m-input" placeholder="DOI" autocomplete="off"  />
+                            <span class="m-input-icon__icon m-input-icon__icon--right">
+                                <span>
+                                    <i class="la la-info-circle"></i>
+                                </span>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group m-form__group row">
+                    <div class="m-form__group-sub col-lg-12">
+                        <label class="form-control-label">Url</label>
+                        <div class="m-input-icon m-input-icon--right">
+                            <input asp-for="Input.Url" class="form-control m-input" placeholder="Url" autocomplete="off" />
+                            <span class="m-input-icon__icon m-input-icon__icon--right">
+                                <span>
+                                    <i class="la la-info-circle"></i>
+                                </span>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group m-form__group row">
+                    <div class="m-form__group-sub col-lg-6 col-xs-12">
+                        <button data-toggle="modal" data-target="#add-authors-modal" class="btn btn-primary m-btn m-btn--air m-btn--icon" type="button">
+                            Agregar Autor
+                        </button>
+                    </div>
+                </div>
+                <table class="table table-striped table-bordered" id="authors-table"></table>
+
+                <div class="form-group m-form__group row">
+                    <div class="m-form__group-sub col-lg-6 col-xs-12">
+                        <button data-toggle="modal" data-target="#add-files-modal" class="btn btn-primary m-btn m-btn--air m-btn--icon" type="button">
+                            Agregar Archivo
+                        </button>
+                    </div>
+                </div>
+                <table class="table table-striped table-bordered" id="files-table"></table>
+
+                <div class="col-md-6 m-form__group-sub">
+                    <label>&emsp;</label>
+                    <div class="m-checkbox-list">
+                        <label class="m-checkbox">
+                            @termsAndCondition
+                            <input class="form-control" asp-for="Input.TermnConditions" type="checkbox" />
+                            <span></span>
+                        </label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="m-portlet__foot m-portlet__foot--fit m--align-right m--margin-top-10">
+                <div class="m-form__actions">
+                    <button hidden id="btnSave" class="btn btn-primary m-btn m-btn--custom m-btn--icon to_hide" type="submit">
+                        <span>
+                            <i class="la la-save"></i>
+                            &nbsp;&nbsp;
+                            <span>
+                                Guardar
+                            </span>
+                        </span>
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+<div class="modal fade" id="add-authors-modal" tabindex="-1" role="dialog" aria-labelledby="addLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title text-primary font-weight-bold" id="add-label">
+                    Agregar Autor
+                </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form id="add-author-form" class="m-form m-form--state">
+                <div class="modal-body">
+                    <div class="form-group m-form__group">
+                        <label class="required-form-label">DNI</label>
+                        <input type="text" name="Dni" placeholder="DNI" pattern="^[0-9]*$" minlength="8" maxlength="8" class="form-control m-input" required />
+                    </div>
+                    <div class="form-group m-form__group">
+                        <label class="required-form-label">Apellido Paterno</label>
+                        <input type="text" name="PaternalSurname" placeholder="Apellido Paterno" class="form-control m-input" required />
+                    </div>
+                    <div class="form-group m-form__group">
+                        <label class="required-form-label">Apellido Materno</label>
+                        <input type="text" name="MaternalSurname" placeholder="Apellido Materno" class="form-control m-input" required />
+                    </div>
+                    <div class="form-group m-form__group">
+                        <label class="required-form-label">Nombres</label>
+                        <input type="text" name="Name" placeholder="Nombres" class="form-control m-input" required />
+                    </div>
+                    <div class="form-group m-form__group">
+                        <label class="required-form-label">Correo electrónico</label>
+                        <input type="email" name="Email" placeholder="Correo electrónico" class="form-control m-input" required />
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                        Cerrar
+                    </button>
+                    <button id="btnSaveFile" type="submit" class="btn btn-primary ladda-button btn-addExternal" data-style="slide-down">
+                        <span class="ladda-label">Guardar</span>
+                        <span class="ladda-spinner"></span>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="add-files-modal" tabindex="-1" role="dialog" aria-labelledby="addLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title text-primary font-weight-bold" id="add-label">
+                    Agregar Archivo
+                </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form id="add-file-form" class="m-form m-form--state">
+                <div class="modal-body">
+                    <div class="form-group m-form__group">
+                        <label class="required-form-label">Nombre de Archivo</label>
+                        <input type="text" name="Name" placeholder="Nombre de Archivo" class="form-control m-input" required />
+                    </div>
+                    <div class="m-form__group">
+                        <label class="required-form-label">Archivo</label>
+                        <div class="custom-file">
+                            <input class="form-control m-input custom-file-input" name="File" type="file" accept="application/pdf, application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document" placeholder="Seleccionar archivo" required>
+                            <label class="custom-file-label selected">Seleccionar Archivo...</label>
+                        </div>
+                    </div>
+
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                        Cerrar
+                    </button>
+                    <button id="btnSaveFile" type="submit" class="btn btn-primary ladda-button btn-addExternal" data-style="slide-down">
+                        <span class="ladda-label">Guardar</span>
+                        <span class="ladda-spinner"></span>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts{
+    <script src="~/js/areas/teacher/publishedchapterbook/create.js" asp-append-version="true"></script>
+}
+
+
+

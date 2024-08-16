@@ -1,0 +1,123 @@
+﻿@page "/admin/configuracion"
+@model AKDEMIC.TEACHERINVESTIGATION.Areas.Admin.Pages.ConfigurationPage.IndexModel
+@{
+    ViewBag.Breadcrumbs = new[] {
+new BreadcrumbViewData {Name="Inicio", Url = "/"},
+};
+}
+<div class="m-content">
+    <div class="m-alert m-alert--icon m-alert--icon-solid m-alert--outline alert alert-primary alert-dismissible fade show" role="alert">
+        <div class="m-alert__icon">
+            <i class="flaticon-exclamation-2"></i>
+            <span></span>
+        </div>
+        <div class="m-alert__text">
+            <strong>Advertencia</strong> Las variables de configuración mostradas son utilizadas en las distintas funcionalidades.
+            <br />Los cambios realizados se aplicar&aacute;n de manera instantanea en el sistema.
+        </div>
+        <div class="m-alert__close">
+        </div>
+    </div>
+    <div class="m-portlet">
+        <div class="m-portlet__head">
+            <div class="m-portlet__head-caption">
+                <div class="m-portlet__head-title">
+                    <h3 class="m-portlet__head-text">
+                        Información del sistema
+                    </h3>
+                </div>
+            </div>
+        </div>
+
+        <form id="configForm" class="m-form m-form--state" asp-area="Admin" method="post" enctype="multipart/form-data">
+            <div class="m-portlet__body">
+                <div class="m-form__section m-form__section--first">
+                    <div class="m-form__heading">
+                        <h3 class="m-form__heading-title">1. Configuraci&oacute;n general:</h3>
+                    </div>
+                    <div class="form-group m-form__group row">
+                        @if (string.IsNullOrEmpty(Model.Input.RulesArticleScientific))
+                        {
+                            <div class="col-md-6 m-form__group-sub">
+                                <label class="form-control-label">Formato de Artículo Científico</label>
+                                <div class="custom-file">
+                                    <input class="form-control m-input custom-file-input" asp-for="Input.File" type="file" accept="application/pdf, application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document" placeholder="Seleccionar archivo">
+                                    <label class="custom-file-label selected">Seleccionar archivo</label>
+                                </div>
+                            </div>
+                        }
+                        else
+                        {
+                            <div class="col-md-6 m-form__group-sub">
+                                <label id="gantt_label" class="form-control-label">Formato de Artículo Científico <a href="/documentos/@Model.Input.RulesArticleScientific" title="Descargar" class="m-widget4__icon custom--document-link" download><i class="la la-download custom--document-download"></i></a></label>
+                                <div class="custom-file">
+                                    <input class="form-control m-input custom-file-input" asp-for="Input.File" type="file" accept="application/pdf, application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document" placeholder="Seleccionar archivo">
+                                    <label class="custom-file-label selected">Seleccionar archivo</label>
+                                </div>
+                                <div class="form-control-feedback">*Seleccionar en caso sea necesario reemplazar el documento vigente.</div>
+                            </div>
+                        }
+
+                        <div class="col-md-6 m-form__group-sub">
+                            <label>&emsp;</label>
+                            <div class="m-checkbox-list">
+                                <label class="m-checkbox">
+                                    <input class="form-control" asp-for="Input.HasSinglePostulantRestriction" type="checkbox" value="true" />   <label asp-for="Input.HasSinglePostulantRestriction"></label>
+                                    <span></span>
+                                </label>
+                            </div>
+                        </div>
+
+                        @if (AKDEMIC.CORE.Constants.GeneralConstants.Institution.VALUE == AKDEMIC.CORE.Constants.InstitutionConstants.UNAB)
+                        {
+                            <div class="col-md-6 m-form__group-sub">
+                                <label>&emsp;</label>
+                                <div class="m-checkbox-list">
+                                    <label class="m-checkbox">
+                                        <input class="form-control" asp-for="Input.AllowRegistrationRequest" type="checkbox" value="true" />   <label asp-for="Input.AllowRegistrationRequest"></label>
+                                        <span></span>
+                                    </label>
+                                </div>
+                            </div>
+                        }
+
+                    </div>
+                </div>
+                @if (AKDEMIC.CORE.Constants.GeneralConstants.Institution.VALUE == AKDEMIC.CORE.Constants.InstitutionConstants.UNAB)
+                {
+                    <div class="m-form__section">
+                        <div class="m-form__heading">
+                            <h3 class="m-form__heading-title">2. Publicaciones:</h3>
+                        </div>
+                        <div class="form-group m-form__group row">
+                            <div class="col-md-12 m-form__group-sub">
+                                <label class="form-control-label">Publicaciones terminos y condiciones</label>
+                                <input class="form-control m-input" asp-for="Input.PublicationTermsAndCondition" placeholder="Terminos y condiciones">
+                            </div>
+                        </div>
+                    </div>
+                }
+
+            </div>
+            <div class="m-portlet__foot m-portlet__no-border m-portlet__foot--fit">
+                <div class="m-form__actions m-form__actions--solid">
+                    <div class="row">
+                        <div class="col-md-6 offset-md-6 m--align-right">
+                            <button type="submit" class="btn btn-primary m-btn m-btn--icon btn-submit">
+                                <span>
+                                    <i class="la la-archive"></i>
+                                    <span>Guardar cambios</span>
+                                </span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+
+</div>
+
+@section Scripts{
+    <script src="~/js/areas/admin/configuration/index.js" asp-append-version="true"></script>
+}

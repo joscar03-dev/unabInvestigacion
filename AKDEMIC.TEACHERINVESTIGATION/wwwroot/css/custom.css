@@ -1,0 +1,85 @@
+/* style.bundle.css */
+
+/* Custom site styles */
+
+.cursor-pointer {
+    cursor: pointer !important;
+}
+
+.m-form__custom-heading-subtitle {
+    color: #575962;
+    font-weight: 500;
+    font-size: 1.1rem;
+}
+
+.custom--document-image {
+    height: 30px !important;
+    width: 30px !important;
+}
+
+.btn.disabled, .btn:disabled {
+    cursor: not-allowed;
+}
+
+button.m-loader, .btn.m-loader {
+    cursor: wait;
+}
+
+/*table.dataTable thead tr {
+    background-color: #f4f3f8;
+}
+
+.table-striped > tbody > tr:nth-child(2n) > td, .table-striped > tbody > tr:nth-child(2n) > th {
+    background-color: #faf9fc;
+}
+
+.table-striped > tbody > tr:nth-child(2n+1) > td, .table-striped > tbody > tr:nth-child(2n+1) > th {
+    background-color: white;
+}
+
+.table th {
+    font-weight: 600;
+    padding: 16px 10px;
+    font-size: 14px;
+}
+
+div.dataTables_wrapper div.dataTables_processing {
+    background: #eef1f5;
+}
+
+div.dataTables_wrapper div.dataTables_info {
+    padding-top: 0.85em !important;
+    white-space: inherit !important;
+}
+
+div.dataTables_wrapper div.dataTables_processing {
+    margin-left: 0 !important;
+    margin-top: 0 !important;
+}*/
+
+.table-options-section {
+    width: max-content !important;
+    display: inline-table !important;
+}
+
+.table-options-simple-margin {
+    margin-right: 0.5em;
+}
+
+.table-options-double-margin {
+    margin: 0 0.5em;
+}
+
+.padding-top-zero {
+    padding-top: 0 !important;
+}
+
+.padding-bottom-zero {
+    padding-bottom: 0 !important;
+}
+
+.grey-color {
+    color: grey !important;
+}
+
+/* End of Custom site styles */

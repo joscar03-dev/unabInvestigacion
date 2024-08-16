@@ -1,0 +1,465 @@
+﻿@page "/evaluador/postulantes-investigacion/{investigationConvocationPostulantId:Guid}/detalles"
+@using Microsoft.AspNetCore.Html
+@model AKDEMIC.TEACHERINVESTIGATION.Areas.Evaluator.Pages.Postulant.DetailModel
+@{
+    ViewBag.Breadcrumbs = new[] {
+new BreadcrumbViewData { Name = "Postulaciones", Url = "/evaluador/postulantes-investigacion"},
+new BreadcrumbViewData { Name = "Detalle", Url = null },
+    };
+
+}
+<style>
+    .header_space :disabled {
+        height: 1px;
+        margin-bottom: 28px;
+    }
+
+    .option {
+        border: 1px #dfe4ed solid;
+        border-radius: 15px;
+        padding: 5px 12px;
+        transition: 0.3s;
+        cursor: pointer;
+        user-select: none;
+    }
+
+        .option:hover {
+            background-color: #e6eaf0;
+        }
+
+        .option input {
+            position: absolute;
+            clip: rect(0,0,0,0);
+            pointer-events: none;
+        }
+</style>
+
+<div class="m-content">
+    <div class="m-alert m-alert--icon m-alert--icon-solid m-alert--outline alert alert-primary alert-dismissible fade show" role="alert">
+        <div class="m-alert__icon">
+            <i class="flaticon-exclamation-2"></i>
+            <span></span>
+        </div>
+        <div class="m-alert__text">
+            <strong>Advertencia</strong> El detalle de la postulación se muestra con campos deshabilitados para verificar el orden.
+            <br />Los cambios realizados se aplicar&aacute;n de manera instantanea en el sistema.
+        </div>
+        <div class="m-alert__close">
+        </div>
+    </div>
+    <div class="m-portlet">
+        <div class="m-portlet__head">
+            <div class="m-portlet__head-caption">
+                <div class="m-portlet__head-title">
+
+                    <h3 class="m-portlet__head-text">
+                        Detalle de Postulación
+                    </h3>
+                </div>
+            </div>
+        </div>
+        <input asp-for="Input.InvestigationConvocationPostulantId" hidden />
+        <div class="m-portlet__body">
+            <div class="m-form__section m-form__section--first">
+                <div class="m-form__heading">
+                    <h3 class="m-form__heading-title">1. Datos Generales:</h3>
+                </div>
+                <div class="form-group m-form__group row">
+                    <div class="col-xl-12">
+                        <h6 class="m-form__heading-title">1.1 Ámbito de Investigación:</h6>
+                        <div class="row">
+                            <div class="col-xs-6 col-md-6 m-form__group-sub">
+                                <label class="col-form-label">Tipo de Investigación</label>
+                                <input asp-for="Input.InvestigationTypeText" class="form-control m-input" disabled />
+                            </div>
+                            <div class="col-xs-6 col-md-6 m-form__group-sub">
+                                <label class="col-form-label">Entidad Externa</label>
+                                <input asp-for="Input.ExternalEntityText" class="form-control m-input" disabled />
+                            </div>
+                            <div class="col-xs-6 col-md-6 m-form__group-sub">
+                                <label class="col-form-label">Presupuesto</label>
+                                <input asp-for="Input.Budget" class="form-control m-input" disabled />
+                            </div>
+                            <div class="col-xs-6 col-md-6 m-form__group-sub">
+                                <label class="col-form-label">Forma de Investigación</label>
+                                <input asp-for="Input.InvestigationPatternText" class="form-control m-input" disabled />
+                            </div>
+                            <div class="col-xs-6 col-md-6 m-form__group-sub">
+                                <label class="col-form-label">Área</label>
+                                <input asp-for="Input.InvestigationAreaText" class="form-control m-input" disabled />
+                            </div>
+                            <div class="col-xs-6 col-md-6 m-form__group-sub">
+                                <label class="col-form-label">Facultad</label>
+                                <input asp-for="Input.FacultyText" class="form-control m-input" disabled />
+                            </div>
+                            <div class="col-xs-6 col-md-6 m-form__group-sub">
+                                <label class="col-form-label">Escuela</label>
+                                <input asp-for="Input.CareerText" class="form-control m-input" disabled />
+                            </div>
+                            <div class="col-xs-6 col-md-6 m-form__group-sub">
+                                <label class="col-form-label">Centro</label>
+                                <input asp-for="Input.ResearchCenterText" class="form-control m-input" disabled />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group m-form__group row">
+                    <div class="col-xl-12">
+                        <h6 class="m-form__heading-title">1.2 Financiamiento:</h6>
+                        <div class="row">
+                            <div class="col-xs-12 col-md-12 m-form__group-sub">
+                                <label class="col-form-label">Tipo de Investigación</label>
+                                <input asp-for="Input.FinancingInvestigationText" class="form-control m-input" disabled />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group m-form__group row">
+                    <div class="col-xl-12">
+                        <h6 class="m-form__heading-title">1.3 Lugar de Ejecución:</h6>
+                        <div class="row">
+                            <table class="table table-striped table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">Departamento</th>
+                                        <th scope="col">Provincia</th>
+                                        <th scope="col">Distrito</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @if (Model.Input.PostulantExecutionPlaces.Count > 0)
+                                    {
+                                        @for (int i = 0; i < Model.Input.PostulantExecutionPlaces.Count; i++)
+                                        {
+                                            <tr>
+                                                <td>@Model.Input.PostulantExecutionPlaces[i].DepartmentText</td>
+                                                <td>@Model.Input.PostulantExecutionPlaces[i].ProvinceText</td>
+                                                <td>@Model.Input.PostulantExecutionPlaces[i].DistrictText</td>
+                                            </tr>
+                                        }
+                                    }
+                                    else
+                                    {
+                                        <tr>
+                                            <td colspan="3">No se encontraron registros</td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+
+
+                            <div class="col-xs-12 col-md-12 m-form__group-sub">
+                                <label class="col-form-label">Localización principal del Proyecto</label>
+                                <textarea rows="5" asp-for="Input.MainLocation" class="form-control m-input" disabled></textarea>
+                            </div>
+
+                        </div>
+                        <div class="row">
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group m-form__group row">
+                    <div class="col-xl-12">
+                        <h6 class="m-form__heading-title">1.4 Línea de Investigación:</h6>
+                        <div class="row">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="m-form__section m-form__section">
+                <div class="m-form__heading">
+                    <h3 class="m-form__heading-title">2. Descripción del problema o Resumen del Proyecto:</h3>
+                    <div class="form-group m-form__group row">
+                        <div class="col-xl-12">
+                            <div class="row">
+                                <div class="col-xs-12 col-md-12 m-form__group-sub">
+                                    <label class="col-form-label">Título del Proyecto</label>
+                                    <input asp-for="Input.ProjectTitle" class="form-control m-input" disabled />
+                                </div>
+                                <div class="col-xs-6 col-md-6 m-form__group-sub">
+                                    <label class="col-form-label">Objetivo General</label>
+                                    <div>
+                                        @(new HtmlString(Model.Input.GeneralGoal))
+                                    </div>
+                                </div>
+                                <div class="col-xs-6 col-md-6 m-form__group-sub">
+                                    <label class="col-form-label">Formulación del Problema</label>
+                                    <input asp-for="Input.ProblemFormulation" value="@(new HtmlString(Model.Input.ProblemFormulation))" class="form-control m-input" disabled />
+                                </div>
+                                <div class="col-xs-6 col-md-6 m-form__group-sub">
+                                    <label class="col-form-label">Objetivos Especificos</label>
+                                    <div>
+                                        @(new HtmlString(Model.Input.SpecificGoal))
+                                    </div>
+                                </div>
+                                <div class="col-xs-12 col-md-12 m-form__group-sub">
+                                    <label class="col-form-label">Justificación</label>
+                                    <input asp-for="Input.Justification" class="form-control m-input" disabled />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="m-form__section m-form__section">
+                <div class="m-form__heading">
+                    <h3 class="m-form__heading-title">3. Marco de Referencia:</h3>
+                    <div class="form-group m-form__group row">
+                        <div class="col-xl-12">
+                            <div class="row">
+                                <div class="col-xs-6 col-md-6 m-form__group-sub">
+                                    <label class="col-form-label">Fundamentos Teoricos</label>
+                                    <input asp-for="Input.TheoreticalFundament" class="form-control m-input" disabled />
+                                </div>
+                                <div class="col-xs-6 col-md-6 m-form__group-sub">
+                                    <label class="col-form-label">Antecedentes del Problema</label>
+                                    <input asp-for="Input.ProblemRecord" class="form-control m-input" disabled />
+                                </div>
+                                <div class="col-xs-6 col-md-6 m-form__group-sub">
+                                    <label class="col-form-label">Hipotesis</label>
+                                    <input asp-for="Input.Hypothesis" class="form-control m-input" disabled />
+                                </div>
+                                <div class="col-xs-6 col-md-6 m-form__group-sub">
+                                    <label class="col-form-label">Variables</label>
+                                    <input asp-for="Input.Variable" class="form-control m-input" disabled />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="m-form__section m-form__section">
+                <div class="m-form__heading">
+                    <h3 class="m-form__heading-title">4. Metodología:</h3>
+                    <div class="form-group m-form__group row">
+                        <div class="col-xl-12">
+                            <div class="row">
+                                <div class="col-xs-6 col-md-6 m-form__group-sub">
+                                    <label class="col-form-label">Seleciona el Tipo de Metodología</label>
+                                    <input asp-for="Input.MethodologyTypeText" class="form-control m-input" disabled />
+                                </div>
+                                <div class="col-xs-6 col-md-6 m-form__group-sub">
+                                    <label class="col-form-label">Metodología</label>
+                                    <input asp-for="Input.MethodologyDescription" class="form-control m-input" disabled />
+                                </div>
+                                <div class="col-xs-6 col-md-6 m-form__group-sub">
+                                    <label class="col-form-label">Población y Muestra</label>
+                                    <input asp-for="Input.Population" class="form-control m-input" disabled />
+                                </div>
+                                <div class="col-xs-6 col-md-6 m-form__group-sub">
+                                    <label class="col-form-label">Diseño de técnicas de Recolección de Información</label>
+                                    <input asp-for="Input.InformationCollectionTechnique" class="form-control m-input" disabled />
+                                </div>
+                                <div class="col-xs-6 col-md-6 m-form__group-sub">
+                                    <label class="col-form-label">Técnicas de Análisis </label>
+                                    <input asp-for="Input.AnalysisTechnique" class="form-control m-input" disabled />
+                                </div>
+                                <div class="col-xs-6 col-md-6 m-form__group-sub">
+                                    <label class="col-form-label">Consideraciones Éticas </label>
+                                    <input asp-for="Input.EthicalConsiderations" class="form-control m-input" disabled />
+                                </div>
+                                <div class="col-xs-12 col-md-12 m-form__group-sub">
+                                    <label class="col-form-label">Guía de trabajo de Campo </label>
+                                    <input asp-for="Input.FieldWork" class="form-control m-input" disabled />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="m-form__section m-form__section">
+                <div class="m-form__heading">
+                    <h3 class="m-form__heading-title">5. Resultados Esperados:</h3>
+                    <div class="form-group m-form__group row">
+                        <div class="col-xl-12">
+                            <div class="row">
+                                <div class="col-xs-6 col-md-6 m-form__group-sub">
+                                    <label class="col-form-label">Resultados Esperados</label>
+                                    <input asp-for="Input.ExpectedResults" class="form-control m-input" disabled />
+                                </div>
+                                <div class="col-xs-6 col-md-6 m-form__group-sub">
+                                    <label class="col-form-label">Desarrollo de tesis para titulación </label>
+                                    <input asp-for="Input.ThesisDevelopment" class="form-control m-input" disabled />
+                                </div>
+                                <div class="col-xs-6 col-md-6 m-form__group-sub">
+                                    <label class="col-form-label">Artículos publicados </label>
+                                    <input asp-for="Input.PublishedArticle" class="form-control m-input" disabled />
+                                </div>
+                                <div class="col-xs-6 col-md-6 m-form__group-sub">
+                                    <label class="col-form-label">Difusión en congreso nacional </label>
+                                    <input asp-for="Input.BroadcastArticle" class="form-control m-input" disabled />
+                                </div>
+                                <div class="col-xs-6 col-md-6 m-form__group-sub">
+                                    <label class="col-form-label">Desarrollo de un proceso o prototipo </label>
+                                    <input asp-for="Input.ProcessDevelopment" class="form-control m-input" disabled />
+                                </div>
+                                <div class="col-xs-6 col-md-6 m-form__group-sub">
+                                    <label class="col-form-label">Referencias Bibliográficas </label>
+                                    <input asp-for="Input.BibliographicReferences" class="form-control m-input" disabled />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="m-form__section m-form__section">
+                <div class="m-form__heading">
+                    <h3 class="m-form__heading-title">6. Equipo de Trabajo:</h3>
+                    <div class="m-portlet m-portlet--full-height ">
+                        <div class="m-portlet__head">
+                            <div class="m-portlet__head-caption">
+                                <div class="m-portlet__head-title">
+                                    <h3 class="m-portlet__head-text">
+                                        Miembros del Equipo de Trabajo
+                                    </h3>
+                                </div>
+                            </div>
+                        </div>
+                        @for (int i = 0; i < Model.Input.PostulantTeamMembers.Count(); i++)
+                        {
+                            <div class="m-portlet__body">
+                                <div class="m-widget3">
+                                    <div class="m-widget3__item">
+                                        <div class="m-widget3__header">
+                                            <div class="m-widget3__info">
+                                                <span class="m-widget3__username">
+                                                    @Model.Input.PostulantTeamMembers[i].UserMemberFullName - @Model.Input.PostulantTeamMembers[i].TeamMemberRole
+                                                </span><br>
+                                            </div>
+                                            <span class="m-widget3__status m--font-info center">
+                                                <a href="/documentos/@Model.Input.PostulantTeamMembers[i].CvFilePath" class="btn btn-success m-btn btn-sm m-btn--icon" download=""><span><i class="flaticon-file"></i></span></a>
+                                            </span>
+                                        </div>
+                                        <div class="m-widget3__body">
+                                            <p class="m-widget3__text">
+                                                @Model.Input.PostulantTeamMembers[i].Objectives
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                    <div class="m-portlet m-portlet--full-height ">
+                        <div class="m-portlet__head">
+                            <div class="m-portlet__head-caption">
+                                <div class="m-portlet__head-title">
+                                    <h3 class="m-portlet__head-text">
+                                        Colaboradores Externos
+                                    </h3>
+                                </div>
+                            </div>
+                        </div>
+                        @for (int i = 0; i < Model.Input.PostulantExternalMembers.Count(); i++)
+                        {
+                            <div class="m-portlet__body">
+                                <div class="m-widget3">
+                                    <div class="m-widget3__item">
+                                        <div class="m-widget3__header">
+                                            <div class="m-widget3__info">
+                                                <span class="m-widget3__username">
+                                                    @Model.Input.PostulantExternalMembers[i].FullName - @Model.Input.PostulantExternalMembers[i].Dni
+                                                </span><br>
+                                            </div>
+                                            <span class="m-widget3__status m--font-info center">
+                                                <a href="/documentos/@Model.Input.PostulantExternalMembers[i].CvFilePath" class="btn btn-success m-btn btn-sm m-btn--icon" download=""><span><i class="flaticon-file"></i></span></a>
+                                            </span>
+                                        </div>
+                                        <div class="m-widget3__body">
+                                            <p class="m-widget3__text">
+                                                @Model.Input.PostulantExternalMembers[i].Profession
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                    <div class="form-group m-form__group row">
+                        <div class="col-xl-12">
+                            <div class="row">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="m-form__section m-form__section">
+                <div class="m-form__heading">
+                    <h3 class="m-form__heading-title">7. Anexos Adjuntos:</h3>
+                    <div class="form-group m-form__group row">
+                        <div class="col-xl-12">
+                            <div class="row">
+                                <div class="col-xs-6 col-md-6 m-form__group-sub">
+                                    <label class="col-form-label">Duración en meses del proyecto  </label>
+                                    <input asp-for="Input.ProjectDuration" class="form-control m-input" disabled />
+                                </div>
+                                <div class="col-xs-6 col-md-6 m-form__group-sub">
+                                    <label class="col-form-label">Archivos de anexos de postulación </label>
+                                    <input asp-for="Input.ProjectDuration" class="form-control m-input" disabled />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="m-form__section m-form__section">
+                <div class="m-form__heading">
+                    <h3 class="m-form__heading-title">8. Preguntas Adicionales:</h3>
+                    <div class="form-group m-form__group row">
+                        <div class="col-xl-12">
+                            @if (!Model.Input.QuestionsHidden)
+                            {
+                                <div class="row">
+                                    @for (int i = 0; i < Model.Input.InvestigationQuestions.Count(); i++)
+                                    {
+                                        <div class="col-12 m-form__group-sub">
+                                            <input asp-for="Input.InvestigationQuestions[i].Id" name="Input.InvestigationQuestions[@i].Id" hidden />
+                                            <div class="p-3 row">
+                                                @(i + 1).&emsp;@Model.Input.InvestigationQuestions[i].QuestionDescription
+                                            </div>
+                                            <div class="p-2 row ">
+                                                <input asp-for="Input.InvestigationQuestions[i].Type" hidden />
+                                                @switch (Model.Input.InvestigationQuestions[i].Type)
+                                                {
+                                                    case TeacherInvestigationConstants.InscriptionForm.QuestionType.TEXT_QUESTION:
+                                                        <input asp-for="Input.InvestigationQuestions[i].AnswerDescription" class="form-control" disabled />
+                                                        break;
+                                                    case TeacherInvestigationConstants.InscriptionForm.QuestionType.MULTIPLE_SELECTION_QUESTION:
+                                                        for (int j = 0; j < Model.Input.InvestigationQuestions[i].InvestigationAnswers.Count; j++)
+                                                        {
+                                                            <input asp-for="Input.InvestigationQuestions[i].InvestigationAnswers[j].Id" hidden />
+                                                            <label class="option @(Model.Input.InvestigationQuestions[i].InvestigationAnswers[j].Selected ? "bg-selected" : "")">
+                                                                <input type="checkbox" asp-for="Input.InvestigationQuestions[i].InvestigationAnswers[j].Selected" disabled> @Model.Input.InvestigationQuestions[i].InvestigationAnswers[j].Description
+                                                            </label>
+                                                            @:&emsp;
+                                                        }
+                                                        break;
+                                                    case TeacherInvestigationConstants.InscriptionForm.QuestionType.UNIQUE_SELECTION_QUESTION:
+                                                        for (int j = 0; j < Model.Input.InvestigationQuestions[i].InvestigationAnswers.Count; j++)
+                                                        {
+                                                            <input asp-for="Input.InvestigationQuestions[i].InvestigationAnswers[j].Id" hidden />
+                                                            <label class="option @(Model.Input.InvestigationQuestions[i].InvestigationAnswers[j].Selected ? "bg-selected" : "")">
+                                                                <input type="radio" asp-for="Input.InvestigationQuestions[i].UniqueAnswer" value="@Model.Input.InvestigationQuestions[i].InvestigationAnswers[j].Id" disabled> @Model.Input.InvestigationQuestions[i].InvestigationAnswers[j].Description
+                                                            </label>
+                                                            @:&emsp;
+                                                        }
+                                                        break;
+                                                }
+                                            </div>
+                                        </div>
+                                    }
+                                </div>
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section Scripts{
+    <script src="~/js/areas/evaluatorcommittee/investigationconvocationpostulant/detail.js" asp-append-version="true"></script>
+}

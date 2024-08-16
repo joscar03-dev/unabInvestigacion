@@ -1,0 +1,802 @@
+﻿@model AKDEMIC.TEACHERINVESTIGATION.Areas.Teacher.ViewModels.InvestigationConvocationViewModels.GeneralInformationViewModel
+
+<input name="InvestigationConvocationPostulantId" value="@Model.InvestigationConvocationPostulantId" hidden />
+
+<div class="m-form__heading">
+    <h3 class="m-form__heading-title">1. Datos Generales</h3>
+</div>
+
+<div class="m-form__section m-form__section--first">
+    <div class="m-form__heading">
+        <h3 class="m-form__heading-title">1.1 Ámbito de Investigación</h3>
+    </div>
+    @if (!Model.InvestigationTypeHidden)
+    {
+        <div class="form-group m-form__group row">
+            <div class="col-lg-12 m-form__group-sub">
+                <label class="form-control-label">Tipo de Investigación</label>
+                <div class="input-group" style="flex-wrap:initial">
+                    <select id="InvestigationType" asp-for="InvestigationTypeId" class="form-control">
+                        <option value="0">Seleccione un tipo de investigación</option>
+                    </select>
+                    <div class="input-group-append">
+
+                        <span class="input-group-text requirement_weight" data-weight="@Model.InvestigationTypeWeight">@Model.InvestigationTypeWeight %</span>
+
+                    </div>
+                    <input id="InvestigationTypeDefault" value="@Model.InvestigationTypeId" hidden />
+                </div>
+            </div>
+        </div>
+    }
+
+    @if (!Model.ExternalEntityHidden)
+    {
+        <div class="form-group m-form__group row">
+            <div class="col-lg-12 m-form__group-sub">
+                <label class="form-control-label">Entidad Externa</label>
+                <div class="input-group" style="flex-wrap:initial">
+                    <select id="ExternalEntity" asp-for="ExternalEntityId" class="form-control">
+                        <option value="0">Selecciona Entidad Externa</option>
+                    </select>
+                    <div class="input-group-append">
+
+                        <span class="input-group-text requirement_weight" data-weight="@Model.ExternalEntityWeight">@Model.ExternalEntityWeight %</span>
+
+
+                    </div>
+                    <input id="ExternalEntityDefault" value="@Model.ExternalEntityId" hidden />
+                </div>
+            </div>
+        </div>
+    }
+
+    @if (!Model.BudgetHidden)
+    {
+        <div class="form-group m-form__group row">
+            <div class="col-lg-12 m-form__group-sub">
+                <label class="form-control-label">Presupuesto</label>
+                <div class="input-group" style="flex-wrap:initial">
+                    <input asp-for="Budget" class="form-control m-input" />
+                    <div class="input-group-append">
+
+                        <span class="input-group-text requirement_weight" data-weight="@Model.BudgetWeight">@Model.BudgetWeight %</span>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+
+    @if (!Model.InvestigationPatternHidden)
+    {
+        <div class="form-group m-form__group row">
+            <div class="col-lg-12 m-form__group-sub">
+                <label class="form-control-label">Forma de Investigación</label>
+                <div class="input-group" style="flex-wrap:initial">
+                    <select id="InvestigationPattern" asp-for="InvestigationPatternId" class="form-control">
+                        <option value="0">Selecciona una Forma de Investigación</option>
+                    </select>
+                    <div class="input-group-append">
+
+                        <span class="input-group-text requirement_weight" data-weight="@Model.InvestigationPatternWeight">@Model.InvestigationPatternWeight %</span>
+
+                    </div>
+                    <input id="InvestigationPatternDefault" value="@Model.InvestigationPatternId" hidden />
+                </div>
+            </div>
+        </div>
+    }
+
+    @if (!Model.InvestigationAreaHidden)
+    {
+        <div class="form-group m-form__group row">
+            <div class="col-lg-12 m-form__group-sub">
+                <label class="form-control-label">Área</label>
+                <div class="input-group" style="flex-wrap:initial">
+                    <select id="Area" asp-for="InvestigationAreaId" class="form-control">
+                        <option value="0" disabled>Selecciona una Área</option>
+                    </select>
+                    <div class="input-group-append">
+
+                        <span class="input-group-text requirement_weight" data-weight="@Model.InvestigationAreaWeight">@Model.InvestigationAreaWeight %</span>
+
+                    </div>
+                    <input id="AreaDefault" value="@Model.InvestigationAreaId" hidden />
+                </div>
+            </div>
+        </div>
+    }
+
+    @if (!Model.FacultyHidden)
+    {
+        <div class="form-group m-form__group row">
+            <div class="col-lg-12 m-form__group-sub">
+                <label class="form-control-label">Facultad</label>
+                <div class="input-group" style="flex-wrap:initial">
+                    <select id="Faculty" asp-for="FacultyId" class="form-control">
+                        <option value="0" selected disabled>Selecciona Una Facultad</option>
+                    </select>
+                    <div class="input-group-append">
+
+                        <span class="input-group-text requirement_weight" data-weight="@Model.FacultyWeight">@Model.FacultyWeight %</span>
+
+
+                    </div>
+                    <input id="FacultyDefault" value="@Model.FacultyId" hidden />
+
+                </div>
+            </div>
+        </div>
+    }
+    @if (!Model.CareerHidden)
+    {
+        <div class="form-group m-form__group row">
+            <div class="col-lg-12 m-form__group-sub">
+                <label class="form-control-label">Escuela Profesional</label>
+                <div class="input-group" style="flex-wrap:initial">
+                    <select id="Career" asp-for="CareerId" class="form-control">
+                        <option id="CareerText" value="0" selected disabled>Selecciona Una Escuela</option>
+                    </select>
+                    <div class="input-group-append">
+
+                        <span class="input-group-text requirement_weight" data-weight="@Model.CareerWeight">@Model.CareerWeight %</span>
+
+
+                    </div>
+
+                    <input id="CareerDefault" value="@Model.CareerId" hidden />
+
+                </div>
+            </div>
+        </div>
+    }
+
+    @if (!Model.ResearchCenterHidden)
+    {
+        <div class="form-group m-form__group row">
+            <div class="col-lg-12 m-form__group-sub">
+                <label class="form-control-label">Centro de Investigación</label>
+                <div class="input-group" style="flex-wrap:initial">
+                    <select id="ResearchCenter" asp-for="ResearchCenterId" class="form-control">
+                        <option value="0" selected disabled>Selecciona Un Centro</option>
+                    </select>
+                    <div class="input-group-append">
+
+                        <span class="input-group-text requirement_weight" data-weight="@Model.ResearchCenterWeight">@Model.ResearchCenterWeight %</span>
+
+                    </div>
+                    <input id="ResearchCenterDefault" value="@Model.ResearchCenterId" hidden />
+                </div>
+            </div>
+        </div>
+    }
+</div>
+
+<div class="m-separator m-separator--dashed m-separator--lg"></div>
+
+<div class="m-form__section">
+    <div class="m-form__heading">
+        <h3 class="m-form__heading-title">1.2 Financiamiento</h3>
+    </div>
+    @if (!Model.FinancingHidden)
+    {
+        <div class="form-group m-form__group row">
+            <div class="col-lg-12 m-form__group-sub">
+                <label class="form-control-label">Financiamiento</label>
+                <div class="input-group" style="flex-wrap:initial">
+                    <select id="Financing" asp-for="FinancingInvestigationId" class="form-control">
+                        <option value="0" disabled>Seleccione un Financiamiento</option>
+                    </select>
+                    <div class="input-group-append">
+
+                        <span class="input-group-text requirement_weight" data-weight="@Model.FinancingWeight">@Model.FinancingWeight %</span>
+
+                    </div>
+                    <input id="FinancingDefault" value="@Model.FinancingInvestigationId" hidden />
+                </div>
+            </div>
+        </div>
+    }
+</div>
+
+<div class="m-separator m-separator--dashed m-separator--lg"></div>
+
+<div class="m-form__section">
+    <div class="m-form__heading">
+        <h3 class="m-form__heading-title">1.3 Lugar de Ejecución</h3>
+    </div>
+
+    @if (!Model.ExecutionPlaceHidden)
+    {
+        <div class="form-group m-form__group row">
+            <div class="col-xl-12 col-lg-12 m-form__group-sub" style="text-align:end">
+                <button type="button" class="btn btn-success btn-sm m-btn m-btn--icon " data-toggle="modal" data-target="#executionPlaceModal">
+                    <span>
+                        <i class="la la-plus"></i>
+                        <span>Agregar Lugar de Ejecución</span>
+                    </span>
+                </button>
+            </div>
+        </div>
+        <h5>Lista de lugares de ejecución <span id="executionPlacesWeight"></span></h5>
+        <table class="table table-striped table-bordered" id="execution-place-datatable"></table>
+    }
+
+    @if (!Model.MainLocationHidden)
+    {
+        <div class="form-group m-form__group row">
+            <div class="col-lg-12 m-form__group-sub">
+                <label class="form-control-label">Localización Principal del Proyecto</label>
+                <div class="input-group" style="flex-wrap:initial">
+                    <input asp-for="MainLocation" class="form-control m-input" />
+                    <div class="input-group-append">
+
+                        <span class="input-group-text requirement_weight" data-weight="@Model.MainLocationWeight">@Model.MainLocationWeight %</span>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+
+<div class="m-separator m-separator--dashed m-separator--lg"></div>
+
+<div class="m-form__section">
+    <div class="m-form__heading">
+        <h3 class="m-form__heading-title">1.4 Línea de Investigación</h3>
+    </div>
+    @for (int i = 0; i < Model.ResearchLineCategoryRequirments.Count; i++)
+    {
+
+        @if (!Model.ResearchLineCategoryRequirments[i].Hidden)
+        {
+            <div class="form-group m-form__group row">
+                <div class="col-lg-12 m-form__group-sub">
+                    <input asp-for="ResearchLineCategoryRequirments[i].Id" hidden />
+                    <input asp-for="ResearchLineCategoryRequirments[i].ResearchLineCategoryId" hidden />
+                    <input asp-for="ResearchLineCategoryRequirments[i].InvestigationConvocationRequirementId" hidden />
+                    <label class="form-control-label">Categoría @Model.ResearchLineCategoryRequirments[i].ResearchLineCategoryName :</label>
+                    <div class="input-group" style="flex-wrap:initial">
+                        <select name="ResearchLineCategoryRequirments[@i].ResearchLineSelectedId" class="form-control research-line-category-select2" data-selectid="@Model.ResearchLineCategoryRequirments[@i].ResearchLineSelectedId">
+                            <option value="0" selected>Seleccione una línea de investigación</option>
+                            @foreach (var item in Model.ResearchLineCategoryRequirments[i].ResearchLines)
+                            {
+                                <option value="@item.Id">@item.Name</option>
+                            }
+                        </select>
+                        <div class="input-group-append">
+
+                            <span class="input-group-text requirement_weight" data-weight="@Model.ResearchLineCategoryRequirments[i].Weight">@Model.ResearchLineCategoryRequirments[i].Weight %</span>
+
+                        </div>
+                        <input id="ResearchLineCategoryRequirmentsDefault" value="@Model.ResearchLineCategoryRequirments[i].ResearchLineCategoryId" hidden />
+                    </div>
+                </div>
+            </div>
+        }
+    }
+</div>
+
+
+<script type="text/javascript">
+    var GeneralInformationInit = function () {
+        var investigationConvocationPostulantId = $("#Input_InvestigationConvocationPostulantId").val();
+        var datatable = {
+            executionPlace: {
+                object: null,
+                options: {
+                    serverSide: true,
+                    filter: false,
+                    lengthChange: false,
+                    ajax: {
+                        url: `/investigador/convocatoria/${investigationConvocationPostulantId}/inscripcion`.proto().parseURL(),
+                        type: "GET",
+                        dataType: "JSON",
+                        data: function (data) {
+                            delete data.columns;
+                            data.handler = "ExecutionPlaceDatatable";
+                            data.searchValue = $("#search").val();
+                        }
+                    },
+                    pageLength: 50,
+                    orderable: [],
+                    columns: [
+                        {
+                            title: "Departamento",
+                            data: "departmentText"
+                        },
+                        {
+                            title: "Provincia",
+                            data: "provinceText"
+                        },
+                        {
+                            title: "Distrito",
+                            data: "districtText"
+                        },
+                        {
+                            title: "Opciones",
+                            data: null,
+                            orderable: false,
+                            render: function (data) {
+                                var template = "";
+                                //Delete
+                                template += `<button type="button" `;
+                                template += "class='btn btn-danger btn-delete ";
+                                template += "m-btn btn-sm  m-btn--icon-only' ";
+                                template += " data-id='" + data.id + "'>";
+                                template += "<i class='la la-trash'></i></button> ";
+                                return template;
+                            }
+                        }
+                    ],
+                },
+                reload: function () {
+                    this.object.ajax.reload();
+                },
+                init: function () {
+                    this.object = $("#execution-place-datatable").DataTable(this.options);
+                    this.events();
+                },
+                events: function () {
+                    $("#execution-place-datatable").on('click', '.btn-delete', function () {
+                        var id = $(this).data("id");
+                        swal({
+                            title: "¿Está seguro?",
+                            text: "El lugar de ejecución será eliminado.",
+                            type: "warning",
+                            showCancelButton: true,
+                            confirmButtonText: "Sí, eliminarlo",
+                            confirmButtonClass: "btn btn-danger m-btn m-btn--custom",
+                            cancelButtonText: "Cancelar",
+                            showLoaderOnConfirm: true,
+                            preConfirm: () => {
+                                return new Promise((resolve) => {
+                                    $.ajax({
+                                        url: (`/investigador/convocatoria/${investigationConvocationPostulantId}/inscripcion`).proto().parseURL(),
+                                        type: "GET",
+                                        data: {
+                                            handler: "ExecutionPlaceDelete",
+                                            id: id
+                                        },
+                                        success: function (result) {
+                                            swal({
+                                                type: "success",
+                                                title: "Completado",
+                                                text: "El lugar de ejecución ha sido eliminada con exito",
+                                                confirmButtonText: "Excelente"
+                                            }).then(datatable.executionPlace.reload());
+                                            modal.executionPlace.calculateWeigth();
+                                            InitApp.progressBarCalculate();
+                                        },
+                                        error: function (errormessage) {
+                                            swal({
+                                                type: "error",
+                                                title: "Error",
+                                                confirmButtonClass: "btn btn-danger m-btn m-btn--custom",
+                                                confirmButtonText: "Entendido",
+                                                text: "El lugar de ejecución presenta información relacionada"
+                                            });
+                                        }
+                                    });
+                                });
+                            },
+                            allowOutsideClick: () => !swal.isLoading()
+                        });
+                    });
+                }
+            },
+            init: function () {
+                this.executionPlace.init();
+            }
+        };
+        var modal = {
+            executionPlace: {
+                create: {
+                    object: $("#execution-place-modal-form").validate({
+                        submitHandler: function (form, e) {
+                            $("#btnSaveExecutionPlace").addLoader();
+                            e.preventDefault();
+                            let formData = new FormData(form);
+                            formData.append("DepartmentText", $("#DepartmentId option:selected").text());
+                            formData.append("ProvinceText", $("#ProvinceId option:selected").text());
+                            formData.append("DistrictText", $("#DistrictId option:selected").text());
+                            $.ajax({
+                                url: $(form).attr("action"),
+                                type: "POST",
+                                data: formData,
+                                contentType: false,
+                                processData: false,
+                            }).done(function () {
+                                $(".modal").modal("hide");
+                                $(".m-alert").addClass("m--hide");
+                                toastr.success(_app.constants.toastr.message.success.task, _app.constants.toastr.title.success);
+                                datatable.executionPlace.reload();
+                                modal.executionPlace.create.clear();
+                                modal.executionPlace.calculateWeigth();
+                                InitApp.progressBarCalculate();
+                                $("#btnSaveExecutionPlace").removeLoader();
+                            }).fail(function (error) {
+                                toastr.error(error.responseText, _app.constants.toastr.title.error);
+                                $("#btnSaveExecutionPlace").removeLoader();
+                                //if (error.responseText !== null && error.responseText !== "") $("#add_form_msg_txt").html(error.responseText);
+                                //else $("#add_form_msg_txt").html(_app.constants.ajax.message.error);
+                                //$("#add_form_msg").removeClass("m--hide").show();
+                            }).always(function () {
+
+                            });
+                        }
+                    }),
+                    show: function () {
+                        $("#btnSaveExecutionPlace").removeLoader();
+                        $("#executionPlaceModal").modal("toggle");
+                    },
+                    clear: function () {
+                        $("#DepartmentId").val(0).trigger("change", [true]);
+                        select.district.clear();
+                        select.province.clear();
+                        modal.executionPlace.create.object.resetForm();
+                    },
+                    events: function () {
+                        $("#executionPlaceModal").on("hidden.bs.modal", function () {
+                            modal.executionPlace.create.clear();
+                        });
+                    }
+                },
+                calculateWeigth: function () {
+                    $.ajax({
+                        url: `/investigador/convocatoria/${investigationConvocationPostulantId}/inscripcion`.proto().parseURL(),
+                        type: "GET",
+                        data: {
+                            handler: "ExecutionPlaceWeight",
+                            InvestigationConvocationPostulantId: investigationConvocationPostulantId
+                        },
+                    }).done(function (result) {
+                        $("#executionPlacesWeight").text(`(peso: ${result} %)`);
+                    });
+                },
+                init: function () {
+                    this.create.events();
+                    this.calculateWeigth();
+                }
+            },
+            init: function () {
+                this.executionPlace.init();
+            }
+        };
+        var select = {
+            investigationType: {
+                init: function () {
+                    this.load();
+                },
+                load: function () {
+                    $.ajax({
+                        url: (`/api/tiposdeinvestigacion/select/get`).proto().parseURL(),
+                        type: "GET"
+                    }).done(function (result) {
+                        $("#InvestigationType").select2({
+                            data: result,
+                        });
+
+                        let defaultValue = $("#InvestigationTypeDefault").val();
+                        if (defaultValue != null && defaultValue != '') {
+                            $("#InvestigationType").val(defaultValue).trigger("change");
+                        }
+                    });
+                }
+            },
+            externalEntity: {
+                init: function () {
+                    this.load();
+                },
+                load: function () {
+                    $.ajax({
+                        url: (`/api/entidadexterna/select/get`).proto().parseURL(),
+                        type: "GET"
+                    }).done(function (result) {
+                        $("#ExternalEntity").select2({
+                            data: result,
+                        });
+                        let defaultValue = $("#ExternalEntityDefault").val();
+                        if (defaultValue != null && defaultValue != '') {
+                            $("#ExternalEntity").val(defaultValue).trigger("change");
+                        }
+                    });
+                }
+            },
+            investigationPattern: {
+                init: function () {
+                    this.load();
+                },
+                load: function () {
+                    $.ajax({
+                        url: (`/api/formasdeinvestigacion/select/get`).proto().parseURL(),
+                        type: "GET"
+                    }).done(function (result) {
+                        $("#InvestigationPattern").select2({
+                            data: result,
+                        });
+                        let defaultValue = $("#InvestigationPatternDefault").val();
+                        if (defaultValue != null && defaultValue != '') {
+                            $("#InvestigationPattern").val(defaultValue).trigger("change");
+                        }
+                    });
+                }
+            },
+            area: {
+                init: function () {
+                    this.load();
+                },
+                load: function () {
+                    $.ajax({
+                        url: (`/api/areadeinvestigacion/select/get`).proto().parseURL(),
+                        type: "GET"
+                    }).done(function (result) {
+                        $("#Area").select2({
+                            data: result,
+                        });
+                        let defaultValue = $("#AreaDefault").val();
+                        if (defaultValue != null && defaultValue != '') {
+                            $("#Area").val(defaultValue).trigger("change");
+                        }
+                    });
+                }
+            },
+            faculty: {
+                init: function () {
+                    this.load();
+                    this.events();
+                },
+                load: function () {
+                    $.ajax({
+                        url: (`/api/facultades/get`).proto().parseURL(),
+                        type: "GET"
+                    }).done(function (result) {
+
+                        $("#Faculty").select2({
+                            data: result,
+                        });
+                        let defaultValue = $("#FacultyDefault").val();
+                        if (defaultValue != null && defaultValue != '') {
+                            $("#Faculty").val(defaultValue).trigger("change");
+                        }
+                    });
+                },
+                events: function () {
+                    $("#Faculty").on("change", function () {
+                        if ($(this).val() == 0) {
+                            select.career.clear();
+                        } else {
+                            select.career.load();
+                        }
+                    });
+                }
+            },
+            career: {
+                init: function () {
+                    $("#Career").select2();
+                },
+                clear: function () {
+                    $("#Career").empty();
+                    $("#Career").html('<option value="0" selected disabled>Selecciona Carrera</option>')
+                },
+                load: function () {
+                    select.career.clear();
+                    $.ajax({
+                        url: (`/api/carreras/get`).proto().parseURL(),
+                        type: "GET",
+                        data: {
+                            facultyId: $("#Faculty").val()
+                        }
+                    }).done(function (result) {
+                        $("#Career").select2({
+                            data: result,
+                        });
+
+                        let defaultValue = $("#CareerDefault").val();
+                        if (defaultValue != null && defaultValue != '') {
+                            $("#Career").val(defaultValue).trigger("change");
+                        }
+                    });
+                },
+            },
+            researchCenter: {
+                init: function () {
+                    this.load();
+                },
+                load: function () {
+                    $.ajax({
+                        url: (`/api/centro-investigacion/get`).proto().parseURL(),
+                        type: "GET",
+                    }).done(function (result) {
+                        $("#ResearchCenter").select2({
+                            data: result,
+                        });
+                        let defaultValue = $("#ResearchCenterDefault").val();
+                        if (defaultValue != null && defaultValue != '') {
+                            $("#ResearchCenter").val(defaultValue).trigger("change");
+                        }
+                    });
+                }
+            },
+            financing: {
+                init: function () {
+                    this.load();
+                },
+                load: function () {
+                    $.ajax({
+                        url: (`/api/financiamiento/select/get`).proto().parseURL(),
+                        type: "GET"
+                    }).done(function (result) {
+                        $("#Financing").select2({
+                            data: result,
+                        });
+                        let defaultValue = $("#FinancingDefault").val();
+                        if (defaultValue != null && defaultValue != '') {
+                            $("#Financing").val(defaultValue).trigger("change");
+                        }
+                    });
+                }
+            },
+            department: {
+                init: function () {
+                    this.load();
+                    this.events();
+                },
+                load: function () {
+                    $.ajax({
+                        url: (`/api/departamentos/get`).proto().parseURL(),
+                        type: "GET"
+                    }).done(function (result) {
+                        $("#DepartmentId").select2({
+                            data: result,
+                            dropdownParent: $('#executionPlaceModal')
+                        });
+
+                    });
+                },
+                events: function () {
+                    $("#DepartmentId").on("change", function (e, state) {
+                        //Si estado es True , estamos haciendo el cambio por codigo , estamos inicializando
+                        if (typeof state != 'undefined' && state) {
+                            return false;
+                        }
+                        if ($(this).val() == 0) {
+                            select.province.clear();
+                            select.district.clear();
+                        } else {
+                            select.province.load();
+                        }
+                    });
+                }
+            },
+            province: {
+                init: function () {
+                    $("#ProvinceId").select2();
+                    this.events();
+                },
+                clear: function () {
+                    $("#ProvinceId").empty();
+                    $("#ProvinceId").html('<option value="0" selected disabled>Selecciona Provincia</option>')
+                },
+                load: function () {
+                    select.province.clear();
+                    select.district.clear();
+                    $.ajax({
+                        url: (`/api/provincias/get`).proto().parseURL(),
+                        type: "GET",
+                        data: {
+                            departmentId: $("#DepartmentId").val()
+                        }
+                    }).done(function (result) {
+                        $("#ProvinceId").select2({
+                            data: result,
+                            dropdownParent: $('#executionPlaceModal')
+                        });
+                    });
+                },
+                events: function () {
+                    $("#ProvinceId").on("change", function () {
+                        if ($(this).val() == 0) {
+                            select.district.clear();
+                        } else {
+                            select.district.load();
+                        }
+                    });
+                }
+            },
+            district: {
+                init: function () {
+                    $("#DistrictId").select2();
+                },
+                clear: function () {
+                    $("#DistrictId").empty();
+                    $("#DistrictId").html('<option value="0" selected disabled>Selecciona Distrito</option>')
+                },
+                load: function () {
+                    select.district.clear();
+                    $.ajax({
+                        url: (`/api/distritos/get`).proto().parseURL(),
+                        type: "GET",
+                        data: {
+                            provinceId: $("#ProvinceId").val()
+                        }
+                    }).done(function (result) {
+                        $("#DistrictId").select2({
+                            data: result,
+                            dropdownParent: $('#executionPlaceModal')
+                        });
+                    });
+                }
+            },
+            researchLineCategory: {
+                init: function () {
+                    this.load();
+                },
+                load: function () {
+                    $(".research-line-category-select2").select2();
+                    $('.research-line-category-select2').each(function (i, obj) {
+                        var selectedId = $(obj).data("selectid");
+                        if (selectedId == '') {
+                            $(obj).val(0).trigger("change");
+                        } else {
+                            $(obj).val(selectedId).trigger("change");
+                        }
+                    });
+                }
+            },
+            init: function () {
+                this.investigationType.init();
+                this.externalEntity.init();
+                this.investigationPattern.init();
+                this.area.init();
+                this.faculty.init();
+                this.career.init();
+                this.researchCenter.init();
+                this.financing.init();
+                this.department.init();
+                this.province.init();
+                this.district.init();
+                this.researchLineCategory.init();
+            }
+        };
+
+        var summernote = {
+            init: function () {
+                $(".mv_summernote").summernote({
+                    lang: "es-ES",
+                    height: 250,
+                    toolbar: [
+                        ['style', ['style']],
+                        ['font', ['bold', 'italic', 'underline', 'strikethrough', 'superscript', 'subscript', 'clear']],
+                        ['fontname', ['fontname']],
+                        ['fontsize', ['fontsize']],
+                        ['color', ['color']],
+                        ['para', ['ol', 'ul', 'paragraph', 'height']],
+                        ['table', ['table']],
+                        ['insert', ['link', 'video', 'hr']],
+                        ['view', ['undo', 'redo', 'fullscreen', 'codeview']]
+                    ]
+                });
+            }
+        };
+
+        return {
+            init: function () {
+                select.init();
+                summernote.init();
+                modal.init();
+                datatable.init();
+            }
+        };
+    }();
+
+    $(function () {
+        GeneralInformationInit.init();
+        if ($("#Input_ProjectState").val() == 3 || $("#Input_ProjectState").val() == 2) {
+            $(":input").prop("disabled", true);
+            $(":button").prop("disabled", true);
+        }
+    })
+</script>

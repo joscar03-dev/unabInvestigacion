@@ -1,0 +1,79 @@
+﻿@model AKDEMIC.TEACHERINVESTIGATION.Areas.Teacher.ViewModels.InvestigationConvocationViewModels.MarkReferenceViewModel
+
+<input name="InvestigationConvocationPostulantId" value="@Model.InvestigationConvocationPostulantId" hidden />
+
+<div class="m-form__heading">
+    <h3 class="m-form__heading-title">3. Marco de Referencia:</h3>
+</div>
+<div class="m-form__section m-form__section--first">
+    @if (!Model.TheoreticalFundamentHidden)
+    {
+        <div class="form-group m-form__group row">
+            <div class="col-lg-12 m-form__group-sub">
+                <label class="form-control-label">Fundamentos Teoricos</label>
+                <div class="input-group" style="flex-wrap:initial">
+                    <textarea rows="5" asp-for="TheoreticalFundament" class="form-control m-input"></textarea>
+                    <div class="input-group-append">
+                        <span class="input-group-text requirement_weight" data-weight="@Model.TheoreticalFundamentWeight">@Model.TheoreticalFundamentWeight %</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+
+    @if (!Model.ProblemRecordHidden)
+    {
+        <div class="form-group m-form__group row">
+            <div class="col-lg-12 m-form__group-sub">
+                <label class="form-control-label">Antecedentes del Problema</label>
+                <div class="input-group" style="flex-wrap:initial">
+                    <textarea rows="5" asp-for="ProblemRecord" class="form-control m-input"></textarea>
+                    <div class="input-group-append">
+                        <span class="input-group-text requirement_weight" data-weight="@Model.ProblemRecordWeight">@Model.ProblemRecordWeight %</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+
+    @if (!Model.HypothesisHidden)
+    {
+        <div class="form-group m-form__group row">
+            <div class="col-lg-12 m-form__group-sub">
+                <label class="form-control-label">Hipotesis</label>
+                <div class="input-group" style="flex-wrap:initial">
+                    <textarea rows="5" asp-for="Hypothesis" class="form-control m-input"></textarea>
+                    <div class="input-group-append">
+                        <span class="input-group-text requirement_weight" data-weight="@Model.HypothesisWeight">@Model.HypothesisWeight %</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+
+    @if (!Model.VariableHidden)
+    {
+
+        <div class="form-group m-form__group row">
+            <div class="col-lg-12 m-form__group-sub">
+                <label class="form-control-label">Variables</label>
+                <div class="input-group" style="flex-wrap:initial">
+                    <textarea rows="5" asp-for="Variable" class="form-control m-input"></textarea>
+                    <div class="input-group-append">
+                        <span class="input-group-text requirement_weight" data-weight="@Model.VariableWeight">@Model.VariableWeight %</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+
+</div>
+
+<script type="text/javascript" asp-append-version="true">
+    $(function() {
+        if ($("#Input_ProjectState").val() == 3 || $("#Input_ProjectState").val() == 2) {
+            $(":input").prop("disabled", true);
+            $(":button").prop("disabled", true);
+        }
+    })
+</script>

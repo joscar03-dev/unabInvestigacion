@@ -1,0 +1,47 @@
+﻿@page "/evaluador/postulantes-investigacion"
+@model AKDEMIC.TEACHERINVESTIGATION.Areas.Evaluator.Pages.Postulant.IndexModel
+@{
+    ViewData["Title"] = "Postulantes de Investigación";
+    ViewBag.Breadcrumbs = new[]
+    {
+    new BreadcrumbViewData {Name=ViewData["Title"].ToString(), Url = null},
+    };
+}
+
+<div class="m-content">
+    <div class="m-portlet">
+        <div class="m-portlet__head">
+            <div class="m-portlet__head-caption">
+                <div class="m-portlet__head-title">
+                    <h3 class="m-portlet__head-text">
+                        @ViewData["Title"]
+                    </h3>
+                </div>
+            </div>
+        </div>
+        <div class="m-portlet__body">
+            <div class="m-form--label-align-right m--margin-top-20 m--margin-bottom-30">
+                <div class="row align-items-center">
+                    <div class="col-xl-12 order-2 order-xl-1">
+                        <div class="row">
+                            <div class="form-group m-form__group col-xl-4">
+                                <label>&emsp;</label>
+                                <div class="m-input m-input-icon m-input-icon--left">
+                                    <input type="text" class="form-control m-input m-input--pill m-input--solid" placeholder="Buscar..." id="search">
+                                    <span class="m-input-icon__icon m-input-icon__icon--left">
+                                        <span><i class="la la-search"></i></span>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <table class="table table-striped table-bordered" id="data-table"></table>
+        </div>
+    </div>
+</div>
+
+@section Scripts{
+    <script src="~/js/areas/evaluator/postulant/index.js" asp-append-version="true"></script>
+}

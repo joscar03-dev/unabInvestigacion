@@ -1,0 +1,182 @@
+﻿@page "/unidad-emprendimiento/convocatorias-emprendimiento/{incubatorConvocationId:Guid}/rubrica"
+@model AKDEMIC.TEACHERINVESTIGATION.Areas.IncubatorUnit.Pages.IncubatorConvocationPage.IncubatorRubricModel
+@{
+    ViewData["Title"] = "Rúbrica de Evaluación";
+    ViewBag.Breadcrumbs = new[]
+    {
+        new BreadcrumbViewData {Name="Gestión de Convocatorias", Url="/unidad-emprendimiento/convocatorias-emprendimiento"},
+        new BreadcrumbViewData {Name="Detalle de Convocatoria", Url = $"/unidad-emprendimiento/convocatorias-emprendimiento/{Model.IncubatorConvocation.Id}/archivos" },
+        new BreadcrumbViewData {Name= ViewData["Title"].ToString() },
+    };
+}
+
+<div class="m-content" id="rubric_page">
+    <div class="m-portlet">
+        <div class="m-portlet__head">
+            <div class="m-portlet__head-caption">
+                <div class="m-portlet__head-title">
+                    <h3 class="m-portlet__head-text">
+                        @ViewData["Title"]
+                    </h3>
+                </div>
+            </div>
+        </div>
+        <div class="m-portlet__body">
+            <div class="row">
+                <div class="form-group m-form__group col-lg-4">
+                    <label class="form-control-label">Código</label>
+                    <input asp-for="IncubatorConvocation.Code" class="form-control m-input" readonly />
+                </div>
+                <div class="form-group m-form__group col-lg-4">
+                    <label class="form-control-label">Nombre</label>
+                    <input asp-for="IncubatorConvocation.Name" class="form-control m-input" readonly />
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <input type="hidden" asp-for="IncubatorConvocation.Id" />
+
+    <div class="m-portlet">
+        <div class="m-portlet__body">
+            @if (Model.IncubatorConvocation.HasRubricQualifications)
+            {
+                <div class="alert alert-warning" role="alert">
+                    Existen postulaciones calificadas con esta rubrica, por lo que no puede ser editada
+                </div>
+            }
+            <div class="m-form--label-align-right m--margin-bottom-20">
+                <div class="row">
+                    <div class="col-12 text-right">
+                        <button class="btn btn-primary m-btn m-btn--icon" id="btn_import_rubric">
+                            <span>
+                                <i class="la la-plus"></i>
+                                <span>Importar Rubrica</span>
+                            </span>
+                        </button>
+                        <button class="btn btn-primary m-btn m-btn--icon" id="btn_add_section">
+                            <span>
+                                <i class="la la-plus"></i>
+                                <span>Nueva Sección</span>
+                            </span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div id="rubric_container"></div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="rubric_section_modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title font-weight-bold">Agregar Sección</h5>
+            </div>
+            <form method="post" id="rubric_section_form">
+                <input type="hidden" name="Id" />
+                <div class="modal-body">
+                    <div class="form-group m-form__group">
+                        <label for="name">Título</label>
+                        <input type="text" class="form-control" name="Title" placeholder="Ingresar título" />
+                    </div>
+                    <div class="form-group m-form__group">
+                        <label for="Title">Puntaje Máximo</label>
+                        <input type="number" class="form-control" min="0" name="MaxSectionScore" placeholder="Ingresar puntaje máximo" />
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal"> Cerrar </button>
+                    <button type="submit" class="btn btn-primary"> Guardar </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="rubric_criterion_modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title font-weight-bold">Agregar Criterio</h5>
+            </div>
+            <form method="post" id="rubric_criterion_form">
+                <input type="hidden" name="Id" />
+                <input type="hidden" name="RubricSectionId" />
+                <div class="modal-body">
+                    <div class="form-group m-form__group">
+                        <label for="name">Nombre</label>
+                        <input type="text" class="form-control" name="Name" placeholder="Ingresar nombre" />
+                    </div>
+                    <div class="form-group m-form__group">
+                        <label for="Title">Descripción</label>
+                        <textarea class="form-control" name="Description" placeholder="Ingresar Descripción" rows="3" maxlength="1000" id="criterion_description_summernote" required></textarea>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal"> Cerrar </button>
+                    <button type="submit" class="btn btn-primary"> Guardar </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="level_criterion_modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title font-weight-bold">Agregar Nivel de Desempeño</h5>
+            </div>
+            <form method="post" id="level_criterion_form">
+                <input type="hidden" name="Id" />
+                <input type="hidden" name="RubricCriterionId" />
+                <div class="modal-body">
+                    <div class="form-group m-form__group">
+                        <label for="Title">Descripción</label>
+                        <textarea class="form-control" name="Description" placeholder="Ingresar Descripción" rows="3" maxlength="1000" required></textarea>
+                    </div>
+                    <div class="form-group m-form__group">
+                        <label for="Title">Puntaje</label>
+                        <input type="number" class="form-control" min="0" name="Score" placeholder="Ingresar puntaje" />
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal"> Cerrar </button>
+                    <button type="submit" class="btn btn-primary"> Guardar </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@*importar*@
+
+<div class="modal fade" id="rubric_import_modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title font-weight-bold">Agregar Sección</h5>
+            </div>
+            <form method="post" id="rubric_import_form">
+                <input type="hidden" name="IncubatorConvocationId" value="@Model.IncubatorConvocation.Id" />
+                <div class="modal-body">
+                    <div class="form-group m-form__group">
+                        <label for="name">Código de la Convocatoría de Incubadora que deseamos exportar</label>
+                        <input type="text" class="form-control" name="ConvocationCodeToExport" placeholder="Código de la Convocatoria" />
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal"> Cerrar </button>
+                    <button type="submit" class="btn btn-primary"> Guardar </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+@section Scripts {
+    <script src="~/js/areas/incubatorunit/incubatorconvocation/incubatorrubric.js" asp-append-version="true"></script>
+}

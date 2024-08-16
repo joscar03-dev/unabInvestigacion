@@ -1,0 +1,249 @@
+﻿@model AKDEMIC.TEACHERINVESTIGATION.Areas.Student.ViewModels.IncubatorPostulationViewModels.ScheduleViewModels
+
+@if (Model.SpecificGoals == null || Model.SpecificGoals.Count == 0)
+{
+    <span> Debe agregar Objetivos Especificos (Componentes en la pestaña de información general)</span>
+}
+else
+{
+    @for (int i = 0; i < Model.SpecificGoals.Count; i++)
+    {
+        <div class="m-portlet">
+            <div class="m-portlet__head">
+                <div class="m-portlet__head-caption">
+                    <div class="m-portlet__head-title">
+                        <h3 class="m-portlet__head-text">
+                            @Model.SpecificGoals[i].Description
+                        </h3>
+                    </div>
+                </div>
+                <div class="m-portlet__head-tools">
+                    <ul class="m-portlet__nav">
+                        <li class="m-portlet__nav-item">
+                            <button type="button" data-description="@Model.SpecificGoals[i].Description" data-id="@Model.SpecificGoals[i].Id" class="btn btn-primary m-btn btn-sm m-btn--icon btn-add-activity">
+                                <span>
+                                    <i class="la la-plus"></i>
+                                    <span>Agregar</span>
+                                </span>
+                            </button>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="m-portlet__body">
+                @for (int j = 0; j < Model.SpecificGoals[i].Activities.Count; j++)
+                {
+                    <div class="m-portlet">
+                        <div class="m-portlet__head">
+                            <div class="m-portlet__head-caption">
+                                <div class="m-portlet__head-title">
+                                    <h3 class="m-portlet__head-text">
+                                        @Model.SpecificGoals[i].Activities[j].Description
+                                    </h3>
+                                </div>
+                            </div>
+                            <div class="m-portlet__head-tools">
+                                <ul class="m-portlet__nav">
+                                    <li class="m-portlet__nav-item">
+                                        <a href="javascript:;" data-id="@Model.SpecificGoals[i].Activities[j].Id" class="m-portlet__nav-link btn btn-danger m-btn m-btn--icon m-btn--icon-only btn-edit-activity">
+                                            <i class="la la-edit"></i>
+                                        </a>
+                                    </li>
+                                    <li class="m-portlet__nav-item">
+                                        <a href="javascript:;" data-id="@Model.SpecificGoals[i].Activities[j].Id" class="m-portlet__nav-link btn btn-danger m-btn m-btn--icon m-btn--icon-only btn-delete-activity">
+                                            <i class="la la-trash"></i>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="m-portlet__body">
+                            <form id="saveActivityMonth-form-@i-@j" class="m-form m-form--state" asp-area="Student" asp-page-handler="ActivityMonthSave" method="post">
+                                <input name="IncubatorPostulationActivityId" value="@Model.SpecificGoals[i].Activities[j].Id" hidden>
+                                <div class="row">
+                                    @for (int k = 0; k < Model.MonthDuration; k++)
+                                    {
+                                        var mes = k + 1;
+                                        <div class="col-xl-2 col-lg-2 col-md-3 col-sm-4 col-6" style="margin-bottom:10px">
+                                            @if (Model.SpecificGoals[i].Activities[j].ActivityMonths.Any(x => x.MonthNumber == mes))
+                                            {
+                                                <button type="button" data-month="@mes" class="btn btn-success m-btn m-btn--icon btn-add-activityMonth" style="width:100%">
+                                                    @mes
+                                                </button>
+                                            }
+                                            else
+                                            {
+                                                <button type="button" data-month="@mes" class="btn btn-warning m-btn m-btn--icon btn-add-activityMonth" style="width:100%">
+                                                    @mes
+                                                </button>
+                                            }
+                                        </div>
+                                    }
+                                </div>
+                                <div class="row">
+                                    <div class="col-xl-12 col-lg-12" style="text-align:end">
+                                        <button type="button" data-formnumber="@i-@j" class="btn btn-primary btn-sm m-btn m-btn--icon btn-save-activityMonth">
+                                            <span>
+                                                <i class="la la-save"></i>
+                                                <span>Guardar</span>
+                                            </span>
+                                        </button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    }
+}
+
+
+
+<script type="text/javascript">
+    var ScheduleInit = function () {
+        var incubatorPostulationId = $("#IncubatorPostulationId").val();
+        var activityMonth = {
+            init: function () {
+                this.events();
+            },
+            save: function (formNumber, monthArr, btn) {
+                var formElement = $(`#saveActivityMonth-form-${formNumber}`);
+                var formData = new FormData();
+                var incubatorPostulationActivityId = $(`#saveActivityMonth-form-${formNumber} input[name="IncubatorPostulationActivityId"]`).val();
+                formData.append('IncubatorPostulationActivityId', incubatorPostulationActivityId);
+                for (var i = 0; i < monthArr.length; i++) {
+                    formData.append(`months[]`, monthArr[i]);
+                }
+                $.ajax({
+                    url: `/alumno/postulacion-convocatoria-emprendimiento/${incubatorPostulationId}/inscripcion?handler=ActivityMonthSave`,
+                    type: "POST",
+                    data: formData,
+                    contentType: false,
+                    processData: false,
+                    beforeSend: function (xhr) {
+                        xhr.setRequestHeader("XSRF-TOKEN",
+                            $(`#saveActivityMonth-form-${formNumber} input:hidden[name="__RequestVerificationToken"]`).val());
+                    },
+                    })
+                    .done(function () {
+                        toastr.success(_app.constants.toastr.message.success.task, _app.constants.toastr.title.success);
+                        btn.removeLoader();
+                    }).fail(function (error) {
+                        toastr.error(error.responseText, _app.constants.toastr.title.error);
+                        btn.removeLoader();
+                    }).always(function () {
+
+                    });
+            },
+            events: function () {
+                $(".btn-add-activityMonth").on("click", function () {
+                    var id = $(this).data("month");
+                    if ($(this).hasClass("btn-warning")) {
+                        $(this).removeClass("btn-warning");
+                        $(this).addClass("btn-success");
+                    } else if ($(this).hasClass("btn-success")) {
+                        $(this).removeClass("btn-success");
+                        $(this).addClass("btn-warning");
+                    }
+                });
+
+                $(".btn-save-activityMonth").on("click", function () {
+                    var btn = $(this);
+                    btn.addLoader();
+                    var monthArr = [];
+                    var formNumber = $(this).data("formnumber");
+                    $(`#saveActivityMonth-form-${formNumber}`).find(".btn-success").each(function (index) {
+                        var mes = $(this).data("month");
+                        monthArr.push(mes);
+                    });
+                    activityMonth.save(formNumber, monthArr, btn);
+
+                });
+            }
+        };
+        var modal = {
+            init: function () {
+                this.activity.init();
+            },
+            activity: {
+                init: function () {
+                    this.events();
+                },
+                events: function () {
+                    $(".btn-add-activity").on("click", function () {
+                        var id = $(this).data("id");
+                        var description = $(this).data("description");
+                        $("#activity-add-form input[name=IncubatorPostulationSpecificGoalId]").val(id);
+                        $("#activity-add-form input[name=SpecificGoalDescription]").val(description);
+                        $("#activityAddModal").modal("show");
+                    });
+
+                    $(".btn-edit-activity").on("click", function () {
+                        var id = $(this).data("id");
+                        InitApp.activityShow(id)
+                    });
+
+                    $(".btn-delete-activity").on("click", function () {
+                        var id = $(this).data("id");
+
+                        swal({
+                            title: "¿Está seguro?",
+                            text: "La actividad será eliminada.",
+                            type: "warning",
+                            showCancelButton: true,
+                            confirmButtonText: "Sí, eliminarla",
+                            confirmButtonClass: "btn btn-danger m-btn m-btn--custom",
+                            cancelButtonText: "Cancelar",
+                            showLoaderOnConfirm: true,
+                            preConfirm: () => {
+                                return new Promise((resolve) => {
+                                    $.ajax({
+                                        url: `/alumno/postulacion-convocatoria-emprendimiento/${incubatorPostulationId}/inscripcion?handler=ActivityDelete`.proto().parseURL(),
+                                        type: "POST",
+                                        data: {
+                                            id: id
+                                        },
+                                        beforeSend: function (xhr) {
+                                            xhr.setRequestHeader("XSRF-TOKEN",
+                                                $('#general-information-form input:hidden[name="__RequestVerificationToken"]').val());
+                                        },
+                                        success: function (result) {
+                                            swal({
+                                                type: "success",
+                                                title: "Completado",
+                                                text: "La actividad ha sido eliminado con exito",
+                                                confirmButtonText: "Excelente"
+                                            }).then(InitApp.reloadScheduleSection());
+                                        },
+                                        error: function (errormessage) {
+                                            swal({
+                                                type: "error",
+                                                title: "Error",
+                                                confirmButtonClass: "btn btn-danger m-btn m-btn--custom",
+                                                confirmButtonText: "Entendido",
+                                                text: "La actividad tiene información relacionada"
+                                            });
+                                        }
+                                    });
+                                });
+                            },
+                            allowOutsideClick: () => !swal.isLoading()
+                        });
+                    });
+                }
+            }
+        };
+        return {
+            init: function () {
+                modal.init();
+                activityMonth.init();
+            }
+        };
+    }();
+
+    $(function () {
+        ScheduleInit.init();
+    })
+</script>

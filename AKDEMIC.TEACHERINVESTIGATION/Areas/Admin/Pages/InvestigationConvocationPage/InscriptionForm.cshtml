@@ -1,0 +1,1213 @@
+﻿@page "/admin/convocatoria-de-investigacion/{investigationConvocationId:Guid}/formulario-inscripcion"
+@model AKDEMIC.TEACHERINVESTIGATION.Areas.Admin.Pages.InvestigationConvocationPage.InscriptionFormModel
+@{
+    ViewData["Title"] = "Formulario de Inscripción";
+    ViewBag.Breadcrumbs = new[]
+    {
+        new BreadcrumbViewData {Name="Gestión de Convocatorias", Url="/admin/convocatorias"},
+        new BreadcrumbViewData {Name="Archivos de Convocatoria", Url=$"/admin/convocatoria-de-investigacion/{Model.Input.InvestigationConvocationRequirementId}/archivos"},
+        new BreadcrumbViewData {Name="Formulario de Inscripción", Url = null},
+    };
+}
+
+<div class="m-content">
+    <div class="m-alert m-alert--icon m-alert--icon-solid m-alert--outline alert alert-primary alert-dismissible fade show" role="alert">
+        <div class="m-alert__icon">
+            <i class="flaticon-exclamation-2"></i>
+            <span></span>
+        </div>
+        @* <div class="m-alert__text">
+        <strong>Advertencia</strong> Las variables de configuración mostradas son utilizadas en las distintas funcionalidades.
+        <br />Los cambios realizados se aplicar&aacute;n de manera instantanea en el sistema.
+        </div>*@
+        <div class="m-alert__close">
+        </div>
+    </div>
+    <div class="m-portlet">
+        <div class="m-portlet__head">
+            <div class="m-portlet__head-caption">
+                <div class="m-portlet__head-title">
+
+                    <h3 class="m-portlet__head-text">
+                        Formulario de Inscripción
+                    </h3>
+                </div>
+            </div>
+        </div>
+        <form id="configForm" class="m-form m-form--state" asp-area="Admin" asp-page="InscriptionForm" method="post">
+            <input asp-for="Input.InvestigationConvocationRequirementId" hidden />
+            <input asp-for="Input.InvestigationConvocationId" hidden />
+            <div class="m-portlet__body">
+                <div class="m-form__section m-form__section--first">
+                    <div class="m-form__heading">
+                        <h3 class="m-form__heading-title">1. Datos Generales:</h3>
+                    </div>
+                    <div class="form-group m-form__group row">
+                        <div class="col-xl-12">
+                            <h6 class="m-form__heading-title">1.1 Ámbito de Investigación:</h6>
+                            <div class="row">
+                                <div class="col-xs-12 col-md-8 m-form__group-sub">
+                                    <label class="col-form-label">Tipo de Investigación</label>
+                                    <select id="InvestigationType" class="form-control">
+                                        <option value="0">Seleccione un tipo de investigación</option>
+                                    </select>
+                                </div>
+                                <div class="col-xs-4 col-sm-4 col-md-2 m-form__group-sub">
+                                    <label class="col-form-label">Peso</label>
+                                    <input asp-for="Input.InvestigationTypeWeight" min="0" max="100" type="number" class="form-control m-input" />
+                                </div>
+                                <div class="col-xs-4 col-sm-4 col-md-2 m-form__group-sub">
+                                    <div class="m-input-icon m-input-icon--right">
+                                        <label class="col-form-label" style="display:block">Ocultar</label>
+                                        <label class="m-checkbox m-checkbox--bold m-checkbox--state-brand" style="margin-bottom:8px ; margin-top:8px">
+                                            <input asp-for="Input.InvestigationTypeHidden" type="checkbox">
+                                            Si
+                                            <span style="margin-bottom:8px ; margin-top:2px"></span>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-xs-12 col-md-8 m-form__group-sub">
+                                    <label class="col-form-label">Entidad Externa</label>
+                                    <select id="ExternalEntity" class="form-control">
+                                        <option value="0">Selecciona Entidad Externa</option>
+                                    </select>
+                                </div>
+                                <div class="col-xs-4 col-sm-4 col-md-2 m-form__group-sub">
+                                    <label class="col-form-label">Peso</label>
+                                    <input asp-for="Input.ExternalEntityWeight" min="0" max="100" type="number" class="form-control m-input" />
+                                </div>
+                                <div class="col-xs-4 col-sm-4 col-md-2 m-form__group-sub">
+                                    <div class="m-input-icon m-input-icon--right">
+                                        <label class="col-form-label" style="display:block">Ocultar</label>
+                                        <label class="m-checkbox m-checkbox--bold m-checkbox--state-brand" style="margin-bottom:8px ; margin-top:8px">
+                                            <input asp-for="Input.ExternalEntityHidden" type="checkbox">
+                                            Si
+                                            <span style="margin-bottom:8px ; margin-top:2px"></span>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-xs-12 col-md-8 m-form__group-sub">
+                                    <label class="col-form-label">Presupuesto</label>
+                                    <input id="Budget" placeholder="Ingrese el Presupuesto" class="form-control m-input" type="number" />
+                                </div>
+                                <div class="col-xs-4 col-sm-4 col-md-2 m-form__group-sub">
+                                    <label class="col-form-label">Peso</label>
+                                    <input asp-for="Input.BudgetWeight" min="0" max="100" type="number" class="form-control m-input" />
+                                </div>
+                                <div class="col-xs-4 col-sm-4 col-md-2 m-form__group-sub">
+                                    <div class="m-input-icon m-input-icon--right">
+                                        <label class="col-form-label" style="display:block">Ocultar</label>
+                                        <label class="m-checkbox m-checkbox--bold m-checkbox--state-brand" style="margin-bottom:8px ; margin-top:8px">
+                                            <input asp-for="Input.BudgetHidden" type="checkbox">
+                                            Si
+                                            <span style="margin-bottom:8px ; margin-top:2px"></span>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-xs-12 col-md-8 m-form__group-sub">
+                                    <label class="col-form-label">Forma de Investigación</label>
+                                    <select id="InvestigationPattern" class="form-control">
+                                        <option value="0">Selecciona una Forma de Investigación</option>
+                                    </select>
+                                </div>
+                                <div class="col-xs-4 col-sm-4 col-md-2 m-form__group-sub">
+                                    <label class="col-form-label">Peso</label>
+                                    <input asp-for="Input.InvestigationPatternWeight" min="0" max="100" type="number" class="form-control m-input" />
+                                </div>
+                                <div class="col-xs-4 col-sm-4 col-md-2 m-form__group-sub">
+                                    <div class="m-input-icon m-input-icon--right">
+                                        <label class="col-form-label" style="display:block">Ocultar</label>
+                                        <label class="m-checkbox m-checkbox--bold m-checkbox--state-brand" style="margin-bottom:8px ; margin-top:8px">
+                                            <input asp-for="Input.InvestigationPatternHidden" type="checkbox">
+                                            Si
+                                            <span style="margin-bottom:8px ; margin-top:2px"></span>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-xs-12 col-md-8 m-form__group-sub">
+                                    <label class="col-form-label">Área</label>
+                                    <select id="Area" class="form-control">
+                                        <option value="0">Selecciona una Área</option>
+                                    </select>
+                                </div>
+                                <div class="col-xs-4 col-sm-4 col-md-2 m-form__group-sub">
+                                    <label class="col-form-label">Peso</label>
+                                    <input asp-for="Input.AreaWeight" min="0" max="100" type="number" class="form-control m-input" />
+                                </div>
+                                <div class="col-xs-4 col-sm-4 col-md-2 m-form__group-sub">
+                                    <div class="m-input-icon m-input-icon--right">
+                                        <label class="col-form-label" style="display:block">Ocultar</label>
+                                        <label class="m-checkbox m-checkbox--bold m-checkbox--state-brand" style="margin-bottom:8px ; margin-top:8px">
+                                            <input asp-for="Input.AreaHidden" type="checkbox">
+                                            Si
+                                            <span style="margin-bottom:8px ; margin-top:2px"></span>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-xs-12 col-md-8 m-form__group-sub">
+                                    <label class="col-form-label">Facultad</label>
+                                    <select id="Faculty" class="form-control">
+                                        <option value="0">Selecciona Una Facultad</option>
+                                    </select>
+                                </div>
+                                <div class="col-xs-4 col-sm-4 col-md-2 m-form__group-sub">
+                                    <label class="col-form-label">Peso</label>
+                                    <input asp-for="Input.FacultyWeight" min="0" max="100" type="number" class="form-control m-input" />
+                                </div>
+                                <div class="col-xs-4 col-sm-4 col-md-2 m-form__group-sub">
+                                    <div class="m-input-icon m-input-icon--right">
+                                        <label class="col-form-label" style="display:block">Ocultar</label>
+                                        <label class="m-checkbox m-checkbox--bold m-checkbox--state-brand" style="margin-bottom:8px ; margin-top:8px">
+                                            <input asp-for="Input.FacultyHidden" type="checkbox">
+                                            Si
+                                            <span style="margin-bottom:8px ; margin-top:2px"></span>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-xs-12 col-md-8 m-form__group-sub">
+                                    <label class="col-form-label">Escuela</label>
+                                    <select id="Career" class="form-control">
+                                        <option value="0">Selecciona Una Escuela</option>
+                                    </select>
+                                </div>
+                                <div class="col-xs-4 col-sm-4 col-md-2 m-form__group-sub">
+                                    <label class="col-form-label">Peso</label>
+                                    <input asp-for="Input.CareerWeight" min="0" max="100" type="number" class="form-control m-input" />
+                                </div>
+                                <div class="col-xs-4 col-sm-4 col-md-2 m-form__group-sub">
+                                    <div class="m-input-icon m-input-icon--right">
+                                        <label class="col-form-label" style="display:block">Ocultar</label>
+                                        <label class="m-checkbox m-checkbox--bold m-checkbox--state-brand" style="margin-bottom:8px ; margin-top:8px">
+                                            <input asp-for="Input.CareerHidden" type="checkbox">
+                                            Si
+                                            <span style="margin-bottom:8px ; margin-top:2px"></span>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-xs-12 col-md-8 m-form__group-sub">
+                                    <label class="col-form-label">Centro de Investigación</label>
+                                    <select id="ResearchCenter" class="form-control">
+                                        <option value="0">Selecciona Un Centro de Investigación</option>
+                                    </select>
+                                </div>
+                                <div class="col-xs-4 col-sm-4 col-md-2 m-form__group-sub">
+                                    <label class="col-form-label">Peso</label>
+                                    <input asp-for="Input.ResearchCenterWeight" min="0" max="100" type="number" class="form-control m-input" />
+                                </div>
+                                <div class="col-xs-4 col-sm-4 col-md-2 m-form__group-sub">
+                                    <div class="m-input-icon m-input-icon--right">
+                                        <label class="col-form-label" style="display:block">Ocultar</label>
+                                        <label class="m-checkbox m-checkbox--bold m-checkbox--state-brand" style="margin-bottom:8px ; margin-top:8px">
+                                            <input asp-for="Input.ResearchCenterHidden" type="checkbox">
+                                            Si
+                                            <span style="margin-bottom:8px ; margin-top:2px"></span>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group m-form__group row">
+                        <div class="col-xl-12">
+                            <h6 class="m-form__heading-title">1.2 Financiamiento:</h6>
+                            <div class="row">
+                                <div class="col-xs-12 col-md-8 m-form__group-sub">
+                                    <label class="col-form-label">Financiamiento</label>
+                                    <select id="Financing" class="form-control">
+                                        <option value="0">Seleccione un Financiamiento</option>
+                                    </select>
+                                </div>
+                                <div class="col-xs-4 col-sm-4 col-md-2 m-form__group-sub">
+                                    <label class="col-form-label">Peso</label>
+                                    <input asp-for="Input.FinancingWeight" min="0" max="100" type="number" class="form-control m-input" />
+                                </div>
+                                <div class="col-xs-4 col-sm-4 col-md-2 m-form__group-sub">
+                                    <div class="m-input-icon m-input-icon--right">
+                                        <label class="col-form-label" style="display:block">Ocultar</label>
+                                        <label class="m-checkbox m-checkbox--bold m-checkbox--state-brand" style="margin-bottom:8px ; margin-top:8px">
+                                            <input asp-for="Input.FinancingHidden" type="checkbox">
+                                            Si
+                                            <span style="margin-bottom:8px ; margin-top:2px"></span>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group m-form__group row">
+                        <div class="col-xl-12">
+                            <h6 class="m-form__heading-title">1.3 Lugar de Ejecución:</h6>
+                            <div class="row">
+                                <div class="col-xs-12 col-md-8 m-form__group-sub">
+                                    <label class="col-form-label">Agregar Lugar de ejecución</label>
+                                    <input id="ExecutionPlace" placeholder="Ingrese un lugar de ejecución" class="form-control m-input" type="text" />
+                                </div>
+                                <div class="col-xs-4 col-sm-4 col-md-2 m-form__group-sub">
+                                    <label class="col-form-label">Peso</label>
+                                    <input asp-for="Input.ExecutionPlaceWeight" min="0" max="100" type="number" class="form-control m-input" />
+                                </div>
+                                <div class="col-xs-4 col-sm-4 col-md-2 m-form__group-sub">
+                                    <div class="m-input-icon m-input-icon--right">
+                                        <label class="col-form-label" style="display:block">Ocultar</label>
+                                        <label class="m-checkbox m-checkbox--bold m-checkbox--state-brand" style="margin-bottom:8px ; margin-top:8px">
+                                            <input asp-for="Input.ExecutionPlaceHidden" type="checkbox">
+                                            Si
+                                            <span style="margin-bottom:8px ; margin-top:2px"></span>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-xs-12 col-md-8 m-form__group-sub">
+                                    <label class="col-form-label">Localización Principal del Proyecto</label>
+                                    <input id="MainLocation" placeholder="Ingrese una localización principal del proyecto" class="form-control m-input" type="text" />
+                                </div>
+                                <div class="col-xs-4 col-sm-4 col-md-2 m-form__group-sub">
+                                    <label class="col-form-label">Peso</label>
+                                    <input asp-for="Input.MainLocationWeight" min="0" max="100" type="number" class="form-control m-input" />
+                                </div>
+                                <div class="col-xs-4 col-sm-4 col-md-2 m-form__group-sub">
+                                    <div class="m-input-icon m-input-icon--right">
+                                        <label class="col-form-label" style="display:block">Ocultar</label>
+                                        <label class="m-checkbox m-checkbox--bold m-checkbox--state-brand" style="margin-bottom:8px ; margin-top:8px">
+                                            <input asp-for="Input.MainLocationHidden" type="checkbox">
+                                            Si
+                                            <span style="margin-bottom:8px ; margin-top:2px"></span>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group m-form__group row">
+                        <div class="col-xl-12">
+                            <h6 class="m-form__heading-title">1.4 Línea de Investigación:</h6>
+
+                            @for (int i = 0; i < Model.Input.ResearchLineCategoryRequirements.Count(); i++)
+                            {
+                                <div class="row container-researchLinecategory">
+                                    <input asp-for="Input.ResearchLineCategoryRequirements[i].ResearchLineCategoryRequirementId" hidden />
+                                    <input asp-for="Input.ResearchLineCategoryRequirements[i].ResearchLineCategoryId" hidden />
+                                    <div class="col-xs-12 col-md-8 m-form__group-sub">
+                                        <label class="col-form-label">Seleciona un @Model.Input.ResearchLineCategoryRequirements[i].Name </label>
+                                        <select class="form-control researchLineCategory-selects" data-id="@Model.Input.ResearchLineCategoryRequirements[i].ResearchLineCategoryId">
+                                            <option value="0">Seleciona un @Model.Input.ResearchLineCategoryRequirements[i].Name</option>
+                                            @foreach (var researchLine in Model.Input.ResearchLineCategoryRequirements[i].ResearchLineCategoryLines)
+                                            {
+                                                <option value="@researchLine.Id">@researchLine.Name</option>
+                                            }
+                                        </select>
+                                    </div>
+                                    <div class="col-xs-4 col-sm-4 col-md-2 m-form__group-sub">
+                                        <label class="col-form-label">Peso</label>
+                                        @if (Model.Input.ResearchLineCategoryRequirements[i].Hidden)
+                                        {
+                                            <input asp-for="Input.ResearchLineCategoryRequirements[i].Weight" data-id="@Model.Input.ResearchLineCategoryRequirements[i].ResearchLineCategoryId" min="0" max="100" type="number" class="form-control m-input" disabled />
+                                        }
+                                        else
+                                        {
+                                            <input asp-for="Input.ResearchLineCategoryRequirements[i].Weight" data-id="@Model.Input.ResearchLineCategoryRequirements[i].ResearchLineCategoryId" min="0" max="100" type="number" class="form-control m-input" />
+                                        }
+                                    </div>
+                                    <div class="col-xs-4 col-sm-4 col-md-2 m-form__group-sub">
+                                        <div class="m-input-icon m-input-icon--right">
+                                            <label class="col-form-label" style="display:block">Ocultar</label>
+                                            <label class="m-checkbox m-checkbox--bold m-checkbox--state-brand" style="margin-bottom:8px ; margin-top:8px">
+                                                <input asp-for="Input.ResearchLineCategoryRequirements[i].Hidden" class="researchLineCategoryhidden" type="checkbox" data-id="@Model.Input.ResearchLineCategoryRequirements[i].ResearchLineCategoryId" data-row="@i">
+                                                Si
+                                                <span style="margin-bottom:8px ; margin-top:2px"></span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                        </div>
+                    </div>
+                </div>
+                <div class="m-form__section m-form__section--last">
+                    <div class="m-form__heading">
+                        <h3 class="m-form__heading-title">2. Descripción del problema o Resumen del Proyecto :</h3>
+                        <div class="form-group m-form__group row">
+                            <div class="col-xl-12">
+                                <div class="row">
+                                    <div class="col-xs-12 col-md-8 m-form__group-sub">
+                                        <label class="col-form-label">Título del Proyecto</label>
+                                        <input id="ProjectTitle" placeholder="Ingrese el Título del Proyecto" class="form-control m-input" type="text" />
+                                    </div>
+                                    <div class="col-xs-4 col-sm-4 col-md-2 m-form__group-sub">
+                                        <label class="col-form-label">Peso</label>
+                                        <input asp-for="Input.ProjectTitleWeight" min="0" max="100" type="number" class="form-control m-input" />
+                                    </div>
+                                    <div class="col-xs-4 col-sm-4 col-md-2 m-form__group-sub">
+                                        <div class="m-input-icon m-input-icon--right">
+                                            <label class="col-form-label" style="display:block">Ocultar</label>
+                                            <label class="m-checkbox m-checkbox--bold m-checkbox--state-brand" style="margin-bottom:8px ; margin-top:8px">
+                                                <input asp-for="Input.ProjectTitleHidden" type="checkbox">
+                                                Si
+                                                <span style="margin-bottom:8px ; margin-top:2px"></span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xl-12">
+                                <div class="row">
+                                    <div class="col-xs-12 col-md-8 m-form__group-sub">
+                                        <label class="col-form-label">Descripción del problema o Resumen del Proyecto</label>
+                                        <input id="ProblemDescription" placeholder="Ingrese la Descripción del problema o Resumen del Proyecto" class="form-control m-input" type="text" />
+                                    </div>
+                                    <div class="col-xs-4 col-sm-4 col-md-2 m-form__group-sub">
+                                        <label class="col-form-label">Peso</label>
+                                        <input asp-for="Input.ProblemDescriptionWeight " min="0" max="100" type="number" class="form-control m-input" />
+                                    </div>
+                                    <div class="col-xs-4 col-sm-4 col-md-2 m-form__group-sub">
+                                        <div class="m-input-icon m-input-icon--right">
+                                            <label class="col-form-label" style="display:block">Ocultar</label>
+                                            <label class="m-checkbox m-checkbox--bold m-checkbox--state-brand" style="margin-bottom:8px ; margin-top:8px">
+                                                <input asp-for="Input.ProblemDescriptionHidden" type="checkbox">
+                                                Si
+                                                <span style="margin-bottom:8px ; margin-top:2px"></span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xl-12">
+                                <div class="row">
+                                    <div class="col-xs-12 col-md-8 m-form__group-sub">
+                                        <label class="col-form-label">Objetivo General</label>
+                                        <input id="GeneralGoal" placeholder="Ingrese el Objetivo General" class="form-control m-input" type="text" />
+                                    </div>
+                                    <div class="col-xs-4 col-sm-4 col-md-2 m-form__group-sub">
+                                        <label class="col-form-label">Peso</label>
+                                        <input asp-for="Input.GeneralGoalWeight" min="0" max="100" type="number" class="form-control m-input" />
+                                    </div>
+                                    <div class="col-xs-4 col-sm-4 col-md-2 m-form__group-sub">
+                                        <div class="m-input-icon m-input-icon--right">
+                                            <label class="col-form-label" style="display:block">Ocultar</label>
+                                            <label class="m-checkbox m-checkbox--bold m-checkbox--state-brand" style="margin-bottom:8px ; margin-top:8px">
+                                                <input asp-for="Input.GeneralGoalHidden" type="checkbox">
+                                                Si
+                                                <span style="margin-bottom:8px ; margin-top:2px"></span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xl-12">
+                                <div class="row">
+                                    <div class="col-xs-12 col-md-8 m-form__group-sub">
+                                        <label class="col-form-label">Formulación del Problema</label>
+                                        <input id="ProblemFormulation" placeholder="Ingrese la Formulación del Problema" class="form-control m-input" type="text" />
+                                    </div>
+                                    <div class="col-xs-4 col-sm-4 col-md-2 m-form__group-sub">
+                                        <label class="col-form-label">Peso</label>
+                                        <input asp-for="Input.ProblemFormulationWeight" min="0" max="100" type="number" class="form-control m-input" />
+                                    </div>
+                                    <div class="col-xs-4 col-sm-4 col-md-2 m-form__group-sub">
+                                        <div class="m-input-icon m-input-icon--right">
+                                            <label class="col-form-label" style="display:block">Ocultar</label>
+                                            <label class="m-checkbox m-checkbox--bold m-checkbox--state-brand" style="margin-bottom:8px ; margin-top:8px">
+                                                <input asp-for="Input.ProblemFormulationHidden" type="checkbox">
+                                                Si
+                                                <span style="margin-bottom:8px ; margin-top:2px"></span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xl-12">
+                                <div class="row">
+                                    <div class="col-xs-12 col-md-8 m-form__group-sub">
+                                        <label class="col-form-label">Objetivos Especificos</label>
+                                        <input id="SpecificGoal" placeholder="Ingrese los Objetivos Especificos" class="form-control m-input" type="text" />
+                                    </div>
+                                    <div class="col-xs-4 col-sm-4 col-md-2 m-form__group-sub">
+                                        <label class="col-form-label">Peso</label>
+                                        <input asp-for="Input.SpecificGoalWeight" min="0" max="100" type="number" class="form-control m-input" />
+                                    </div>
+                                    <div class="col-xs-4 col-sm-4 col-md-2 m-form__group-sub">
+                                        <div class="m-input-icon m-input-icon--right">
+                                            <label class="col-form-label" style="display:block">Ocultar</label>
+                                            <label class="m-checkbox m-checkbox--bold m-checkbox--state-brand" style="margin-bottom:8px ; margin-top:8px">
+                                                <input asp-for="Input.SpecificGoalHidden" type="checkbox">
+                                                Si
+                                                <span style="margin-bottom:8px ; margin-top:2px"></span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xl-12">
+                                <div class="row">
+                                    <div class="col-xs-12 col-md-8 m-form__group-sub">
+                                        <label class="col-form-label">Justificación</label>
+                                        <input id="Justification" placeholder="Ingrese la Justificación" class="form-control m-input" type="text" />
+                                    </div>
+                                    <div class="col-xs-4 col-sm-4 col-md-2 m-form__group-sub">
+                                        <label class="col-form-label">Peso</label>
+                                        <input asp-for="Input.JustificationWeight" min="0" max="100" type="number" class="form-control m-input" />
+                                    </div>
+                                    <div class="col-xs-4 col-sm-4 col-md-2 m-form__group-sub">
+                                        <div class="m-input-icon m-input-icon--right">
+                                            <label class="col-form-label" style="display:block">Ocultar</label>
+                                            <label class="m-checkbox m-checkbox--bold m-checkbox--state-brand" style="margin-bottom:8px ; margin-top:8px">
+                                                <input asp-for="Input.JustificationHidden" type="checkbox">
+                                                Si
+                                                <span style="margin-bottom:8px ; margin-top:2px"></span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="m-form__section m-form__section--last">
+                    <div class="m-form__heading">
+                        <h3 class="m-form__heading-title">3. Marco de Referencia:</h3>
+                        <div class="form-group m-form__group row">
+                            <div class="col-xl-12">
+                                <div class="row">
+                                    <div class="col-xs-12 col-md-8 m-form__group-sub">
+                                        <label class="col-form-label">Fundamentos Teoricos</label>
+                                        <input id="TheoreticalFundament" placeholder="Ingrese el Fundamento Teorico" class="form-control m-input" type="text" />
+                                    </div>
+                                    <div class="col-xs-4 col-sm-4 col-md-2 m-form__group-sub">
+                                        <label class="col-form-label">Peso</label>
+                                        <input asp-for="Input.TheoreticalFundamentWeight" min="0" max="100" type="number" class="form-control m-input" />
+                                    </div>
+                                    <div class="col-xs-4 col-sm-4 col-md-2 m-form__group-sub">
+                                        <div class="m-input-icon m-input-icon--right">
+                                            <label class="col-form-label" style="display:block">Ocultar</label>
+                                            <label class="m-checkbox m-checkbox--bold m-checkbox--state-brand" style="margin-bottom:8px ; margin-top:8px">
+                                                <input asp-for="Input.TheoreticalFundamentHidden" type="checkbox">
+                                                Si
+                                                <span style="margin-bottom:8px ; margin-top:2px"></span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xl-12">
+                                <div class="row">
+                                    <div class="col-xs-12 col-md-8 m-form__group-sub">
+                                        <label class="col-form-label">Antecedentes del Problema</label>
+                                        <input id="ProblemRecord" placeholder="Antecedentes del Problema" class="form-control m-input" type="text" />
+                                    </div>
+                                    <div class="col-xs-4 col-sm-4 col-md-2 m-form__group-sub">
+                                        <label class="col-form-label">Peso</label>
+                                        <input asp-for="Input.ProblemRecordWeight" min="0" max="100" type="number" class="form-control m-input" />
+                                    </div>
+                                    <div class="col-xs-4 col-sm-4 col-md-2 m-form__group-sub">
+                                        <div class="m-input-icon m-input-icon--right">
+                                            <label class="col-form-label" style="display:block">Ocultar</label>
+                                            <label class="m-checkbox m-checkbox--bold m-checkbox--state-brand" style="margin-bottom:8px ; margin-top:8px">
+                                                <input asp-for="Input.ProblemRecordHidden" type="checkbox">
+                                                Si
+                                                <span style="margin-bottom:8px ; margin-top:2px"></span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xl-12">
+                                <div class="row">
+                                    <div class="col-xs-12 col-md-8 m-form__group-sub">
+                                        <label class="col-form-label">Hipotesis</label>
+                                        <input id="Hypothesis" placeholder="Ingrese la Hipotesis" class="form-control m-input" type="text" />
+                                    </div>
+                                    <div class="col-xs-4 col-sm-4 col-md-2 m-form__group-sub">
+                                        <label class="col-form-label">Peso</label>
+                                        <input asp-for="Input.HypothesisWeight" min="0" max="100" type="number" class="form-control m-input" />
+                                    </div>
+                                    <div class="col-xs-4 col-sm-4 col-md-2 m-form__group-sub">
+                                        <div class="m-input-icon m-input-icon--right">
+                                            <label class="col-form-label" style="display:block">Ocultar</label>
+                                            <label class="m-checkbox m-checkbox--bold m-checkbox--state-brand" style="margin-bottom:8px ; margin-top:8px">
+                                                <input asp-for="Input.HypothesisHidden" type="checkbox">
+                                                Si
+                                                <span style="margin-bottom:8px ; margin-top:2px"></span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xl-12">
+                                <div class="row">
+                                    <div class="col-xs-12 col-md-8 m-form__group-sub">
+                                        <label class="col-form-label">Variables</label>
+                                        <input id="Variable" placeholder="Ingrese las Variables" class="form-control m-input" type="text" />
+                                    </div>
+                                    <div class="col-xs-4 col-sm-4 col-md-2 m-form__group-sub">
+                                        <label class="col-form-label">Peso</label>
+                                        <input asp-for="Input.VariableWeight" min="0" max="100" type="number" class="form-control m-input" />
+                                    </div>
+                                    <div class="col-xs-4 col-sm-4 col-md-2 m-form__group-sub">
+                                        <div class="m-input-icon m-input-icon--right">
+                                            <label class="col-form-label" style="display:block">Ocultar</label>
+                                            <label class="m-checkbox m-checkbox--bold m-checkbox--state-brand" style="margin-bottom:8px ; margin-top:8px">
+                                                <input asp-for="Input.VariableHidden" type="checkbox">
+                                                Si
+                                                <span style="margin-bottom:8px ; margin-top:2px"></span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="m-form__section m-form__section--last">
+                    <div class="m-form__heading">
+                        <h3 class="m-form__heading-title">4. Metodología:</h3>
+                        <div class="form-group m-form__group row">
+                            <div class="col-xl-12">
+                                <div class="row">
+                                    <div class="col-xs-12 col-md-8 m-form__group-sub">
+                                        <label class="col-form-label">Seleciona el Tipo de Metodología</label>
+                                        <select id="MethodologyType" class="form-control">
+                                            <option value="0" disabled>Seleccione Metodología</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-xs-4 col-sm-4 col-md-2 m-form__group-sub">
+                                        <label class="col-form-label">Peso</label>
+                                        <input asp-for="Input.MethodologyTypeWeight" min="0" max="100" type="number" class="form-control m-input" />
+                                    </div>
+                                    <div class="col-xs-4 col-sm-4 col-md-2 m-form__group-sub">
+                                        <div class="m-input-icon m-input-icon--right">
+                                            <label class="col-form-label" style="display:block">Ocultar</label>
+                                            <label class="m-checkbox m-checkbox--bold m-checkbox--state-brand" style="margin-bottom:8px ; margin-top:8px">
+                                                <input asp-for="Input.MethodologyTypeHidden" type="checkbox">
+                                                Si
+                                                <span style="margin-bottom:8px ; margin-top:2px"></span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xl-12">
+                                <div class="row">
+                                    <div class="col-xs-12 col-md-8 m-form__group-sub">
+                                        <label class="col-form-label">Metodología</label>
+                                        <input id="MethodologyDescription" placeholder="Ingrese la metodología" class="form-control m-input" type="text" />
+                                    </div>
+                                    <div class="col-xs-4 col-sm-4 col-md-2 m-form__group-sub">
+                                        <label class="col-form-label">Peso</label>
+                                        <input asp-for="Input.MethodologyDescriptionWeight" min="0" max="100" type="number" class="form-control m-input" />
+                                    </div>
+                                    <div class="col-xs-4 col-sm-4 col-md-2 m-form__group-sub">
+                                        <div class="m-input-icon m-input-icon--right">
+                                            <label class="col-form-label" style="display:block">Ocultar</label>
+                                            <label class="m-checkbox m-checkbox--bold m-checkbox--state-brand" style="margin-bottom:8px ; margin-top:8px">
+                                                <input asp-for="Input.MethodologyDescriptionHidden" type="checkbox">
+                                                Si
+                                                <span style="margin-bottom:8px ; margin-top:2px"></span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xl-12">
+                                <div class="row">
+                                    <div class="col-xs-12 col-md-8 m-form__group-sub">
+                                        <label class="col-form-label">Población y Muestra</label>
+                                        <input id="Population" placeholder="Ingrese el Fundamento Teorico" class="form-control m-input" type="text" />
+                                    </div>
+                                    <div class="col-xs-4 col-sm-4 col-md-2 m-form__group-sub">
+                                        <label class="col-form-label">Peso</label>
+                                        <input asp-for="Input.PopulationWeight" min="0" max="100" type="number" class="form-control m-input" />
+                                    </div>
+                                    <div class="col-xs-4 col-sm-4 col-md-2 m-form__group-sub">
+                                        <div class="m-input-icon m-input-icon--right">
+                                            <label class="col-form-label" style="display:block">Ocultar</label>
+                                            <label class="m-checkbox m-checkbox--bold m-checkbox--state-brand" style="margin-bottom:8px ; margin-top:8px">
+                                                <input asp-for="Input.PopulationHidden" type="checkbox">
+                                                Si
+                                                <span style="margin-bottom:8px ; margin-top:2px"></span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xl-12">
+                                <div class="row">
+                                    <div class="col-xs-12 col-md-8 m-form__group-sub">
+                                        <label class="col-form-label">Diseño de técnicas de Recolección de Información</label>
+                                        <input id="InformationCollectionTechnique" placeholder="Diseño de técnicas de Recolección de Información" class="form-control m-input" type="text" />
+                                    </div>
+                                    <div class="col-xs-4 col-sm-4 col-md-2 m-form__group-sub">
+                                        <label class="col-form-label">Peso</label>
+                                        <input asp-for="Input.InformationCollectionTechniqueWeight" min="0" max="100" type="number" class="form-control m-input" />
+                                    </div>
+                                    <div class="col-xs-4 col-sm-4 col-md-2 m-form__group-sub">
+                                        <div class="m-input-icon m-input-icon--right">
+                                            <label class="col-form-label" style="display:block">Ocultar</label>
+                                            <label class="m-checkbox m-checkbox--bold m-checkbox--state-brand" style="margin-bottom:8px ; margin-top:8px">
+                                                <input asp-for="Input.InformationCollectionTechniqueHidden" type="checkbox">
+                                                Si
+                                                <span style="margin-bottom:8px ; margin-top:2px"></span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xl-12">
+                                <div class="row">
+                                    <div class="col-xs-12 col-md-8 m-form__group-sub">
+                                        <label class="col-form-label">Técnicas de Análisis </label>
+                                        <input id="AnalysisTechnique" placeholder="Ingrese la técnicas de análisis " class="form-control m-input" type="text" />
+                                    </div>
+                                    <div class="col-xs-4 col-sm-4 col-md-2 m-form__group-sub">
+                                        <label class="col-form-label">Peso</label>
+                                        <input asp-for="Input.AnalysisTechniqueWeight" min="0" max="100" type="number" class="form-control m-input" />
+                                    </div>
+                                    <div class="col-xs-4 col-sm-4 col-md-2 m-form__group-sub">
+                                        <div class="m-input-icon m-input-icon--right">
+                                            <label class="col-form-label" style="display:block">Ocultar</label>
+                                            <label class="m-checkbox m-checkbox--bold m-checkbox--state-brand" style="margin-bottom:8px ; margin-top:8px">
+                                                <input asp-for="Input.AnalysisTechniqueHidden" type="checkbox">
+                                                Si
+                                                <span style="margin-bottom:8px ; margin-top:2px"></span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xl-12">
+                                <div class="row">
+                                    <div class="col-xs-12 col-md-8 m-form__group-sub">
+                                        <label class="col-form-label">Consideraciones Éticas</label>
+                                        <input id="EthicalConsiderations" placeholder="Ingrese la Consideración ética" class="form-control m-input" type="text" />
+                                    </div>
+                                    <div class="col-xs-4 col-sm-4 col-md-2 m-form__group-sub">
+                                        <label class="col-form-label">Peso</label>
+                                        <input asp-for="Input.EthicalConsiderationWeight" min="0" max="100" type="number" class="form-control m-input" />
+                                    </div>
+                                    <div class="col-xs-4 col-sm-4 col-md-2 m-form__group-sub">
+                                        <div class="m-input-icon m-input-icon--right">
+                                            <label class="col-form-label" style="display:block">Ocultar</label>
+                                            <label class="m-checkbox m-checkbox--bold m-checkbox--state-brand" style="margin-bottom:8px ; margin-top:8px">
+                                                <input asp-for="Input.EthicalConsiderationHidden" type="checkbox">
+                                                Si
+                                                <span style="margin-bottom:8px ; margin-top:2px"></span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xl-12">
+                                <div class="row">
+                                    <div class="col-xs-12 col-md-8 m-form__group-sub">
+                                        <label class="col-form-label">Guía de trabajo de Campo </label>
+                                        <div class="custom-file">
+                                            <input id="FieldWork" class="form-control m-input custom-file-input" name="File" type="file" accept="application/pdf, application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document" placeholder="Seleccionar archivo">
+                                            <label class="custom-file-label selected">Seleccionar Archivo...</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-4 col-sm-4 col-md-2 m-form__group-sub">
+                                        <label class="col-form-label">Peso</label>
+                                        <input asp-for="Input.FieldWorkWeight" min="0" max="100" type="number" class="form-control m-input" />
+                                    </div>
+                                    <div class="col-xs-4 col-sm-4 col-md-2 m-form__group-sub">
+                                        <div class="m-input-icon m-input-icon--right">
+                                            <label class="col-form-label" style="display:block">Ocultar</label>
+                                            <label class="m-checkbox m-checkbox--bold m-checkbox--state-brand" style="margin-bottom:8px ; margin-top:8px">
+                                                <input asp-for="Input.FieldWorkHidden" type="checkbox">
+                                                Si
+                                                <span style="margin-bottom:8px ; margin-top:2px"></span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="m-form__section m-form__section--last">
+                    <div class="m-form__heading">
+                        <h3 class="m-form__heading-title">5. Resultados Esperados:</h3>
+                        <div class="form-group m-form__group row">
+                            <div class="col-xl-12">
+                                <div class="row">
+                                    <div class="col-xs-12 col-md-8 m-form__group-sub">
+                                        <label class="col-form-label">Resultados Esperados </label>
+                                        <input id="ExpectedResults" placeholder="Ingrese el Resultado Esperado" class="form-control m-input" type="text" />
+                                    </div>
+                                    <div class="col-xs-4 col-sm-4 col-md-2 m-form__group-sub">
+                                        <label class="col-form-label">Peso</label>
+                                        <input asp-for="Input.ExpectedResultsWeight" min="0" max="100" type="number" class="form-control m-input" />
+                                    </div>
+                                    <div class="col-xs-4 col-sm-4 col-md-2 m-form__group-sub">
+                                        <div class="m-input-icon m-input-icon--right">
+                                            <label class="col-form-label" style="display:block">Ocultar</label>
+                                            <label class="m-checkbox m-checkbox--bold m-checkbox--state-brand" style="margin-bottom:8px ; margin-top:8px">
+                                                <input asp-for="Input.ExpectedResultsHidden" type="checkbox">
+                                                Si
+                                                <span style="margin-bottom:8px ; margin-top:2px"></span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xl-12">
+                                <div class="row">
+                                    <div class="col-xs-12 col-md-8 m-form__group-sub">
+                                        <label class="col-form-label">Desarrollo de tesis para titulación </label>
+                                        <input id="ThesisDevelopment" placeholder="Ingrese el Desarrollo de tesis para titulación " class="form-control m-input" type="text" />
+                                    </div>
+                                    <div class="col-xs-4 col-sm-4 col-md-2 m-form__group-sub">
+                                        <label class="col-form-label">Peso</label>
+                                        <input asp-for="Input.ThesisDevelopmentWeight" min="0" max="100" type="number" class="form-control m-input" />
+                                    </div>
+                                    <div class="col-xs-4 col-sm-4 col-md-2 m-form__group-sub">
+                                        <div class="m-input-icon m-input-icon--right">
+                                            <label class="col-form-label" style="display:block">Ocultar</label>
+                                            <label class="m-checkbox m-checkbox--bold m-checkbox--state-brand" style="margin-bottom:8px ; margin-top:8px">
+                                                <input asp-for="Input.ThesisDevelopmentHidden" type="checkbox">
+                                                Si
+                                                <span style="margin-bottom:8px ; margin-top:2px"></span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xl-12">
+                                <div class="row">
+                                    <div class="col-xs-12 col-md-8 m-form__group-sub">
+                                        <label class="col-form-label">Artículos publicados </label>
+                                        <input id="PublishedArticle" placeholder="Artículos publicados " class="form-control m-input" type="text" />
+                                    </div>
+                                    <div class="col-xs-4 col-sm-4 col-md-2 m-form__group-sub">
+                                        <label class="col-form-label">Peso</label>
+                                        <input asp-for="Input.PublishedArticleWeight" min="0" max="100" type="number" class="form-control m-input" />
+                                    </div>
+                                    <div class="col-xs-4 col-sm-4 col-md-2 m-form__group-sub">
+                                        <div class="m-input-icon m-input-icon--right">
+                                            <label class="col-form-label" style="display:block">Ocultar</label>
+                                            <label class="m-checkbox m-checkbox--bold m-checkbox--state-brand" style="margin-bottom:8px ; margin-top:8px">
+                                                <input asp-for="Input.PublishedArticleHidden" type="checkbox">
+                                                Si
+                                                <span style="margin-bottom:8px ; margin-top:2px"></span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xl-12">
+                                <div class="row">
+                                    <div class="col-xs-12 col-md-8 m-form__group-sub">
+                                        <label class="col-form-label">Difusión en congreso nacional </label>
+                                        <input id="BroadcastArticle" placeholder="Ingrese Difusión en congreso nacional " class="form-control m-input" type="text" />
+                                    </div>
+                                    <div class="col-xs-4 col-sm-4 col-md-2 m-form__group-sub">
+                                        <label class="col-form-label">Peso</label>
+                                        <input asp-for="Input.BroadcastArticleWeight" min="0" max="100" type="number" class="form-control m-input" />
+                                    </div>
+                                    <div class="col-xs-4 col-sm-4 col-md-2 m-form__group-sub">
+                                        <div class="m-input-icon m-input-icon--right">
+                                            <label class="col-form-label" style="display:block">Ocultar</label>
+                                            <label class="m-checkbox m-checkbox--bold m-checkbox--state-brand" style="margin-bottom:8px ; margin-top:8px">
+                                                <input asp-for="Input.BroadcastArticleHidden" type="checkbox">
+                                                Si
+                                                <span style="margin-bottom:8px ; margin-top:2px"></span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xl-12">
+                                <div class="row">
+                                    <div class="col-xs-12 col-md-8 m-form__group-sub">
+                                        <label class="col-form-label">Desarrollo de un proceso o prototipo </label>
+                                        <input id="ProcessDevelopment" placeholder="Ingrese el Desarrollo de un proceso o prototipo " class="form-control m-input" type="text" />
+                                    </div>
+                                    <div class="col-xs-4 col-sm-4 col-md-2 m-form__group-sub">
+                                        <label class="col-form-label">Peso</label>
+                                        <input asp-for="Input.ProcessDevelopmentWeight" min="0" max="100" type="number" class="form-control m-input" />
+                                    </div>
+                                    <div class="col-xs-4 col-sm-4 col-md-2 m-form__group-sub">
+                                        <div class="m-input-icon m-input-icon--right">
+                                            <label class="col-form-label" style="display:block">Ocultar</label>
+                                            <label class="m-checkbox m-checkbox--bold m-checkbox--state-brand" style="margin-bottom:8px ; margin-top:8px">
+                                                <input asp-for="Input.ProcessDevelopmentHidden" type="checkbox">
+                                                Si
+                                                <span style="margin-bottom:8px ; margin-top:2px"></span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xl-12">
+                                <div class="row">
+                                    <div class="col-xs-12 col-md-8 m-form__group-sub">
+                                        <label class="col-form-label">Referencias Bibliográficas</label>
+                                        <input id="BibliographicReferences" placeholder="Ingrese una Referencia Bibliográfica" class="form-control m-input" type="text" />
+                                    </div>
+                                    <div class="col-xs-4 col-sm-4 col-md-2 m-form__group-sub">
+                                        <label class="col-form-label">Peso</label>
+                                        <input asp-for="Input.BibliographicReferencesWeight" min="0" max="100" type="number" class="form-control m-input" />
+                                    </div>
+                                    <div class="col-xs-4 col-sm-4 col-md-2 m-form__group-sub">
+                                        <div class="m-input-icon m-input-icon--right">
+                                            <label class="col-form-label" style="display:block">Ocultar</label>
+                                            <label class="m-checkbox m-checkbox--bold m-checkbox--state-brand" style="margin-bottom:8px ; margin-top:8px">
+                                                <input asp-for="Input.BibliographicReferencesHidden" type="checkbox">
+                                                Si
+                                                <span style="margin-bottom:8px ; margin-top:2px"></span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="m-form__section m-form__section--last">
+                    <div class="m-form__heading">
+                        <h3 class="m-form__heading-title">6. Equipo de Trabajo:</h3>
+                        <div class="form-group m-form__group row">
+                            <div class="col-xl-12">
+                                <div class="row">
+                                    <div class="col-xs-12 col-md-8 m-form__group-sub">
+                                        <label class="col-form-label">Agregar Equipo de Trabajo</label>
+                                        <input id="TeamMemberUser" placeholder="Ingrese un equipo de desarrollo  " class="form-control m-input" type="text" />
+                                    </div>
+                                    <div class="col-xs-4 col-sm-4 col-md-2 m-form__group-sub">
+                                        <label class="col-form-label">Peso</label>
+                                        <input asp-for="Input.TeamMemberUserWeight" min="0" max="100" type="number" class="form-control m-input" />
+                                    </div>
+                                    <div class="col-xs-4 col-sm-4 col-md-2 m-form__group-sub">
+                                        <div class="m-input-icon m-input-icon--right">
+                                            <label class="col-form-label" style="display:block">Ocultar</label>
+                                            <label class="m-checkbox m-checkbox--bold m-checkbox--state-brand" style="margin-bottom:8px ; margin-top:8px">
+                                                <input asp-for="Input.TeamMemberUserHidden" type="checkbox">
+                                                Si
+                                                <span style="margin-bottom:8px ; margin-top:2px"></span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xl-12">
+                                <div class="row">
+                                    <div class="col-xs-12 col-md-8 m-form__group-sub">
+                                        <label class="col-form-label">Agregar Colaborador Externo</label>
+                                        <input id="ExternalMember" placeholder="Ingrese un colaborador externo" class="form-control m-input" type="text" />
+                                    </div>
+                                    <div class="col-xs-4 col-sm-4 col-md-2 m-form__group-sub">
+                                        <label class="col-form-label">Peso</label>
+                                        <input asp-for="Input.ExternalMemberWeight" min="0" max="100" type="number" class="form-control m-input" />
+                                    </div>
+                                    <div class="col-xs-4 col-sm-4 col-md-2 m-form__group-sub">
+                                        <div class="m-input-icon m-input-icon--right">
+                                            <label class="col-form-label" style="display:block">Ocultar</label>
+                                            <label class="m-checkbox m-checkbox--bold m-checkbox--state-brand" style="margin-bottom:8px ; margin-top:8px">
+                                                <input asp-for="Input.ExternalMemberHidden" type="checkbox">
+                                                Si
+                                                <span style="margin-bottom:8px ; margin-top:2px"></span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="m-form__section m-form__section--last">
+                    <div class="m-form__heading">
+                        <h3 class="m-form__heading-title">7. Anexos Adjuntos:</h3>
+                        <div class="form-group m-form__group row">
+                            <div class="col-xl-12">
+                                <div class="row">
+                                    <div class="col-xs-12 col-md-8 m-form__group-sub">
+                                        <label class="col-form-label">Duración en meses del proyecto  </label>
+                                        <input id="ProjectDuration" placeholder="Ingrese la duración en meses del proyecto  " class="form-control m-input" type="text" />
+                                    </div>
+                                    <div class="col-xs-4 col-sm-4 col-md-2 m-form__group-sub">
+                                        <label class="col-form-label">Peso</label>
+                                        <input asp-for="Input.ProjectDurationWeight" min="0" max="100" type="number" class="form-control m-input" />
+                                    </div>
+                                    <div class="col-xs-4 col-sm-4 col-md-2 m-form__group-sub">
+                                        <div class="m-input-icon m-input-icon--right">
+                                            <label class="col-form-label" style="display:block">Ocultar</label>
+                                            <label class="m-checkbox m-checkbox--bold m-checkbox--state-brand" style="margin-bottom:8px ; margin-top:8px">
+                                                <input asp-for="Input.ProjectDurationHidden" type="checkbox">
+                                                Si
+                                                <span style="margin-bottom:8px ; margin-top:2px"></span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xl-12">
+                                <div class="row">
+                                    <div class="col-xs-12 col-md-8 m-form__group-sub">
+                                        <label class="col-form-label">Archivos de anexos de postulación </label>
+                                        <div class="custom-file">
+                                            <input id="PostulationAttachmentFiles" class="form-control m-input custom-file-input" name="File" type="file" accept="application/pdf, application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document" placeholder="Seleccionar archivo">
+                                            <label class="custom-file-label selected">Seleccionar Archivo...</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-4 col-sm-4 col-md-2 m-form__group-sub">
+                                        <label class="col-form-label">Peso</label>
+                                        <input asp-for="Input.PostulationAttachmentFilesWeight" min="0" max="100" type="number" class="form-control m-input" />
+                                    </div>
+                                    <div class="col-xs-4 col-sm-4 col-md-2 m-form__group-sub">
+                                        <div class="m-input-icon m-input-icon--right">
+                                            <label class="col-form-label" style="display:block">Ocultar</label>
+                                            <label class="m-checkbox m-checkbox--bold m-checkbox--state-brand" style="margin-bottom:8px ; margin-top:8px">
+                                                <input asp-for="Input.PostulationAttachmentFilesHidden" type="checkbox">
+                                                Si
+                                                <span style="margin-bottom:8px ; margin-top:2px"></span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="m-form__section m-form__section--last">
+                    <div class="m-form__heading">
+                        <h3 class="m-form__heading-title">8. Preguntas Adicionales:</h3>
+                        <div class="form-group m-form__group row">
+                            <div class="col-xl-12">
+                                <div class="row">
+                                    <div class="col-xs-8 col-md-8 m-form__group-sub">
+                                        <button id="newQuestion" type="button" class="btn btn-success btn-sm m-btn m-btn--icon btn-add-question" data-toggle="modal" data-target="#add_question_modal" autocomplete="off">
+                                            <span>
+                                                <i class="la la-plus"></i>
+                                                <span>Nueva Pregunta</span>
+                                            </span>
+                                        </button>
+                                    </div>
+                                    <div class="col-xs-4 col-sm-4 col-md-2 m-form__group-sub">
+                                        <label class="col-form-label">Peso</label>
+                                        <input asp-for="Input.QuestionsWeight" min="0" max="100" type="number" class="form-control m-input" />
+                                    </div>
+                                    <div class="col-xs-4 col-sm-4 col-md-2 m-form__group-sub">
+                                        <div class="m-input-icon m-input-icon--right">
+                                            <label class="col-form-label" style="display:block">Ocultar</label>
+                                            <label class="m-checkbox m-checkbox--bold m-checkbox--state-brand" style="margin-bottom:8px ; margin-top:8px">
+                                                <input asp-for="Input.QuestionsHidden" type="checkbox">
+                                                Si
+                                                <span style="margin-bottom:8px ; margin-top:2px"></span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="aditional-questions"></div>
+                    </div>
+                </div>
+
+
+                <div class="m-portlet__foot m-portlet__no-border m-portlet__foot--fit">
+                    <div class="row">
+
+                        <div class="col-md-6 offset-md-6 m--align-right">
+
+                            <a class="text-dark text-hover-primary fs-6 fw-bolder">Total Porcentaje :</a>
+                            <span class="text-muted fw-bold flex-column" style="color: aliceblue ">@Model.Input.SumPercentage %</span>
+
+                            <button id="Save" type="submit" class="btn btn-primary m-btn m-btn--icon btn-submit">
+
+                                <span>
+                                    <i class="la la-archive"></i>
+                                    <span>Guardar cambios</span>
+                                </span>
+                            </button>
+
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+<!--Begin Modal Agregar Pregunta-->
+<div class="modal fade" id="add_question_modal" tabindex="-10" role="dialog" aria-labelledby="addLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title text-primary font-weight-bold">
+                    Nueva Pregunta
+                </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form id="add-question-form" asp-area="Admin" asp-page="InscriptionForm" asp-page-handler="AddQuestion" method="post">
+                <div class="modal-body">
+                    <div class="m-alert m-alert--icon alert alert-danger m--hide" role="alert" id="add_questionform_msg">
+                        <div class="m-alert__icon">
+                            <i class="la la-warning"></i>
+                        </div>
+                        <div class="m-alert__text" id="add_questionform_msg_txt">
+                            Oh rayos! Ocurri&oacute; un error en el servidor
+                        </div>
+                        <div class="m-alert__close">
+                            <button type="button" class="close" data-close="alert" aria-label="Close"></button>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group m-form__group col-lg-12">
+                            <label>Tipo de Pregunta</label>
+                            <select name="QuestionType" class="form-control m-select2 select2-questionType">
+                                <option value="0">Selecione Tipo de Pregunta</option>
+                                @foreach (var item in AKDEMIC.CORE.Constants.Systems.TeacherInvestigationConstants.InscriptionForm.QuestionType.VALUES)
+                                {
+                                    <option value="@item.Key">@item.Value</option>
+                                }
+                            </select>
+                        </div>
+                        <div class="form-group m-form__group col-lg-12">
+                            <label class="form-control-label">¿Es Obligatorio?</label>
+                            <div class=" m-input-icon m-input-icon--right ">
+                                <input name="IsRequired" value="true" class="checkbox_isrequired" type="checkbox" />
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="form-group m-form__group col-lg-12">
+                            <label>Descripción</label>
+                            <textarea name="Description" class="form-control m-input" maxlength="500"></textarea>
+                            <span class="characterLeft">0/500 caracteres</span>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group m-form__group col-lg-12 question-text" style="display:block;">
+                            <label>Respuesta</label>
+                            <textarea class="form-control" disabled="disabled" style="height: 37.19px; resize: none;"></textarea>
+                        </div>
+                        <div class="form-group col-lg-12 question-multiple" style="display:none;">
+                            <button class="btn btn-primary btn-sm m-btn--icon add-answer" type="button">
+                                <span>
+                                    <i class="la la-plus"></i>
+                                    <span>Añadir respuesta</span>
+                                </span>
+                            </button>
+                        </div>
+                        <div class="formanswers" style="width: 100%;display:none;"></div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+
+
+
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                        Cerrar
+                    </button>
+                    <button id="btnAdd" type="submit" class="btn btn-primary ladda-button" data-style="slide-down">
+                        <span class="ladda-label">Guardar</span>
+                        <span class="ladda-spinner"></span>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<!--End  Modal Agregar Pregunta-->
+<!--Begin Modal Editar Pregunta-->
+<div class="modal fade" id="edit_question_modal" tabindex="-10" role="dialog" aria-labelledby="editLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title text-primary font-weight-bold">
+                    Edita la Pregunta
+                </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form id="edit-question-form" asp-area="Admin" asp-page="InscriptionForm" asp-page-handler="EditQuestion" method="post">
+                <div class="modal-body">
+                    <div class="m-alert m-alert--icon alert alert-danger m--hide" role="alert" id="edit_questionform_msg">
+                        <div class="m-alert__icon">
+                            <i class="la la-warning"></i>
+                        </div>
+                        <div class="m-alert__text" id="edit_questionform_msg_txt">
+                            Oh rayos! Ocurri&oacute; un error en el servidor
+                        </div>
+                        <div class="m-alert__close">
+                            <button type="button" class="close" data-close="alert" aria-label="Close"></button>
+                        </div>
+                    </div>
+                    <input name="Id" hidden />
+                    <div class="row">
+                        <div class="form-group m-form__group col-lg-12">
+                            <label>Tipo de Pregunta</label>
+                            <select name="QuestionType" class="form-control m-select2 select2-questionType" required>
+                                @foreach (var item in AKDEMIC.CORE.Constants.Systems.TeacherInvestigationConstants.InscriptionForm.QuestionType.VALUES)
+                                {
+                                    <option value="@item.Key">@item.Value</option>
+                                }
+                            </select>
+                        </div>
+                        <div class="form-group m-form__group col-lg-12">
+                            <label class="form-control-label">¿Es Obligatorio?</label>
+                            <div class=" m-input-icon m-input-icon--right ">
+                                <input name="IsRequired" class="checkbox_isrequired" type="checkbox" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group m-form__group col-lg-12">
+                            <label>Descripción</label>
+                            <textarea name="Description" class="form-control m-input" required maxlength="500"></textarea>
+                            <span class="characterLeft">0/500 caracteres</span>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group m-form__group col-lg-12 question-text" style="display:block;">
+                            <label>Respuesta</label>
+                            <textarea class="form-control" disabled="disabled" style="height: 37.19px; resize: none;"></textarea>
+                        </div>
+                        <div class="form-group col-lg-12 question-multiple" style="display:none;">
+                            <button class="btn btn-primary btn-sm m-btn--icon add-answer" type="button">
+                                <span>
+                                    <i class="la la-plus"></i>
+                                    <span>Añadir respuesta</span>
+                                </span>
+                            </button>
+                        </div>
+                        <div class="formanswers" style="width: 100%;display:none;"></div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                        Cerrar
+                    </button>
+                    <button id="btnEdit" type="submit" class="btn btn-primary ladda-button" data-style="slide-down">
+                        <span class="ladda-label">Guardar</span>
+                        <span class="ladda-spinner"></span>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<!--End Modal Editar Pregunta-->
+@section Scripts{
+    <script src="~/js/areas/admin/investigationconvocation/inscriptionform.js" asp-append-version="true"></script>
+}
