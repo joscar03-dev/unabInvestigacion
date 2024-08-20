@@ -35,6 +35,8 @@ using IdentityModel;
 using static AKDEMIC.CORE.Constants.GeneralConstants;
 using System.Collections.Generic;
 using AKDEMIC.CORE.Services;
+using Microsoft.AspNetCore.SpaServices.ReactDevelopmentServer;
+
 
 namespace AKDEMIC.TEACHERINVESTIGATION
 {
@@ -213,6 +215,16 @@ namespace AKDEMIC.TEACHERINVESTIGATION
                 endpoints.MapControllerRoute("default", "{controller=Home}/{action=Index}/{id?}");
                 endpoints.MapRazorPages();
             });
+            app.UseSpa(spa =>
+            {
+                spa.Options.SourcePath = "clientapp";
+
+                if (env.IsDevelopment())
+                {
+                    spa.UseReactDevelopmentServer(npmScript: "start");
+                }
+            });
+
         }
 
         private Task RemoteAuthFail(RemoteFailureContext context) { context.Response.Redirect("/"); context.HandleResponse(); return Task.CompletedTask; }

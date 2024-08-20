@@ -53,10 +53,10 @@ namespace AKDEMIC.INFRASTRUCTURE.Data
                     #endregion
                     builder.UseMySql(
                         // LOCALHOST
-                        //"Server=localhost;Database=AKDEMICTEACHER;Uid=root;Pwd=root;AllowLoadLocalInfile=true;Connection Timeout=0;Default Command Timeout=0;"
+                        "Server=localhost;Database=AKDEMICTEACHER;Uid=root;Pwd=;AllowLoadLocalInfile=true;Connection Timeout=0;Default Command Timeout=0;"
 
                         //UNAB - Investigacion                       
-                        "Server=68.168.220.158;Database=UNAB.DOCENTES.DB;Uid=root;Pwd=$*TI.Unab.2024$;AllowLoadLocalInfile=true;Connection Timeout=60;Default Command Timeout=300;"
+                        //"Server=68.168.220.158;Database=UNAB.DOCENTES.DB;Uid=root;Pwd=$*TI.Unab.2024$;AllowLoadLocalInfile=true;Connection Timeout=60;Default Command Timeout=300;"
                         ,
                         new MySqlServerVersion(DataBaseConstants.Versions.MySql.VALUES[DataBaseConstants.Versions.MySql.V8021])
                         , opts =>

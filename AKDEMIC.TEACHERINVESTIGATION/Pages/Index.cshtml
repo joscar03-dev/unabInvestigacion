@@ -1,130 +1,79 @@
 ﻿@page "/"
 @model IndexModel
 
-
 <div class="m-content">
-    @if (User.IsInRole(AKDEMIC.CORE.Constants.GeneralConstants.ROLES.ACOMPANIANTE) ||
-    User.IsInRole(AKDEMIC.CORE.Constants.GeneralConstants.ROLES.EVALUATOR_COMMITTEE) ||
-    User.IsInRole(AKDEMIC.CORE.Constants.GeneralConstants.ROLES.TEACHERS) ||
-    User.IsInRole(AKDEMIC.CORE.Constants.GeneralConstants.ROLES.DOCENTE_ASESOR) ||
-    User.IsInRole(AKDEMIC.CORE.Constants.GeneralConstants.ROLES.STUDENTS) ||
+    <div class="m-portlet">
+        <div class="m-portlet__body">
+            <div class="m-form--label-align-right m--margin-bottom-20">
+                <div class="row align-items-center" style="vertical-align:top">
 
-    User.IsInRole(AKDEMIC.CORE.Constants.GeneralConstants.ROLES.SUPERADMIN) ||
-    User.IsInRole(AKDEMIC.CORE.Constants.GeneralConstants.ROLES.TEACHERINVESTIGATION_ADMIN))
-    {
-        <div class="m-portlet">
-            <div class="m-portlet__body">
-                <div class="m-form--label-align-right m--margin-bottom-20">
-                    <div class="row align-items-center" style="vertical-align:top">
-
-
-                        @if (User.IsInRole(AKDEMIC.CORE.Constants.GeneralConstants.ROLES.SUPERADMIN) || User.IsInRole(AKDEMIC.CORE.Constants.GeneralConstants.ROLES.TEACHERINVESTIGATION_ADMIN))
-                        {
-                            <div class="col-xl-2 order-2 order-xl-1" style="vertical-align:top;height:150px; display:none">
-
-                                <center> <a href="/Indexincubadoranew"><img class="ico" style="cursor:pointer" src="~/images/fa_encubadora.png" width="60px" /></a></center>
-                                <br>
-                                <center><b><a href="/Indexincubadoranew">Incubadora de Empresas</a></b></center>
-
-                            </div>
-                        }
-                        @if (User.IsInRole(AKDEMIC.CORE.Constants.GeneralConstants.ROLES.SUPERADMIN) || User.IsInRole(AKDEMIC.CORE.Constants.GeneralConstants.ROLES.TEACHERINVESTIGATION_ADMIN))
-                        {
-                            <div class="col-xl-2 order-2 order-xl-1" style="vertical-align:top;height:150px; display:none">
-
-                                <center> <a href="/Indexpublicidad"><img class="ico" style="cursor:pointer" src="~/images/fa_publicar.png" width="60px" /></a></center>
-                                <br>
-                                <center><b><a href="/indexpublicidad">Publicaciones</a></b></center>
-                            </div>
-                        }
-                        @if (User.IsInRole(AKDEMIC.CORE.Constants.GeneralConstants.ROLES.SUPERADMIN) || User.IsInRole(AKDEMIC.CORE.Constants.GeneralConstants.ROLES.TEACHERINVESTIGATION_ADMIN))
-                        {
-                            <div class="col-xl-2 order-2 order-xl-1" style="vertical-align:top;height:150px; display:none">
-
-                                <center> <a href="/Indexinnovacion"><img class="ico" style="cursor:pointer" src="~/images/fa_project.png" width="60px" /></a></center>
-                                <br>
-
-                                <center><b><a href="/Indexinnovacion">Innovación y Transferencia Tecnológica</a></b></center>
-
-
-                            </div>
-                        }
-                        @if (User.IsInRole(AKDEMIC.CORE.Constants.GeneralConstants.ROLES.ACOMPANIANTE) ||
-                       User.IsInRole(AKDEMIC.CORE.Constants.GeneralConstants.ROLES.EVALUATOR_COMMITTEE) ||
-                       User.IsInRole(AKDEMIC.CORE.Constants.GeneralConstants.ROLES.TEACHERS) ||
-                       User.IsInRole(AKDEMIC.CORE.Constants.GeneralConstants.ROLES.SUPERADMIN) ||
-                       User.IsInRole(AKDEMIC.CORE.Constants.GeneralConstants.ROLES.TEACHERINVESTIGATION_ADMIN))
-                        {
-
-                            <div class="col-xl-2 order-1 order-xl-2 m--align-right" style="vertical-align:top;height:150px">
-                                <center><a href="investigacionformativa/index"><img class="ico" style="cursor:pointer" src="~/images/fa_formacionacdemica.png" width="60px" /></a></center>
-                                <br>
-
-                                <center><b><a href="investigacionformativa/index">Plan de Trabajo de Investigación Formativa-test5</a></b></center>
-                            </div>
-                        }
-                        @if (User.IsInRole(AKDEMIC.CORE.Constants.GeneralConstants.ROLES.SUPERADMIN) ||
-                       User.IsInRole(AKDEMIC.CORE.Constants.GeneralConstants.ROLES.TEACHERINVESTIGATION_ADMIN) ||
-                       User.IsInRole(AKDEMIC.CORE.Constants.GeneralConstants.ROLES.TEACHERS))
-                        {
-                            <div class="col-xl-2 order-1 order-xl-2 m--align-right" style="vertical-align:top;height:150px; display:none">
-                                <center><a href="investigacionfomento/index"><img class="ico" style="cursor:pointer" src="~/images/fa_fomento.png" width="60px" /></a></center>
-                                <br>
-
-                                <center><a href="investigacionfomento/index"><b>Programa de Fomento de Investigación</b></a></center>
-                            </div>
-                        }
-                        @if (User.IsInRole(AKDEMIC.CORE.Constants.GeneralConstants.ROLES.DOCENTE_ASESOR) || User.IsInRole(AKDEMIC.CORE.Constants.GeneralConstants.ROLES.STUDENTS) || User.IsInRole(AKDEMIC.CORE.Constants.GeneralConstants.ROLES.SUPERADMIN) || User.IsInRole(AKDEMIC.CORE.Constants.GeneralConstants.ROLES.TEACHERINVESTIGATION_ADMIN))
-                        {
-                            <div class="col-xl-2 order-1 order-xl-2 m--align-right" style="vertical-align:top;height:150px">
-                                <center><a href="investigacionasesoria/index"><img class="ico" style="cursor:pointer" src="~/images/fa_asesoriatesis.png" width="60px" /></a></center>
-
-                                <center><a href="investigacionasesoria/index"><b>Asesoria de Tesis</b></a></center>
-                            </div>
-                        }
-                        @if (User.IsInRole(AKDEMIC.CORE.Constants.GeneralConstants.ROLES.SUPERADMIN))
-                        {
-                            <div class="col-xl-2 order-1 order-xl-2 m--align-right" style="vertical-align:top;height:150px">
-                                <center><a href="investigacionlaboratorio/index"><img class="ico" style="cursor:pointer" src="~/images/fa_laboratorio.png" width="60px" /></a></center>
-
-                                <center><a href="investigacionlaboratorio/index"><b>Laboratorios de Investigación</b></a></center>
-                            </div>
-                        }
+                    <div class="col-xl-2 order-2 order-xl-1" style="vertical-align:top;height:150px;">
+                        <center><a href="/Indexincubadoranew"><img class="ico" style="cursor:pointer" src="~/images/fa_encubadora.png" width="60px" /></a></center>
+                        <br>
+                        <center><b><a href="/Indexincubadoranew">Incubadora de Empresas</a></b></center>
                     </div>
 
+                    <div class="col-xl-2 order-2 order-xl-1" style="vertical-align:top;height:150px;">
+                        <center><a href="/Indexpublicidad"><img class="ico" style="cursor:pointer" src="~/images/fa_publicar.png" width="60px" /></a></center>
+                        <br>
+                        <center><b><a href="/indexpublicidad">Publicaciones</a></b></center>
+                    </div>
 
+                    <div class="col-xl-2 order-2 order-xl-1" style="vertical-align:top;height:150px;">
+                        <center><a href="/Indexinnovacion"><img class="ico" style="cursor:pointer" src="~/images/fa_project.png" width="60px" /></a></center>
+                        <br>
+                        <center><b><a href="/Indexinnovacion">Innovación y Transferencia Tecnológica</a></b></center>
+                    </div>
+
+                    <div class="col-xl-2 order-1 order-xl-2 m--align-right" style="vertical-align:top;height:150px;">
+                        <center><a href="investigacionformativa/index"><img class="ico" style="cursor:pointer" src="~/images/fa_formacionacdemica.png" width="60px" /></a></center>
+                        <br>
+                        <center><b><a href="investigacionformativa/index">Plan de Trabajo de Investigación Formativa-test5</a></b></center>
+                    </div>
+
+                    <div class="col-xl-2 order-1 order-xl-2 m--align-right" style="vertical-align:top;height:150px;">
+                        <center><a href="investigacionfomento/index"><img class="ico" style="cursor:pointer" src="~/images/fa_fomento.png" width="60px" /></a></center>
+                        <br>
+                        <center><a href="investigacionfomento/index"><b>Programa de Fomento de Investigación</b></a></center>
+                    </div>
+
+                    <div class="col-xl-2 order-1 order-xl-2 m--align-right" style="vertical-align:top;height:150px;">
+                        <center><a href="investigacionasesoria/index"><img class="ico" style="cursor:pointer" src="~/images/fa_asesoriatesis.png" width="60px" /></a></center>
+                        <br>
+                        <center><a href="investigacionasesoria/index"><b>Asesoria de Tesis</b></a></center>
+                    </div>
+
+                    <div class="col-xl-2 order-1 order-xl-2 m--align-right" style="vertical-align:top;height:150px;">
+                        <center><a href="investigacionlaboratorio/index"><img class="ico" style="cursor:pointer" src="~/images/fa_laboratorio.png" width="60px" /></a></center>
+                        <br>
+                        <center><a href="investigacionlaboratorio/index"><b>Laboratorios de Investigación</b></a></center>
+                    </div>
                 </div>
+            </div>
 
-                <br><br><br><br>
-                @if (User.IsInRole(AKDEMIC.CORE.Constants.GeneralConstants.ROLES.SUPERADMIN) || User.IsInRole(AKDEMIC.CORE.Constants.GeneralConstants.ROLES.TEACHERINVESTIGATION_ADMIN))
-                {
-                    <div class="row">
-                        <div class="col-xs-12 col-sm-12 col-md-6">
-                            <div class="m-form__heading">
-                                <h5 class="m-form__heading-title">
-                                    Entregables que van a vencer
-                                </h5>
-                            </div>
-                            <table class="table table-striped table-bordered" id="projectReportNotExpired-table"></table>
-                        </div>
-                        <div class="col-xs-12 col-sm-12 col-md-6">
-                            <div class="m-form__heading">
-                                <h5 class="m-form__heading-title">
-                                    Entregables que vencieron
-                                </h5>
-                            </div>
-                            <table class="table table-striped table-bordered" id="projectReportExpired-table"></table>
-                        </div>
+            <br><br><br><br>
+            <div class="row">
+                <div class="col-xs-12 col-sm-12 col-md-6">
+                    <div class="m-form__heading">
+                        <h5 class="m-form__heading-title">
+                            Entregables que van a vencer
+                        </h5>
                     </div>
-                }
+                    <table class="table table-striped table-bordered" id="projectReportNotExpired-table"></table>
+                </div>
+                <div class="col-xs-12 col-sm-12 col-md-6">
+                    <div class="m-form__heading">
+                        <h5 class="m-form__heading-title">
+                            Entregables que vencieron
+                        </h5>
+                    </div>
+                    <table class="table table-striped table-bordered" id="projectReportExpired-table"></table>
+                </div>
             </div>
         </div>
-    }
+    </div>
 </div>
 
-@if (User.IsInRole(AKDEMIC.CORE.Constants.GeneralConstants.ROLES.SUPERADMIN) || User.IsInRole(AKDEMIC.CORE.Constants.GeneralConstants.ROLES.TEACHERINVESTIGATION_ADMIN))
-{
-    @section Scripts {
+@section Scripts {
     <script src="~/js/pages/index.js" asp-append-version="true"></script>
-    }
 }

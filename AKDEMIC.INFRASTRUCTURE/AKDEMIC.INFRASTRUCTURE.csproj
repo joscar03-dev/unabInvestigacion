@@ -25,6 +25,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\AKDEMIC.CORE\AKDEMIC.CORE.csproj" />
+    <ProjectReference Include="..\AKDEMIC.DOMAIN\AKDEMIC.DOMAIN.csproj" />
   </ItemGroup>
 
 </Project>
